@@ -1,0 +1,64 @@
+﻿{
+	"prices": [
+		{
+			"name": "Masafi Pure 500ml",
+			"price": "AED 1.95",
+			"barcode": "8965412356231"
+		},
+		{
+			"name": "Masafi Zero 330ml",
+			"price": "AED 1.50",
+			"barcode": "8965412356232"
+		},
+		{
+			"name": "Masafi Blue 330ml",
+			"price": "AED 1.50",
+			"barcode": "8965412356233"
+		},
+		{
+			"name": "Masafi Ziya 500ml",
+			"price": "AED 10.95",
+			"barcode": "8965412356234"
+		},
+		{
+			"name": "Masafi ABCD 500ml",
+			"price": "AED 1.95",
+			"barcode": "8965412356235"
+		},
+		{
+			"name": "Masafi Joey 330ml",
+			"price": "AED 22.00",
+			"barcode": "8965412356236"
+		},
+		{
+			"name": "NEW MINI BRAD",
+			"price": "1.00",
+			"barcode": "8965412356237"
+		},
+		{
+			"name": "NEW MINI VIENESE",
+			"price": "2.00",
+			"barcode": "8965412356238"
+		},
+		{
+			"name": "NEW MUFFINS ASSORTED",
+			"price": "3.00",
+			"barcode": "8965412356239"
+		},
+		{
+			"name": "HERBS 1",
+			"price": "1.00",
+			"barcode": "8965412356240"
+		},
+		{
+			"name": "NEW HERBS 2",
+			"price": "2.00",
+			"barcode": "8965412356241"
+		},
+		{
+			"name": "HERBS 3",
+			"price": "3.00",
+			"barcode": "8965412356242"
+		}
+	]
+}

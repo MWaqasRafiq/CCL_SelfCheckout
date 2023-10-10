@@ -1,0 +1,17 @@
+﻿<Window x:Class="OposPrinter.CheckoutCamera"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OposPrinter"
+        mc:Ignorable="d"
+        Title="CheckoutCamera" Height="700" Width="600" WindowStyle="SingleBorderWindow" Topmost="True"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" >
+
+    <Grid>
+
+        <Image x:Name="FrameImage"></Image>
+        <Button Click="btnClose_Click" Content="Pay Now" HorizontalAlignment="Left" Margin="54,580,0,0" VerticalAlignment="Top" Height="64" Width="500"/>
+
+    </Grid>
+</Window>

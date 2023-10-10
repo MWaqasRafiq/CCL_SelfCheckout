@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_LastSelectedProfileId>D:\IDOL\IDOLSelfCheckout-1 2\IDOLSelfCheckout-1 2\IDOLSelfCheckout\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="UserControls\ucAsistantScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucBakeryScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucClosedScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucCreditCardScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucDonationScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucDuScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucEtisalatScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucHelpScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucHerbsScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucItemScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucMainScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucOperatorsScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucPaymentScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucPrintScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucPrintScreenOPOS.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucStartScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucVirginScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucAsistantScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucBakeryScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucClosedScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucCreditCardScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucDonationScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucDuScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucEtisalatScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucHelpScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucHerbsScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucItemScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucMainScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucOperatorsScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucPaymentScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucPrintScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucPrintScreenOPOS.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucStartScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucVirginScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

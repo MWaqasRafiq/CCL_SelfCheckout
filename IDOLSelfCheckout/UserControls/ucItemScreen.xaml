@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="IDOLSelfCheckout.UserControls.ucItemScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IDOLSelfCheckout.UserControls"
+             mc:Ignorable="d" 
+             d:MinHeight="100" d:MinWidth="100">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <Border Background="Cyan"  Grid.Column="0" Grid.Row="0">
+                <!--<Image Source="pack://application:,,,/IDOLSelfCheckout;component/Resources/scanitemimg1.png" Stretch="Fill" />-->
+            <Image Source="C:/IDOL/images/icons/scanitemimg1.png" Stretch="Fill" />
+
+            
+            <!--<Image Margin="78,84,22,66" Name="image1" Stretch="Fill" >
+                <Image.Source>
+                    <BitmapImage UriSource="pack://application:,,,/IDOLSelfCheckout;component/images/icons/scanitemimg1.png"/>
+                </Image.Source>
+            </Image>-->
+        </Border>
+
+        <Border Background="Gray"  Grid.Column="0" Grid.Row="1">
+            <Button Name="btn_donation_add" Click="btn_donation_add_Click" >
+                <Image Name="donationimg" Source="C:/IDOL/images/icons/donationbtn1.png" Stretch="Fill" />
+            </Button>          
+
+        </Border>
+
+        <Border  Grid.Column="0" Grid.Row="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Border  Background="red"  Grid.Column="0" Grid.Row="0">
+                    <Button Name="btn_bakery_add" Click="btn_bakery_add_Click"  >
+                        <Image Source="C:/IDOL/images/icons/bakerybtn.png" Stretch="Fill"   />
+                    </Button>
+                    
+                    
+
+                </Border>
+                <Border Background="Yellow" Grid.Column="1" Grid.Row="0">
+                    <Button Name="btn_herbs_add" Click="btn_herbs_add_Click"  >
+                        <Image Source="C:/IDOL/images/icons/herbsbtn.png" Stretch="Fill" />
+                    </Button>
+                    
+
+                </Border>
+            </Grid>
+
+        </Border>
+
+        <Border Background="Blue" Grid.Column="0" Grid.Row="3">
+            <Button Name="btn_operators_add" Click="btn_operators_add_Click" >
+                <Image Source="C:/IDOL/images/icons/operatorsbtn.png" Stretch="Fill" />
+            </Button>
+            
+
+        </Border>
+        <Border Background="Blue" Grid.Column="0" Grid.Row="4">
+            <Button x:Name="btn_pay" FontSize="36" FontWeight="Bold" Foreground="White" Click="btn_pay_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FFB81D1D" Offset="0.763"/>
+                        <GradientStop Color="#FF909090" Offset="0.018"/>
+                    </LinearGradientBrush>
+                </Button.Background> PAY
+            
+            </Button>
+
+        </Border>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,11 @@
+{
+  "buttons": [{
+    "buttonName":"etisalat 30",
+	"buttonBarcode":"4353535354",
+	"buttonImagePath":"C:\IDOL\images\icons\scoetisalatlogo.png"
+	},	{
+    "buttonName":"etisalat 50",
+	"buttonBarcode":"4353535354",
+	"buttonImagePath":"C:\IDOL\images\icons\scoetisalatlogo.png"
+	}]	
+}
