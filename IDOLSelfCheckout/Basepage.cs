@@ -43,6 +43,9 @@ namespace IDOLSelfCheckout
         public static string PopId_Host;
         public static int PopId_Port;
         public static int PopId_SecondaryPort;
+        public static bool IsLocalConsumption;
+        public static string HostTerminalId;
+        public static string StoreNumber;
         //private TsgcWebSocketClient socketClient;
 
         public void loadValues()
@@ -82,12 +85,22 @@ namespace IDOLSelfCheckout
                     Basepage.LSRetail_LedComPort = ConfigurationManager.AppSettings["LSRetail_LedComPort"].ToString();
                 if (ConfigurationManager.AppSettings["OPOS_PrinterName"] != null)
                     Basepage.OPOS_PrinterName = ConfigurationManager.AppSettings["OPOS_PrinterName"].ToString();
+
+                //FacePay
                 if (ConfigurationManager.AppSettings["PopId_Host"] != null)
                     Basepage.PopId_Host = ConfigurationManager.AppSettings["PopId_Host"].ToString();
                 if (ConfigurationManager.AppSettings["PopId_Port"] != null)
                     Basepage.PopId_Port = Convert.ToInt32(ConfigurationManager.AppSettings["PopId_Port"]);
                 if (ConfigurationManager.AppSettings["PopId_SecondaryPort"] != null)
                     Basepage.PopId_SecondaryPort = Convert.ToInt32(ConfigurationManager.AppSettings["PopId_SecondaryPort"]);
+
+                //Service API
+                if (ConfigurationManager.AppSettings["IsLocalConsumption"] != null)
+                    Basepage.IsLocalConsumption = Convert.ToBoolean(ConfigurationManager.AppSettings["IsLocalConsumption"]);
+                if (ConfigurationManager.AppSettings["Terminal_Id"] != null)
+                    Basepage.HostTerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
+                if (ConfigurationManager.AppSettings["Store_No"] != null)
+                    Basepage.StoreNumber = ConfigurationManager.AppSettings["Store_No"].ToString();
                 Basepage.logWrite("--------------------- Application Started -----------------------");
             }
             catch (Exception ex)

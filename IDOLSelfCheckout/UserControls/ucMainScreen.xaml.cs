@@ -26,6 +26,7 @@ namespace IDOLSelfCheckout.UserControls
         public static Label TransactionTotal;
         public static Label TransactionVat;
         public static Label ItemInfo;
+        public static TextBlock ReceiptText;
         private readonly view_models viewModels;
         public ucMainScreen()
         {
@@ -49,6 +50,7 @@ namespace IDOLSelfCheckout.UserControls
             TransactionTotal = transactoin_total;
             TransactionVat = transactoin_vat;
             ItemInfo = item_info;
+            ReceiptText = Receipt_Text;
             MainWindow.Item_SCO = Item_sco;
 
             Basepage bp = new Basepage();
@@ -71,8 +73,43 @@ namespace IDOLSelfCheckout.UserControls
             {
                 uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
             }
+            sco_data.StoreNumber = Basepage.StoreNumber;
+            if (Basepage.IsLocalConsumption)
+            {
+                item_list_parent.Visibility = Visibility.Visible;
+                Receipt_Text_parent.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                item_list_parent.Visibility = Visibility.Hidden;
+                Receipt_Text_parent.Visibility = Visibility.Visible;
+            }
         }
+        public void UpdateReceipt(PosServiceResponseVM responseVM)
+        {
+            if (responseVM != null && ReceiptText != null)
+            {
+                ReceiptText.Text = responseVM.Receipt;
+                
+                sco_data.TerminalNumber = responseVM.TerminalID;
+                
+                sco_data.TransactionTotal = responseVM.BalanceDue;
 
+                if (responseVM.Receipt.Contains("TRN:"))
+                    sco_data.ReceiptNumber = responseVM.Receipt.Split("TRN:")[1].Split("\r")[0];
+                else
+                    sco_data.ReceiptNumber = "";
+
+                if (!string.IsNullOrEmpty(sco_data.TransactionTotal))
+                    sco_data.TransactionVat = ((Convert.ToDecimal(responseVM.BalanceDue.Replace(",", "")) / 100) * 5).ToString();
+                else
+                    sco_data.TransactionVat = "0.00";
+
+                ucMainScreen.TransactionDetails.Content = (object)("StoreNo: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
+                ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED: " + sco_data.TransactionTotal);
+                ucMainScreen.TransactionVat.Content =   (object)("VAT   AED: " + sco_data.TransactionVat);
+            }
+        }
         private void btn_help_Click(object sender, RoutedEventArgs e)
         {
             btn_help.Focusable = false;

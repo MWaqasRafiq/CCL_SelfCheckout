@@ -18,6 +18,8 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Threading;
 using static IDOLSelfCheckout.FacePay;
+using IDOLSelfCheckout.DataModel;
+using System.Threading;
 
 
 #nullable enable
@@ -29,7 +31,7 @@ namespace IDOLSelfCheckout
         public static Grid Item_SCO;
         public static Image Img_Circle;
         private string _barcode = string.Empty;
-        private Timer _timer;
+        private System.Timers.Timer _timer;
         private List<string> Images1 = new List<string>();
         private int count1;
         internal
@@ -40,6 +42,7 @@ namespace IDOLSelfCheckout
         internal TextBlock _textBlock1;
         internal Image _imgCircle;
         private TsgcWebSocketClient socketClient;
+        private ServerIntegration serverIntegration;
 
         public MainWindow()
         {
@@ -54,18 +57,32 @@ namespace IDOLSelfCheckout
             };
             foreach (string fileName in MainWindow.GetFileNames("C:\\IDOL\\images\\advertise\\", filter))
                 this.Images1.Add(fileName);
-            this._timer = new Timer(10000.0);
+            this._timer = new System.Timers.Timer(10000.0);
             this._timer.Elapsed += new ElapsedEventHandler(this._timer_Elapsed);
             this._timer.Enabled = true;
             this._timer.Start();
-
+            //FacePay
             socketClient = new TsgcWebSocketClient();
             socketClient.OnError += OnSocketErrorEvent;
             socketClient.OnException += OnSocketExceptionEvent;
             socketClient.OnConnect += OnSocketConnectEvent;
             socketClient.OnMessage += OnSocketResponseEvent;
-        }
 
+            //Server API
+            serverIntegration = new ServerIntegration();
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(500);
+            timer.Tick += ServiceCallWorker;
+            timer.Start();
+        }
+        void ServiceCallWorker(object sender, EventArgs e)
+        {
+            if(new ucMainScreen().Receipt_Text != null)
+            {
+                PosServiceResponseVM responseVM = serverIntegration.PostPosRequest(null);
+                new ucMainScreen().UpdateReceipt(responseVM);
+            }
+        }
         private void Window_Loaded(
 #nullable enable
         object sender, RoutedEventArgs e)
@@ -104,31 +121,47 @@ namespace IDOLSelfCheckout
                     {
                         sco_data.ScannedBarcode = _barcode;
                         Basepage.logWrite("sco_data.ScannedBarcode=" + sco_data.ScannedBarcode);
-                        masafiPricesRequest masafiPricesRequest = new LSscoApi().productList();
-                        prices prices = new prices();
-                        prices product = Array.Find<prices>(masafiPricesRequest.prices, (Predicate<prices>)(element => element.barcode == sco_data.ScannedBarcode));
-                        if (product != null)
+                        if (Basepage.IsLocalConsumption)
                         {
-                            Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name);
-                            Basepage basepage = new Basepage();
-                            Basepage.logWrite("basepage reinitialized");
-                            if (basepage.addItem(sco_data.ReceiptNumber, sco_data.ScannedBarcode, product))
+                            masafiPricesRequest masafiPricesRequest = new LSscoApi().productList();
+                            prices prices = new prices();
+                            prices product = Array.Find<prices>(masafiPricesRequest.prices, (Predicate<prices>)(element => element.barcode == sco_data.ScannedBarcode));
+                            if (product != null)
                             {
-                                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Added");
-                                basepage.updateTransactionDetails(product);
-                                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+                                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name);
+                                Basepage basepage = new Basepage();
+                                Basepage.logWrite("basepage reinitialized");
+                                if (basepage.addItem(sco_data.ReceiptNumber, sco_data.ScannedBarcode, product))
+                                {
+                                    Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Added");
+                                    basepage.updateTransactionDetails(product);
+                                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+                                }
+                                else
+                                {
+                                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
+                                    Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Went to Help");
+
+                                }
                             }
                             else
                             {
-                                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
-                                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Went to Help");
-
+                                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Not Found");
                             }
                         }
                         else
                         {
-                            Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode +" Not Found");
+                            PosServiceRequestVM serviceRequest = new PosServiceRequestVM()
+                            {
+                                ProcessFlag = "display",
+                                DisplayLine = sco_data.ScannedBarcode + "<80>",
+                                ListenerFlag = "1",
+                                IPDevice = "",
+                                qty = ""
+                            };
+                            serverIntegration.PostPosRequest(serviceRequest);
                         }
+                        
                     }
                 }
                 this._barcode = "";
@@ -355,5 +388,6 @@ namespace IDOLSelfCheckout
 
         }
         #endregion
+
     }
 }

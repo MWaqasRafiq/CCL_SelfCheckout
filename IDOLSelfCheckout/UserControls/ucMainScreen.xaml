@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:IDOLSelfCheckout.UserControls"
              Loaded="Window_Loaded">
     <Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="3*"/>
@@ -68,7 +69,13 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
-                            <Border Background="Azure" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">
+                            <ScrollViewer Name="Receipt_Text_parent" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">
+                                <TextBlock IsEnabled="False" Name="Receipt_Text"  TextWrapping = "Wrap" Background="White"  FontSize="12" >
+                                    Hello, world!
+                                </TextBlock>
+                            </ScrollViewer>
+                            <Border Visibility="Hidden" x:Name="item_list_parent" Background="Azure" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">
+
                                 <Grid>
                                     <DataGrid x:Name="item_list" AutoGenerateColumns="False" CanUserResizeColumns="False"
                             GridLinesVisibility="None" ItemsSource="{Binding items}">
@@ -142,5 +149,7 @@
                 </Grid>
             </Border>
         </Grid>
+
+       
     </Grid>
 </UserControl>
