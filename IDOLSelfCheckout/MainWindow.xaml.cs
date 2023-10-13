@@ -1,6 +1,8 @@
-﻿using IDOLSelfCheckout.Classes;
+﻿using esegece.sgcWebSockets;
+using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
+using Newtonsoft.Json;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -15,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Threading;
+using static IDOLSelfCheckout.FacePay;
 
 
 #nullable enable
@@ -36,6 +39,7 @@ namespace IDOLSelfCheckout
         internal TextBox _textBox1;
         internal TextBlock _textBlock1;
         internal Image _imgCircle;
+        private TsgcWebSocketClient socketClient;
 
         public MainWindow()
         {
@@ -54,6 +58,12 @@ namespace IDOLSelfCheckout
             this._timer.Elapsed += new ElapsedEventHandler(this._timer_Elapsed);
             this._timer.Enabled = true;
             this._timer.Start();
+
+            socketClient = new TsgcWebSocketClient();
+            socketClient.OnError += OnSocketErrorEvent;
+            socketClient.OnException += OnSocketExceptionEvent;
+            socketClient.OnConnect += OnSocketConnectEvent;
+            socketClient.OnMessage += OnSocketResponseEvent;
         }
 
         private void Window_Loaded(
@@ -160,5 +170,186 @@ namespace IDOLSelfCheckout
                 this.count1 = 0;
             this.sceneriesBtn.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("C:\\IDOL\\images\\advertise\\" + this.Images1[this.count1].ToString());
         }
+
+        #region Face Pay - Pop ID
+        public void InitializeFacePay()
+        {
+            try
+            {
+                Basepage.logWrite("FacePay - Initialization!");
+
+                socketClient.Host = Basepage.PopId_Host;
+                socketClient.Port = Basepage.PopId_Port;
+
+                socketClient.Start();
+
+                Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
+                {
+                    { "type", "search" }
+                };
+                string mes = JsonConvert.SerializeObject(keyValuePairs);
+                socketClient.WriteData(mes);
+                
+                Basepage.logWrite("FacePay - Search request sent.");
+            }
+            catch (Exception ex) { Basepage.logWrite("FacePay - InitializeSocketConnection - " + ex.Message); }
+        }
+        private void OnSocketExceptionEvent(TsgcWSConnection Connection, Exception e)
+        {
+            MessageBox.Show("Exception: " + e.Message);
+        }
+
+        private void OnSocketErrorEvent(TsgcWSConnection Connection, string Error)
+        {
+            MessageBox.Show("Error: " + Error);
+        }
+
+        private void OnSocketResponseEvent(TsgcWSConnection Connection, string Text)
+        {
+            try
+            {
+                if (Text.Contains("faceId"))
+                {
+                    Basepage.logWrite("FacePay - FaceId Detected: "+Text);
+                    PayAfterFaceDetection(Connection, Text);
+                }
+                else if (Text.Contains("transactionId"))
+                {
+                    Basepage.logWrite("FacePay - Transaction Succeeded: "+Text);
+                    bool flag = GetTransactionDetails(Connection, Text);
+                    if (flag)
+                    {
+                        //PrintReceipt("1.01");
+                    }
+                }
+                else
+                {
+                    Basepage.logWrite("FacePay - Error Received from Server: " + Text);
+                    var responseJson = JsonConvert.DeserializeObject<ResponseJsonError>(Text);
+                }
+            }
+            catch (Exception ex) { Basepage.logWrite("FacePay - Exception: OnSocketResponseEvent - " + ex.Message); }
+
+        }
+
+        public void OnSocketConnectEvent(TsgcWSConnection Connection)
+        {
+            Basepage.logWrite("Socket Connected!");
+        }
+
+        private void PayAfterFaceDetection(TsgcWSConnection Connection, string Text)
+        {
+            var responseJson = JsonConvert.DeserializeObject<List<ResponseJson>>(Text);
+            if (responseJson != null && responseJson.Count == 1)
+            {
+                PaymentRequest paymentRequest = new PaymentRequest()
+                {
+                    amount = sco_data.TransactionTotal,
+                    person_id = responseJson[0].faceId,
+                    type = "pay",
+                    tip = "0.00"
+                };
+
+                string pay = JsonConvert.SerializeObject(paymentRequest);
+                Connection.WriteData(pay);
+
+                if (!Directory.Exists("C:\\IDOL\\JsonData"))
+                {
+                    Directory.CreateDirectory("C:\\IDOL\\JsonData");
+                }
+                if (!File.Exists("C:\\IDOL\\JsonData\\pendingTrJsondata.json"))
+                {
+                    using (var a = File.Create("C:\\IDOL\\JsonData\\pendingTrJsondata.json"))
+                    {
+                        a.Close();
+                    }
+                }
+                List<PaymentLog> paymentLog = new List<PaymentLog>();
+                paymentLog.Add(new PaymentLog()
+                {
+                    jsonResponse = responseJson[0],
+                    jsonPaymentRequest = paymentRequest
+                });
+
+                using (StreamWriter file = File.CreateText("C:\\IDOL\\JsonData\\pendingTrJsondata.json"))
+                {
+                    Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                    serializer.Serialize(file, paymentLog);
+                }
+                Basepage.logWrite("FacePay - Tranaction Request sent: " + Text);
+            }
+            else
+            {
+                Basepage.logWrite("FacePay - More than one person found" + Text);
+                //Basepage.logWrite("Please verify your identity by entering last 4 digits of your phone number." + Text);
+            }
+        }
+
+        private bool GetTransactionDetails(TsgcWSConnection Connection, string Text)
+        {
+            try
+            {
+                var responseJson = JsonConvert.DeserializeObject<ResponseJson>(Text);
+                List<PaymentLog> items = new List<PaymentLog>();
+                List<TransactionLog> transactions = new List<TransactionLog>();
+                PaymentLog payment = new PaymentLog();
+                using (StreamReader r = new StreamReader("C:\\IDOL\\JsonData\\pendingTrJsondata.json"))
+                {
+                    string json = r.ReadToEnd();
+                    items = JsonConvert.DeserializeObject<List<PaymentLog>>(json);
+                    payment = items.Where(x => x.jsonResponse.firstName == responseJson.firstName && x.jsonResponse.lastName == responseJson.lastName).FirstOrDefault();
+                    if (payment != null)
+                    {
+                        TransactionLog transaction = new TransactionLog()
+                        {
+                            firstName = payment.jsonResponse.firstName,
+                            lastName = payment.jsonResponse.lastName,
+                            amount = payment.jsonPaymentRequest.amount,
+                            person_id = payment.jsonPaymentRequest.person_id,
+                            phone = payment.jsonResponse.phone,
+                            tip = payment.jsonPaymentRequest.tip,
+                            transactionId = responseJson.transactionId ?? 0
+                        };
+                        transactions.Add(transaction);
+                        items.Remove(payment);
+                    }
+                }
+                using (StreamReader r = new StreamReader("C:\\IDOL\\JsonData\\TransactionJsondata.json"))
+                {
+                    string json = r.ReadToEnd();
+                    var tem = JsonConvert.DeserializeObject<List<TransactionLog>>(json);
+                    if (tem != null)
+                        transactions.AddRange(JsonConvert.DeserializeObject<List<TransactionLog>>(json));
+                }
+
+                if (!File.Exists("C:\\IDOL\\JsonData\\TransactionJsondata.json"))
+                {
+                    using (var a = File.Create("C:\\IDOL\\JsonData\\TransactionJsondata.json"))
+                    {
+                        a.Close();
+                    }
+                }
+                using (StreamWriter file = File.CreateText("C:\\IDOL\\JsonData\\TransactionJsondata.json"))
+                {
+                    Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                    serializer.Serialize(file, transactions);
+                }
+                using (StreamWriter file = File.CreateText("C:\\IDOL\\JsonData\\pendingTrJsondata.json"))
+                {
+                    Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                    serializer.Serialize(file, items);
+                }
+                Basepage.logWrite("FacePay - Transaction Completed - " + Text);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Basepage.logWrite("FacePay - OnSocketResponseEvent - " + ex.Message);
+                return false;
+            }
+
+        }
+        #endregion
     }
 }

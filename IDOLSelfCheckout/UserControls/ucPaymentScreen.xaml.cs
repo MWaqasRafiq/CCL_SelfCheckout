@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using esegece.sgcWebSockets;
+using POS.Devices;
 
 namespace IDOLSelfCheckout.UserControls
 {
@@ -90,67 +91,19 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btnFacePay_Click(object sender, RoutedEventArgs e)
         {
-            bool initals = InitializeSocketConnection();
-            if (initals)
-            {
-
-            }
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.InitializeFacePay();
+            //FacePay facePay = new FacePay();
+            //facePay.InitializeSocketConnection();
         }
         //BackgroundWorker worker;
 
-        private bool InitializeSocketConnection()
-        {
-            try
-            {
-                //socketClient = new TsgcWebSocketClient();
-                //socketClient.Host = Basepage.PopId_Host;
-                //socketClient.Port = Basepage.PopId_Port;
-                socketClient.Host = "localhost";
-                socketClient.Port = 10244;
-
-                socketClient.OnConnect += OnSocketConnectEvent;
-                socketClient.OnMessage += OnSocketResponseEvent;
-                socketClient.HeartBeat.Interval = 1;
-                socketClient.HeartBeat.Timeout = 0;
-                socketClient.HeartBeat.Enabled = true;
-                socketClient.Active = true;
-
-                Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
-                {
-                    { "type", "search" }
-                };
-
-                string mes = JsonConvert.SerializeObject(keyValuePairs);
-                socketClient.WriteTimeOut = 3000;
-                socketClient.WriteData(mes);
-                return true;
-            }
-            catch (Exception ex) { return false; }
-        }
-
-        private void OnSocketResponseEvent(TsgcWSConnection Connection, string Text)
-        {
-            MessageBox.Show(Dispatcher.Invoke(() => "Message Received from Server: " + Text));
-            Connection.Close();
-        }
-
-        private void OnSocketConnectEvent(TsgcWSConnection Connection)
-        {
-            //Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
-            //    {
-            //        { "type", "search" }
-            //    };
-            //string mes = JsonConvert.SerializeObject(keyValuePairs);
-            //var result = Connection.WriteAndWaitData(mes, 5000);
-            MessageBox.Show(Dispatcher.Invoke(() => "Socket Connected!"));// + result);
-        }
-
-
+       
         //private void Worker_RunWorkerCompleted()
         //{
         //    //imgCircle.Visibility = Visibility.Collapsed;
         //    MainWindow.Main_SCO.IsEnabled = true;
-           
+
         //}
 
         //private void PerformTaskProcess()

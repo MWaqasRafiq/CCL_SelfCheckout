@@ -4,11 +4,12 @@
 // MVID: C67170A7-BC98-4C94-BBAA-42FB9B93CC1B
 // Assembly location: C:\Users\Hi\Downloads\APP Masafi\IDOLSelfCheckout.dll
 
-using esegece.sgcWebSockets;
 using IDOLSelfCheckout.BankDevice;
 using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
+using Newtonsoft.Json;
+using POS.Devices;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -42,7 +43,7 @@ namespace IDOLSelfCheckout
         public static string PopId_Host;
         public static int PopId_Port;
         public static int PopId_SecondaryPort;
-        private TsgcWebSocketClient socketClient;
+        //private TsgcWebSocketClient socketClient;
 
         public void loadValues()
         {
@@ -95,12 +96,6 @@ namespace IDOLSelfCheckout
             }
         }
 
-        public TsgcWebSocketClient initializeFacePay()
-        {
-
-            socketClient = new TsgcWebSocketClient();
-            return socketClient;
-        }
         public bool startNewTransaction()
         {
             bool flag = false;
@@ -425,5 +420,6 @@ namespace IDOLSelfCheckout
                 return ex.ToString();
             }
         }
+
     }
 }
