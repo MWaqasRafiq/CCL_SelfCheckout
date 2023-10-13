@@ -6,16 +6,25 @@
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<PlatformTarget>x86</PlatformTarget>
-		<Platforms>AnyCPU;x86</Platforms>
+		<Platforms>x86;AnyCPU</Platforms>
 	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>True</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <Optimize>True</Optimize>
-  </PropertyGroup>
+  </PropertyGroup>-->
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+		<Optimize>False</Optimize>
+	</PropertyGroup>
+	
 
   <ItemGroup>
     <None Remove="leaflet1.jpg" />
@@ -77,5 +86,12 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
-
+	<ItemGroup>
+		<Content Update="C:\Users\Muhammad Waqas\.nuget\packages\esegece.sgcwebsockets\2023.7.0\build\win32\sgcWebSockets.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="C:\Users\Muhammad Waqas\.nuget\packages\esegece.sgcwebsockets\2023.7.0\build\win64\sgcWebSockets.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 </Project>

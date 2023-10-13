@@ -181,6 +181,10 @@ namespace IDOLSelfCheckout
                 socketClient.Host = Basepage.PopId_Host;
                 socketClient.Port = Basepage.PopId_Port;
 
+                socketClient.HeartBeat.Interval = 1;
+                socketClient.HeartBeat.Timeout = 0;
+                socketClient.HeartBeat.Enabled = true;
+
                 socketClient.Start();
 
                 Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
@@ -196,12 +200,12 @@ namespace IDOLSelfCheckout
         }
         private void OnSocketExceptionEvent(TsgcWSConnection Connection, Exception e)
         {
-            MessageBox.Show("Exception: " + e.Message);
+            MessageBox.Show("FacePay - Exception: " + e.Message);
         }
 
         private void OnSocketErrorEvent(TsgcWSConnection Connection, string Error)
         {
-            MessageBox.Show("Error: " + Error);
+            MessageBox.Show("FacePay - Error: " + Error);
         }
 
         private void OnSocketResponseEvent(TsgcWSConnection Connection, string Text)
@@ -234,7 +238,7 @@ namespace IDOLSelfCheckout
 
         public void OnSocketConnectEvent(TsgcWSConnection Connection)
         {
-            Basepage.logWrite("Socket Connected!");
+            Basepage.logWrite("FacePay - Socket Connected!");
         }
 
         private void PayAfterFaceDetection(TsgcWSConnection Connection, string Text)
