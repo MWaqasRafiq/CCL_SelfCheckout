@@ -94,12 +94,22 @@ namespace IDOLSelfCheckout
                 }
                 else if (Text.Contains("PAYMENT") && Text.Contains("APPROVED") && Text.Contains("TRANSACTION_COMPLETED"))
                 {
-                    GetTransactionDetails(Text);
+                    GetTransactionDetails(Connection, Text);
                 }
                 else
                 {
                     Basepage.logWrite("FacePay - Error Received from Server: " + Text);
-                    throw new Exception(Text);
+
+                    CloseSession(Connection);
+                    if (Text.Contains("DECLINED"))
+                    {
+                        var responseJson = JsonConvert.DeserializeObject<ResponseJson>(Text);
+                        throw new Exception("Card attached to your account was declined.");
+                    }
+                    else
+                    {
+                        uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
+                    }
                 }
             }
             catch (Exception ex) 
@@ -136,6 +146,20 @@ namespace IDOLSelfCheckout
             return Text;
         }
 
+        private void CloseSession(TsgcWSConnection Connection)
+        {
+            SessionVM session = new SessionVM()
+            {
+                sessionId = sco_data.SessionId,
+                type = "CLOSE_SESSION"
+            };
+
+            string serializedJson = JsonConvert.SerializeObject(session);
+
+            Connection.WriteAndWaitData(serializedJson);
+            sco_data.SessionId = string.Empty;
+        }
+
         private void OnSocketConnectEvent(TsgcWSConnection Connection)
         {
             Basepage.logWrite("FacePay - " + "Socket Connected! " + Connection.IP);
@@ -152,7 +176,8 @@ namespace IDOLSelfCheckout
                     requestedAmount = Convert.ToInt32(Convert.ToDecimal(sco_data.TransactionTotal) *100),
                     sessionId = responseJson.sessionId,
                     taxAmount = Convert.ToInt32(Convert.ToDecimal(sco_data.TransactionVat) * 100),
-                    tipAmount = 0
+                    tipAmount = 0,
+                    uniqueTransactionId = sco_data.TransactionNo
                 };
 
                 string pay = JsonConvert.SerializeObject(paymentRequest);
@@ -166,7 +191,7 @@ namespace IDOLSelfCheckout
             }
         }
 
-        private void GetTransactionDetails(string Text)
+        private void GetTransactionDetails(TsgcWSConnection Connection, string Text)
         {
             //Log the response
             Basepage.logWrite("FacePay - " + Text);
@@ -176,20 +201,22 @@ namespace IDOLSelfCheckout
             ucPrintScreenOPOS printScreenOPOS = new ucPrintScreenOPOS();
 
             //close session
-            sco_data.SessionId = string.Empty;
+            CloseSession(Connection);
             Basepage.logWrite("FacePay - " + "Transaction Completed.");
         }
 
 
         public class ResponseJson
         {
-            public string firstName { get; set; }
-            public string lastName { get; set; }
-            public string phone { get; set; }
-            public string faceId { get; set; }
-            public string pin { get; set; }
-            public int? transactionId { get; set; }
-            public string loyalty { get; set; }
+            public string last4 { get; set; }
+            public string type { get; set; }
+            public string declineReason { get; set; }
+            public string authCode { get; set; }
+            public string sessionStatus { get; set; }
+            public string sessionId { get; set; }
+            public string userId { get; set; }
+            public string totalAmount { get; set; }
+            public string status { get; set; }
         }
         public class ResponseJsonError
         {

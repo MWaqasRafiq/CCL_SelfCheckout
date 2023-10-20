@@ -91,8 +91,17 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btnFacePay_Click(object sender, RoutedEventArgs e)
         {
-            FacePay facePay = new FacePay();
-            facePay.IdentifyPerson();
+            int total = Convert.ToInt32(Convert.ToDecimal(sco_data.TransactionTotal));
+            if (total > 0)
+            {
+                FacePay facePay = new FacePay();
+                facePay.IdentifyPerson();
+            }
+            else
+            {
+                uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
+            }
+
         }
         //BackgroundWorker worker;
 
