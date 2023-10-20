@@ -87,7 +87,7 @@ namespace IDOLSelfCheckout.UserControls
         }
         public void UpdateReceipt(PosServiceResponseVM responseVM)
         {
-            if (responseVM != null && ReceiptText != null)
+            if (responseVM != null && responseVM.Receipt != null && ReceiptText != null)
             {
                 ReceiptText.Text = responseVM.Receipt;
                 
@@ -100,13 +100,13 @@ namespace IDOLSelfCheckout.UserControls
                 else
                     sco_data.ReceiptNumber = "";
 
-                if (!string.IsNullOrEmpty(sco_data.TransactionTotal))
+                if (!string.IsNullOrEmpty(sco_data.TransactionTotal) && sco_data.TransactionTotal != "null")
                     sco_data.TransactionVat = ((Convert.ToDecimal(responseVM.BalanceDue.Replace(",", "")) / 100) * 5).ToString();
                 else
                     sco_data.TransactionVat = "0.00";
 
-                ucMainScreen.TransactionDetails.Content = (object)("StoreNo: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-                ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED: " + sco_data.TransactionTotal);
+                ucMainScreen.TransactionDetails.Content = (object)("Store No: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
+                ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED: " + ((!string.IsNullOrEmpty(sco_data.TransactionTotal) && sco_data.TransactionTotal != "null") ?  sco_data.TransactionTotal : "0.00"));
                 ucMainScreen.TransactionVat.Content =   (object)("VAT   AED: " + sco_data.TransactionVat);
             }
         }

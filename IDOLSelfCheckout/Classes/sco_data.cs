@@ -8,6 +8,7 @@ namespace IDOLSelfCheckout.Classes
 {
     public class sco_data
     {
+        public static string SessionId;
         public static string TransactionPinpadInfo;
         public static string TransactionProcess;
         public static string ScannedBarcode;

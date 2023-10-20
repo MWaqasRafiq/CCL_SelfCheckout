@@ -281,10 +281,10 @@ namespace IDOLSelfCheckout
             {
                 PaymentRequest paymentRequest = new PaymentRequest()
                 {
-                    amount = sco_data.TransactionTotal,
-                    person_id = responseJson[0].faceId,
+                    //amount = sco_data.TransactionTotal,
+                    //person_id = responseJson[0].faceId,
                     type = "pay",
-                    tip = "0.00"
+                    //tip = "0.00"
                 };
 
                 string pay = JsonConvert.SerializeObject(paymentRequest);
@@ -341,10 +341,10 @@ namespace IDOLSelfCheckout
                         {
                             firstName = payment.jsonResponse.firstName,
                             lastName = payment.jsonResponse.lastName,
-                            amount = payment.jsonPaymentRequest.amount,
-                            person_id = payment.jsonPaymentRequest.person_id,
+                            //amount = payment.jsonPaymentRequest.amount,
+                            //person_id = payment.jsonPaymentRequest.person_id,
                             phone = payment.jsonResponse.phone,
-                            tip = payment.jsonPaymentRequest.tip,
+                            //tip = payment.jsonPaymentRequest.tip,
                             transactionId = responseJson.transactionId ?? 0
                         };
                         transactions.Add(transaction);

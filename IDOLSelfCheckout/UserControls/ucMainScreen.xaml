@@ -71,7 +71,6 @@
                             </Grid.RowDefinitions>
                             <ScrollViewer Name="Receipt_Text_parent" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">
                                 <TextBlock IsEnabled="False" Name="Receipt_Text"  TextWrapping = "Wrap" Background="White"  FontSize="12" >
-                                    Hello, world!
                                 </TextBlock>
                             </ScrollViewer>
                             <Border Visibility="Hidden" x:Name="item_list_parent" Background="Azure" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">

@@ -91,10 +91,8 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btnFacePay_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.InitializeFacePay();
-            //FacePay facePay = new FacePay();
-            //facePay.InitializeSocketConnection();
+            FacePay facePay = new FacePay();
+            facePay.IdentifyPerson();
         }
         //BackgroundWorker worker;
 

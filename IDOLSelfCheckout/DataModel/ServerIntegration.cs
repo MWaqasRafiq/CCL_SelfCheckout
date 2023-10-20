@@ -1,7 +1,9 @@
 ﻿using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.UserControls;
 using Newtonsoft.Json;
+using OpenCvSharp;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -11,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace IDOLSelfCheckout.DataModel
 {
@@ -72,6 +75,7 @@ namespace IDOLSelfCheckout.DataModel
                         Basepage.logWrite("Response from server"+ result);
                         result = result.Remove(result.Length - (Basepage.HostTerminalId.Length+2), (Basepage.HostTerminalId.Length + 2));
                         serviceResponseVM = JsonConvert.DeserializeObject<PosServiceResponseVM>(result)??new PosServiceResponseVM();
+                        serviceResponseVM.Receipt = ConvertArabicText864To1256(serviceResponseVM.Receipt);
                     }
                     else
                     {
@@ -89,6 +93,59 @@ namespace IDOLSelfCheckout.DataModel
 
             return serviceResponseVM;
         }
+        public string ConvertArabicText864To1256(string arabic)
+        {
+            List<byte> Arabic864 = new List<byte>();
+            List<byte> revArabic = new List<byte>();
+            string result = string.Empty;
+            bool flag = false;
 
+
+            try
+            {
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                for (int i = 0; i < arabic.Length; i++)
+                {
+                    if (arabic[i] == '[' && arabic[i + 4] == ']')
+                    {
+                        flag = true;
+                        i++;
+                        string hh = arabic[i++].ToString() + arabic[i++].ToString() + arabic[i++].ToString();
+                        revArabic.Add((byte)int.Parse(hh));
+                    }
+                    else
+                    {
+                        if (flag)
+                        {
+                            if (arabic[i] == ' ' || arabic[i] == ',' || arabic[i] == '.' || arabic[i] == ':')
+                            {
+                                revArabic.Add((byte)arabic[i]);
+                            }
+                            else
+                            {
+                                byte[] B1 = revArabic.ToArray();
+                                for (int j = 0; j < B1.Length; j++)
+                                {
+                                    Arabic864.Add(B1[B1.Length - j - 1]);
+                                }
+                                revArabic.Clear();
+                                flag = false;
+                            }
+                        }
+                        Arabic864.Add((byte)arabic[i]);
+                    }
+                }
+                Arabic864.AddRange(revArabic);
+                byte[] B = Arabic864.ToArray();
+                result = Encoding.GetEncoding("windows-1256").GetString(B);
+            }
+            catch (Exception e)
+            {
+                Basepage.logWrite("Arabic Encoding Error - " + e.Message);
+            }
+            return result;
+        }
+
+     
     }
 }
