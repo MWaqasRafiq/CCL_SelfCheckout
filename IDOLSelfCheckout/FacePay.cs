@@ -22,6 +22,7 @@ namespace IDOLSelfCheckout
     {
         private int count;
         private ClientWebSocket socketClient;
+
         /// <summary>
         /// FacePay constructor initialization
         /// </summary>

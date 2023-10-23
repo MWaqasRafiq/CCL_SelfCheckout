@@ -35,6 +35,8 @@ namespace IDOLSelfCheckout.DataModel
       
         }
 
+        #region Transactional Private Methods
+
         /// <summary>
         /// CheckPosResponse - This method is used for checking the current status and values of current machine from server
         /// </summary>
@@ -88,7 +90,7 @@ namespace IDOLSelfCheckout.DataModel
         /// </summary>
         /// <param name="arabic"></param>
         /// <returns></returns>
-        public string ConvertArabicText864To1256(string arabic)
+        private string ConvertArabicText864To1256(string arabic)
         {
             List<byte> Arabic864 = new List<byte>();
             List<byte> revArabic = new List<byte>();
@@ -140,6 +142,8 @@ namespace IDOLSelfCheckout.DataModel
             }
             return result;
         }
+        
+        #endregion
 
         #region Transactional Public Methods
 
@@ -216,6 +220,9 @@ namespace IDOLSelfCheckout.DataModel
         /// <returns></returns>
         public PosServiceResponseVM TotalReceipt()
         {
+            LedDisplay ledDisplay = new LedDisplay();
+            ledDisplay.ChangeLedColor();
+
             return PostPosRequest(new PosServiceRequestVM()
             {
                 ProcessFlag = "display",
@@ -239,7 +246,11 @@ namespace IDOLSelfCheckout.DataModel
                 amount = amount * 100;
                 Amount = Convert.ToInt32(amount).ToString();
             }
-            return PostPosRequest(new PosServiceRequestVM()
+
+            LedDisplay ledDisplay = new LedDisplay();
+            ledDisplay.ChangeLedColor();
+
+            var result = PostPosRequest(new PosServiceRequestVM()
             {
                 ProcessFlag = "display",
                 DisplayLine = Amount + "<91>",
@@ -247,6 +258,10 @@ namespace IDOLSelfCheckout.DataModel
                 ListenerFlag = "1",
                 qty = ""
             });
+
+            sco_data.TransactionProcess = "FINISHED";
+
+            return result;
         }
 
         /// <summary>
@@ -262,7 +277,11 @@ namespace IDOLSelfCheckout.DataModel
                 amount = amount * 100;
                 Amount = Convert.ToInt32(amount).ToString();
             }
-            return PostPosRequest(new PosServiceRequestVM()
+
+            LedDisplay ledDisplay = new LedDisplay();
+            ledDisplay.ChangeLedColor();
+
+            var result = PostPosRequest(new PosServiceRequestVM()
             {
                 ProcessFlag = "display",
                 DisplayLine = Amount + "<96>",
@@ -270,6 +289,10 @@ namespace IDOLSelfCheckout.DataModel
                 ListenerFlag = "1",
                 qty = ""
             });
+            
+            sco_data.TransactionProcess = "FINISHED";
+
+            return result;
         }
 
         #endregion
