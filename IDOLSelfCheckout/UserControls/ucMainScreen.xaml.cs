@@ -110,6 +110,16 @@ namespace IDOLSelfCheckout.UserControls
                 ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED: " + ((!string.IsNullOrEmpty(sco_data.TransactionTotal) && sco_data.TransactionTotal != "null") ?  sco_data.TransactionTotal : "0.00"));
                 ucMainScreen.TransactionVat.Content =   (object)("VAT   AED: " + sco_data.TransactionVat);
             }
+            else
+            {
+                sco_data.TransactionVat = "0.00";
+                sco_data.TransactionTotal = "0.00";
+                if(ucMainScreen.TransactionTotal != null)
+                {
+                    ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED: " + sco_data.TransactionTotal);
+                    ucMainScreen.TransactionVat.Content = (object)("VAT   AED: " + sco_data.TransactionVat);
+                }
+            }
         }
 
         private void btn_help_Click(object sender, RoutedEventArgs e)

@@ -110,7 +110,7 @@ namespace IDOLSelfCheckout
                 }
                 if (Text.Contains("PAYMENT") && Text.Contains("APPROVED") && Text.Contains("TRANSACTION_COMPLETED"))
                 {
-                    GetTransactionDetails(Text);
+                    CompleteTransaction(Text);
                 }
                 else
                 {
@@ -155,10 +155,11 @@ namespace IDOLSelfCheckout
                     sco_data.SessionId = responseJson.sessionId;
                     //////
                     ///
-                    SessionVM session = new SessionVM()
+                    IdentifyVM session = new IdentifyVM()
                     {
                         sessionId = responseJson.sessionId,
-                        type = "IDENTIFY"
+                        type = "IDENTIFY",
+                        identifyFields = "[FIRST_NAME]"
                     };
 
                     string serializedJson = JsonConvert.SerializeObject(session);
@@ -235,7 +236,7 @@ namespace IDOLSelfCheckout
         /// Close the transaction after payment is done.
         /// </summary>
         /// <param name="Text"></param>
-        private void GetTransactionDetails(string Text)
+        private void CompleteTransaction(string Text)
         {
             try
             {
@@ -243,10 +244,15 @@ namespace IDOLSelfCheckout
                 Basepage.logWrite("FacePay - " + Text);
                 var responseJson = JsonConvert.DeserializeObject<ResponseJson>(Text) ?? new ResponseJson();
 
+                //Verify the last transaction
+                Text = GetLastTransaction(responseJson.sessionId);
+                var response = JsonConvert.DeserializeObject<ResponseJson>(Text) ?? new ResponseJson();
+
                 //Card Payment
                 ServerIntegration serverIntegration = new ServerIntegration();
-                serverIntegration.CashPayment(responseJson.totalAmount);
+                serverIntegration.CashPayment(responseJson.totalAmount.ToString());
                 Thread.Sleep(300);
+
                 //print receipt
                 ucPrintScreenOPOS printScreenOPOS = new ucPrintScreenOPOS();
                 printScreenOPOS.printScreenWait();
@@ -258,7 +264,6 @@ namespace IDOLSelfCheckout
             catch(Exception ex)
             {
                 Basepage.logWrite("FacePay - " + ex.Message);
-                throw ex;
             }
             
         }
@@ -286,17 +291,58 @@ namespace IDOLSelfCheckout
             return result;
         }
 
+        /// <summary>
+        /// Check the Last Transaction Status
+        /// </summary>
+        /// <param name="SessionId"></param>
+        /// <returns></returns>
+        public string GetLastTransaction(string SessionId)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(SessionId))
+                {
+                    SessionVM session = new SessionVM()
+                    {
+                        type = "LAST_TXN",
+                        sessionId = SessionId
+                    };
+                    SessionId = JsonConvert.SerializeObject(session);
+
+                    SessionId = SendAndReceiveMessage(SessionId);
+
+                    Basepage.logWrite("FacePay - Last Transaction Found: " + SessionId);
+                }
+                else
+                {
+                    Basepage.logWrite("FacePay - " + "Last Transaction  is not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Basepage.logWrite("FacePay - " + "Last Transaction Received an error: " + ex.Message);
+            }
+            return SessionId;
+        }
+
         public class ResponseJson
         {
             public string last4 { get; set; }
+            public string bankName { get; set; }
             public string type { get; set; }
+            public string cardBrand { get; set; }
             public string declineReason { get; set; }
             public string authCode { get; set; }
             public string sessionStatus { get; set; }
             public string sessionId { get; set; }
             public string userId { get; set; }
-            public string totalAmount { get; set; }
+            public int totalAmount { get; set; }
+            public int requestedAmount { get; set; }
+            public int tipAmount { get; set; }
+            public int taxAmount { get; set; }
+            public int account { get; set; }
             public string status { get; set; }
+            public string paymentMethod { get; set; }
         }
         public class ResponseJsonError
         {
@@ -324,6 +370,12 @@ namespace IDOLSelfCheckout
             public string sessionId { get; set; }
             public string type { get; set; }
 
+        }
+        public class IdentifyVM
+        {
+            public string sessionId { get; set; }
+            public string type { get; set; }
+            public string identifyFields { get; set; }
         }
         public class IdentificationResponse
         {

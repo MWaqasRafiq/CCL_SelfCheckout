@@ -23,6 +23,7 @@ namespace IDOLSelfCheckout.Classes
         public string Receipt { get; set; }
         public string Display { get; set; }
         public string IdolPrintLine1 { get; set; }
+        public bool IsSecured { get; set; }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     }
 }

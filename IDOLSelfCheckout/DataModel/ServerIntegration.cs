@@ -63,19 +63,19 @@ namespace IDOLSelfCheckout.DataModel
                     if (response.IsSuccessStatusCode)
                     {
                         var result = response.Content.ReadAsStringAsync().Result;
-                        //Basepage.logWrite("Response from server"+ result);
                         result = result.Remove(result.Length - (Basepage.HostTerminalId.Length+2), (Basepage.HostTerminalId.Length + 2));
                         serviceResponseVM = JsonConvert.DeserializeObject<PosServiceResponseVM>(result)??new PosServiceResponseVM();
                         serviceResponseVM.Receipt = ConvertArabicText864To1256(serviceResponseVM.Receipt);
+                        if (result.ToLower().Contains("securemode"))
+                        {
+                            serviceResponseVM.IsSecured = true;
+                        }
                     }
                     else
                     {
-                        Basepage.logWrite("Display Error - Code:" + response.StatusCode );
-                        Basepage.logWrite("Display Error - Message:" + response.ReasonPhrase);
+                        Basepage.logWrite("Display Error - Code:" + response.StatusCode + "Display Error - Message:" + response.ReasonPhrase);
                     }
-
                 }
-
             }
             catch (Exception ex)
             {
