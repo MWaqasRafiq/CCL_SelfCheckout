@@ -1,4 +1,4 @@
-﻿using esegece.sgcWebSockets;
+﻿//using esegece.sgcWebSockets;
 using Newtonsoft.Json;
 using POS.Devices;
 using System;
@@ -10,17 +10,28 @@ using System.Threading.Tasks;
 using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
+using IDOLSelfCheckout.DataModel;
+using System.Net.WebSockets;
+using System.Threading;
+using System.Windows;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace IDOLSelfCheckout
 {
     public class FacePay
     {
-        private TsgcWebSocketClient socketClient;
+        private int count;
+        private ClientWebSocket socketClient;
+        /// <summary>
+        /// FacePay constructor initialization
+        /// </summary>
         public FacePay()
         {
-            socketClient = new TsgcWebSocketClient();
+            count = 0;
+            socketClient = new ClientWebSocket();
             InitializeSocketConnection();
         }
+
         /// <summary>
         /// Initialize the WebSocket Client
         /// </summary>
@@ -29,16 +40,9 @@ namespace IDOLSelfCheckout
             try
             {
                 Basepage.logWrite("FacePay - Initialization!");
-
-                socketClient.Host = Basepage.PopId_Host;
-                socketClient.Port = Basepage.PopId_Port;
-
-                socketClient.Specifications.RFC6455 = true;
-                socketClient.OnError += OnSocketErrorEvent;
-                socketClient.OnException += OnSocketExceptionEvent;
-                socketClient.OnConnect += OnSocketConnectEvent;
-                socketClient.OnMessage += OnSocketResponseEvent;
-                socketClient.Start();
+                Uri serverUri = new Uri("ws://"+ Basepage.PopId_Host + ":"+ Basepage.PopId_Port.ToString() + ""); // Replace with your WebSocket server URL
+                socketClient.ConnectAsync(serverUri, CancellationToken.None);
+                Thread.Sleep(1000);
                 Basepage.logWrite("FacePay - Initialized!");
             }
             catch (Exception ex) 
@@ -47,64 +51,76 @@ namespace IDOLSelfCheckout
             }
         }
 
-        public void IdentifyPerson()
+        /// <summary>
+        /// Initializing the Socket Connection
+        /// </summary>
+        /// <returns></returns>
+        public string IdentifyPerson()
         {
+            string result = string.Empty;
             try
             {
-                Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
+                if (socketClient.State == WebSocketState.Open)
                 {
-                    { "type", "CREATE_SESSION" }
-                };
-                string mes = JsonConvert.SerializeObject(keyValuePairs);
-                socketClient.WriteData(mes);
+                    Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
+                    {
+                        { "type", "CREATE_SESSION" }
+                    };
+                    string mes = JsonConvert.SerializeObject(keyValuePairs);
+                    byte[] sendBytes = Encoding.UTF8.GetBytes(mes);
+                    socketClient.SendAsync(new ArraySegment<byte>(sendBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+                else
+                {
+                    //if(count < 100)
+                    //    IdentifyPerson();
+                }
                 Basepage.logWrite("FacePay - Search request sent.");
+
+                var buffer = new byte[1024];
+                var segment = new ArraySegment<byte>(buffer);
+                var receivedMessage = socketClient.ReceiveAsync(segment, CancellationToken.None);
+                result = Encoding.UTF8.GetString(buffer, 0, receivedMessage.Result.Count);
+                Basepage.logWrite("FacePay - " + receivedMessage);
             }
             catch (Exception ex) {
                 Basepage.logWrite("FacePay - " + ex.Message);
             }
-        }
-
-        private void OnSocketExceptionEvent(TsgcWSConnection Connection, Exception e)
-        {
-            Basepage.logWrite("FacePay - " + "Exception: " + e.Message);
-        }
-
-        private void OnSocketErrorEvent(TsgcWSConnection Connection, string Error)
-        {
-            Basepage.logWrite("FacePay - " + "Error: " + Error);
+            result = ProcessFacePay(result);
+            return result;
         }
 
         /// <summary>
-        /// On every response we'll receive the message on this method
+        /// Create socket session creation request
         /// </summary>
-        /// <param name="Connection"></param>
         /// <param name="Text"></param>
-        private void OnSocketResponseEvent(TsgcWSConnection Connection, string Text)
+        /// <returns></returns>
+        private string ProcessFacePay(string Text)
         {
             try
             {
-                Basepage.logWrite("FacePay - " + "Message Received from Server: " + Text);
                 if (Text.Contains("CREATE_SESSION"))
                 {
-                    string res = CreateSession(Connection, Text);
+                    Text = CreateSession(Text);
                 }
-                else if (Text.Contains("IDENTIFIED") && Text.Contains("USER_FOUND"))
+                if (Text.Contains("IDENTIFIED") && Text.Contains("USER_FOUND"))
                 {
-                    PayAfterFaceDetection(Connection, Text);
+                    Text = PayAfterFaceDetection(Text);
                 }
-                else if (Text.Contains("PAYMENT") && Text.Contains("APPROVED") && Text.Contains("TRANSACTION_COMPLETED"))
+                if (Text.Contains("PAYMENT") && Text.Contains("APPROVED") && Text.Contains("TRANSACTION_COMPLETED"))
                 {
-                    GetTransactionDetails(Connection, Text);
+                    GetTransactionDetails(Text);
                 }
                 else
                 {
                     Basepage.logWrite("FacePay - Error Received from Server: " + Text);
 
-                    CloseSession(Connection);
+                    CloseSession();
+
                     if (Text.Contains("DECLINED"))
                     {
                         var responseJson = JsonConvert.DeserializeObject<ResponseJson>(Text);
-                        throw new Exception("Card attached to your account was declined.");
+                        uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
                     }
                     else
                     {
@@ -112,99 +128,170 @@ namespace IDOLSelfCheckout
                     }
                 }
             }
-            catch (Exception ex) 
-            { 
-                Basepage.logWrite("FacePay - " + ex.Message); 
+            catch(Exception ex)
+            {
+                Basepage.logWrite("FacePay - Message:" + ex.Message + " - Data:" + Text);
             }
 
+            return Text;
         }
 
-        private string CreateSession(TsgcWSConnection Connection, string Text)
+        /// <summary>
+        /// Store session and send a request for face identification
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private string CreateSession(string Text)
         {
-            var responseJson = JsonConvert.DeserializeObject<SessionInfoVM>(Text);
-            if (responseJson != null && responseJson.sessionStatus.ToUpper() == "ACTIVE")
+            try
             {
-                //////
-                //will create session here
-                sco_data.SessionId = responseJson.sessionId;
-                //////
-                ///
-                SessionVM session = new SessionVM()
+                var responseJson = JsonConvert.DeserializeObject<SessionInfoVM>(Text);
+                if (responseJson != null && responseJson.sessionStatus.ToUpper() == "ACTIVE")
                 {
-                    sessionId = responseJson.sessionId,
-                    type = "IDENTIFY"
-                };
+                    //////
+                    //will create session here
+                    sco_data.SessionId = responseJson.sessionId;
+                    //////
+                    ///
+                    SessionVM session = new SessionVM()
+                    {
+                        sessionId = responseJson.sessionId,
+                        type = "IDENTIFY"
+                    };
 
-                string serializedJson = JsonConvert.SerializeObject(session);
-                Text = Connection.WriteAndWaitData(serializedJson);
+                    string serializedJson = JsonConvert.SerializeObject(session);
+                    Text = SendAndReceiveMessage(serializedJson);
+                }
+                else
+                {
+                    throw new Exception("Session was not created!");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                //log error
                 throw new Exception("Session was not created!");
             }
             return Text;
         }
 
-        private void CloseSession(TsgcWSConnection Connection)
+        /// <summary>
+        /// Closing the socket connection
+        /// </summary>
+        private void CloseSession()
         {
-            SessionVM session = new SessionVM()
+            try
             {
-                sessionId = sco_data.SessionId,
-                type = "CLOSE_SESSION"
-            };
-
-            string serializedJson = JsonConvert.SerializeObject(session);
-
-            Connection.WriteAndWaitData(serializedJson);
-            sco_data.SessionId = string.Empty;
+                socketClient.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
+                Basepage.logWrite("FacePay - Connection Closed.");
+            }
+            catch (Exception ex)
+            {
+                Basepage.logWrite("FacePay - " + ex.Message);
+            }
         }
 
-        private void OnSocketConnectEvent(TsgcWSConnection Connection)
+        /// <summary>
+        /// Payment Processing after the face is deducted
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <returns></returns>
+        private string PayAfterFaceDetection(string Text)
         {
-            Basepage.logWrite("FacePay - " + "Socket Connected! " + Connection.IP);
-        }
-
-        private void PayAfterFaceDetection(TsgcWSConnection Connection, string Text)
-        {
-            var responseJson = JsonConvert.DeserializeObject<IdentificationResponse>(Text);
-            if (responseJson != null && responseJson.userId != null)
+            try
             {
-                PaymentRequest paymentRequest = new PaymentRequest()
+                var responseJson = JsonConvert.DeserializeObject<IdentificationResponse>(Text);
+                if (responseJson != null && responseJson.userId != null)
                 {
-                    type = "PAYMENT",
-                    requestedAmount = Convert.ToInt32(Convert.ToDecimal(sco_data.TransactionTotal) *100),
-                    sessionId = responseJson.sessionId,
-                    taxAmount = Convert.ToInt32(Convert.ToDecimal(sco_data.TransactionVat) * 100),
-                    tipAmount = 0,
-                    uniqueTransactionId = sco_data.TransactionNo
-                };
+                    PaymentRequest paymentRequest = new PaymentRequest()
+                    {
+                        type = "PAYMENT",
+                        requestedAmount = Convert.ToInt32(Convert.ToDecimal(sco_data.TransactionTotal) * 100),
+                        sessionId = responseJson.sessionId,
+                        taxAmount = Convert.ToInt32(Convert.ToDecimal(sco_data.TransactionVat) * 100),
+                        tipAmount = 0,
+                        uniqueTransactionId = sco_data.ReceiptNumber
+                    };
 
-                string pay = JsonConvert.SerializeObject(paymentRequest);
-                Connection.WriteData(pay);
+                    string pay = JsonConvert.SerializeObject(paymentRequest);
+                    Text = SendAndReceiveMessage(pay);
 
-                Basepage.logWrite("FacePay - " + "Transaction process started.");
+                    Basepage.logWrite("FacePay - " + "Transaction process started.");
+                }
+                else
+                {
+                    Basepage.logWrite("FacePay - " + "Please verify your identity by entering last 4 digits of your phone number.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Basepage.logWrite("FacePay - " + "Please verify your identity by entering last 4 digits of your phone number.");
+                Basepage.logWrite("FacePay - " + "Transaction Received an error" + ex.Message);
             }
+            return Text;
         }
 
-        private void GetTransactionDetails(TsgcWSConnection Connection, string Text)
+        /// <summary>
+        /// Close the transaction after payment is done.
+        /// </summary>
+        /// <param name="Text"></param>
+        private void GetTransactionDetails(string Text)
         {
-            //Log the response
-            Basepage.logWrite("FacePay - " + Text);
-            var responseJson = JsonConvert.DeserializeObject<ResponseJson>(Text);
+            try
+            {
+                //Log the response
+                Basepage.logWrite("FacePay - " + Text);
+                var responseJson = JsonConvert.DeserializeObject<ResponseJson>(Text);
 
-            //print receipt
-            ucPrintScreenOPOS printScreenOPOS = new ucPrintScreenOPOS();
+                //Card Payment
+                ServerIntegration serverIntegration = new ServerIntegration();
+                serverIntegration.PostPosRequest(new PosServiceRequestVM()
+                {
+                    ProcessFlag = "display",
+                    DisplayLine = responseJson.totalAmount + "<91>",
+                    IPDevice = "",
+                    TerminalID = Basepage.HostTerminalId,
+                    ListenerFlag = "1",
+                    qty = ""
+                });
+                Thread.Sleep(300);
+                //print receipt
+                ucPrintScreenOPOS printScreenOPOS = new ucPrintScreenOPOS();
+                printScreenOPOS.printScreenWait();
 
-            //close session
-            CloseSession(Connection);
-            Basepage.logWrite("FacePay - " + "Transaction Completed.");
+                //close session
+                CloseSession();
+                Basepage.logWrite("FacePay - " + "Transaction Completed.");
+            }
+            catch(Exception ex)
+            {
+                Basepage.logWrite("FacePay - " + ex.Message);
+                throw ex;
+            }
+            
         }
 
+        /// <summary>
+        /// Generic method to send message to a socket and return the response
+        /// </summary>
+        /// <param name="Request"></param>
+        /// <returns></returns>
+        private string SendAndReceiveMessage(string Request)
+        {
+            string result = string.Empty;
+            if (socketClient.State == WebSocketState.Open)
+            {
+                byte[] sendBytes = Encoding.UTF8.GetBytes(Request);
+                socketClient.SendAsync(new ArraySegment<byte>(sendBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+
+            var buffer = new byte[1024];
+            var segment = new ArraySegment<byte>(buffer);
+            var message = socketClient.ReceiveAsync(segment, CancellationToken.None);
+            result = Encoding.UTF8.GetString(buffer, 0, message.Result.Count);
+            Basepage.logWrite("FacePay - Received message: " + result);
+
+            return result;
+        }
 
         public class ResponseJson
         {
@@ -232,28 +319,6 @@ namespace IDOLSelfCheckout
             public int tipAmount { get; set; }
             public int taxAmount { get; set; }
         }
-        public class TransactionLog
-        {
-            public string firstName { get; set; }
-            public string lastName { get; set; }
-            public string phone { get; set; }
-            public int transactionId { get; set; }
-            public string person_id { get; set; }
-            public string amount { get; set; }
-            public string tip { get; set; }
-        }
-        public class PaymentLog
-        {
-            public PaymentLog()
-            {
-                jsonResponse = new ResponseJson();
-                jsonPaymentRequest = new PaymentRequest();
-                jsonError = new ResponseJsonError();
-            }
-            public ResponseJson jsonResponse { get; set; }
-            public PaymentRequest jsonPaymentRequest { get; set; }
-            public ResponseJsonError jsonError { get; set; }
-        }
         public class SessionInfoVM
         {
             public string sessionId { get; set; }
@@ -275,5 +340,27 @@ namespace IDOLSelfCheckout
             public string userId { get; set; }
             public string status { get; set; }
         }
+        //public class PaymentLog
+        //{
+        //    public PaymentLog()
+        //    {
+        //        jsonResponse = new ResponseJson();
+        //        jsonPaymentRequest = new PaymentRequest();
+        //        jsonError = new ResponseJsonError();
+        //    }
+        //    public ResponseJson jsonResponse { get; set; }
+        //    public PaymentRequest jsonPaymentRequest { get; set; }
+        //    public ResponseJsonError jsonError { get; set; }
+        //}
+        //public class TransactionLog
+        //{
+        //    public string firstName { get; set; }
+        //    public string lastName { get; set; }
+        //    public string phone { get; set; }
+        //    public int transactionId { get; set; }
+        //    public string person_id { get; set; }
+        //    public string amount { get; set; }
+        //    public string tip { get; set; }
+        //}
     }
 }

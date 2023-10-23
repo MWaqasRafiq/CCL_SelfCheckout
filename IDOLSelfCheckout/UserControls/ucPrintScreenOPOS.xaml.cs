@@ -33,7 +33,7 @@ namespace IDOLSelfCheckout.UserControls
             });
         }
 
-        private void printScreenWait()
+        public void printScreenWait()
         {
 
             Thread.Sleep(500);

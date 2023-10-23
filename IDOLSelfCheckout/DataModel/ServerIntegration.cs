@@ -72,7 +72,7 @@ namespace IDOLSelfCheckout.DataModel
                     if (response.IsSuccessStatusCode)
                     {
                         var result = response.Content.ReadAsStringAsync().Result;
-                        Basepage.logWrite("Response from server"+ result);
+                        //Basepage.logWrite("Response from server"+ result);
                         result = result.Remove(result.Length - (Basepage.HostTerminalId.Length+2), (Basepage.HostTerminalId.Length + 2));
                         serviceResponseVM = JsonConvert.DeserializeObject<PosServiceResponseVM>(result)??new PosServiceResponseVM();
                         serviceResponseVM.Receipt = ConvertArabicText864To1256(serviceResponseVM.Receipt);

@@ -18,8 +18,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
-using esegece.sgcWebSockets;
 using POS.Devices;
+using IDOLSelfCheckout.DataModel;
 
 namespace IDOLSelfCheckout.UserControls
 {
@@ -28,12 +28,10 @@ namespace IDOLSelfCheckout.UserControls
     /// </summary>
     public partial class ucPaymentScreen : UserControl
     {
-        private TsgcWebSocketClient socketClient;
         public ucPaymentScreen()
         {
             InitializeComponent();
 
-            socketClient = new TsgcWebSocketClient();
         }
 
         private void btn_pay_back_Click(object sender, RoutedEventArgs e)
@@ -91,17 +89,21 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btnFacePay_Click(object sender, RoutedEventArgs e)
         {
-            int total = Convert.ToInt32(Convert.ToDecimal(sco_data.TransactionTotal));
+            int total = Convert.ToInt32(decimal.Parse(sco_data.TransactionTotal));
             if (total > 0)
             {
+                ServerIntegration serverIntegration = new ServerIntegration();
+                serverIntegration.PostPosRequest(new PosServiceRequestVM() {
+                    ProcessFlag = "display",
+                    DisplayLine = "<81>",
+                    IPDevice = "",
+                    TerminalID = Basepage.HostTerminalId,
+                    ListenerFlag = "1",
+                    qty = ""
+                });
                 FacePay facePay = new FacePay();
                 facePay.IdentifyPerson();
             }
-            else
-            {
-                uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
-            }
-
         }
         //BackgroundWorker worker;
 

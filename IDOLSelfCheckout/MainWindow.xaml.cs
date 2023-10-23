@@ -1,5 +1,4 @@
-﻿using esegece.sgcWebSockets;
-using IDOLSelfCheckout.Classes;
+﻿using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
 using Newtonsoft.Json;
