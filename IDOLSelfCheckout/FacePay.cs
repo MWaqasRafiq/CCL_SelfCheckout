@@ -240,19 +240,11 @@ namespace IDOLSelfCheckout
             {
                 //Log the response
                 Basepage.logWrite("FacePay - " + Text);
-                var responseJson = JsonConvert.DeserializeObject<ResponseJson>(Text);
+                var responseJson = JsonConvert.DeserializeObject<ResponseJson>(Text) ?? new ResponseJson();
 
                 //Card Payment
                 ServerIntegration serverIntegration = new ServerIntegration();
-                serverIntegration.PostPosRequest(new PosServiceRequestVM()
-                {
-                    ProcessFlag = "display",
-                    DisplayLine = responseJson.totalAmount + "<91>",
-                    IPDevice = "",
-                    TerminalID = Basepage.HostTerminalId,
-                    ListenerFlag = "1",
-                    qty = ""
-                });
+                serverIntegration.CashPayment(responseJson.totalAmount);
                 Thread.Sleep(300);
                 //print receipt
                 ucPrintScreenOPOS printScreenOPOS = new ucPrintScreenOPOS();

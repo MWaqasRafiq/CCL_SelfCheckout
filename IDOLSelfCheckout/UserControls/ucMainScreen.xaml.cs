@@ -85,6 +85,7 @@ namespace IDOLSelfCheckout.UserControls
                 Receipt_Text_parent.Visibility = Visibility.Visible;
             }
         }
+
         public void UpdateReceipt(PosServiceResponseVM responseVM)
         {
             if (responseVM != null && responseVM.Receipt != null && ReceiptText != null)
@@ -110,6 +111,7 @@ namespace IDOLSelfCheckout.UserControls
                 ucMainScreen.TransactionVat.Content =   (object)("VAT   AED: " + sco_data.TransactionVat);
             }
         }
+
         private void btn_help_Click(object sender, RoutedEventArgs e)
         {
             btn_help.Focusable = false;

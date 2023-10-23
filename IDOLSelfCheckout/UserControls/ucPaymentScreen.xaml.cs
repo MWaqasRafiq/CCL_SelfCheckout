@@ -93,14 +93,7 @@ namespace IDOLSelfCheckout.UserControls
             if (total > 0)
             {
                 ServerIntegration serverIntegration = new ServerIntegration();
-                serverIntegration.PostPosRequest(new PosServiceRequestVM() {
-                    ProcessFlag = "display",
-                    DisplayLine = "<81>",
-                    IPDevice = "",
-                    TerminalID = Basepage.HostTerminalId,
-                    ListenerFlag = "1",
-                    qty = ""
-                });
+                serverIntegration.TotalReceipt();
                 FacePay facePay = new FacePay();
                 facePay.IdentifyPerson();
             }

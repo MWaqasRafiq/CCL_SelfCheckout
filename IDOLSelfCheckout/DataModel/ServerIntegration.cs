@@ -14,15 +14,18 @@ using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
+using static IDOLSelfCheckout.FacePay;
 
 namespace IDOLSelfCheckout.DataModel
 {
     public class ServerIntegration
     {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public static string HostServiceIp;
         public static string HostServiceEndpoint;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        
+        /// <summary>
+        /// Constructor initialization
+        /// </summary>
         public ServerIntegration() 
         {
             if (ConfigurationManager.AppSettings["Service_Ip"] != null)
@@ -36,29 +39,15 @@ namespace IDOLSelfCheckout.DataModel
         /// CheckPosResponse - This method is used for checking the current status and values of current machine from server
         /// </summary>
         /// <returns>PosServiceResponseVM</returns>
-        public PosServiceResponseVM PostPosRequest(PosServiceRequestVM serviceRequest)
+        private PosServiceResponseVM PostPosRequest(PosServiceRequestVM serviceRequest)
         {
             PosServiceResponseVM serviceResponseVM = new PosServiceResponseVM();
             try
             {
                 List<PosServiceRequestVM> serviceRequestVM = new List<PosServiceRequestVM>();
-                if (serviceRequest == null)
-                {
-                    serviceRequestVM.Add(new PosServiceRequestVM
-                    {
-                        ProcessFlag = "display2",
-                        DisplayLine = "",
-                        IPDevice = "",
-                        TerminalID = Basepage.HostTerminalId,
-                        ListenerFlag = "1",
-                        qty = ""
-                    });
-                }
-                else
-                {
-                    serviceRequest.TerminalID = Basepage.HostTerminalId;
-                    serviceRequestVM.Add(serviceRequest);
-                }
+                serviceRequest.TerminalID = Basepage.HostTerminalId;
+                serviceRequestVM.Add(serviceRequest);
+                    
                 using (var httpClient = new HttpClient())
                 {
                     var requestJson = JsonConvert.SerializeObject(serviceRequestVM);
@@ -93,6 +82,12 @@ namespace IDOLSelfCheckout.DataModel
 
             return serviceResponseVM;
         }
+
+        /// <summary>
+        /// Convert CodeBase code into Arabic letter
+        /// </summary>
+        /// <param name="arabic"></param>
+        /// <returns></returns>
         public string ConvertArabicText864To1256(string arabic)
         {
             List<byte> Arabic864 = new List<byte>();
@@ -146,6 +141,137 @@ namespace IDOLSelfCheckout.DataModel
             return result;
         }
 
-     
+        #region Transactional Public Methods
+
+        /// <summary>
+        /// Get Receipt from server using Display2
+        /// </summary>
+        /// <returns></returns>
+        public PosServiceResponseVM GetReceipt()
+        {
+            return PostPosRequest(new PosServiceRequestVM
+            {
+                ProcessFlag = "display2",
+                DisplayLine = "",
+                IPDevice = "",
+                ListenerFlag = "1",
+                qty = ""
+            });
+        }
+
+        /// <summary>
+        /// Void/Remove an item from receipt
+        /// </summary>
+        /// <param name="barCode"></param>
+        /// <returns></returns>
+        public PosServiceResponseVM VoidFromReceipt(string barCode)
+        {
+            return PostPosRequest(new PosServiceRequestVM()
+            {
+                ProcessFlag = "display",
+                DisplayLine = "<70>" + barCode + "<80>",
+                IPDevice = "",
+                ListenerFlag = "1",
+                qty = ""
+            });
+        }
+
+        /// <summary>
+        /// Add item to receipt
+        /// </summary>
+        /// <param name="barCode"></param>
+        /// <returns></returns>
+        public PosServiceResponseVM AddItemToReceipt(string barCode)
+        {
+            return PostPosRequest(new PosServiceRequestVM()
+            {
+                ProcessFlag = "display",
+                DisplayLine = barCode + "<80>",
+                IPDevice = "",
+                ListenerFlag = "1",
+                qty = ""
+            });
+        }
+
+        /// <summary>
+        /// Sign on to the server
+        /// </summary>
+        /// <param name="IsSecured"></param>
+        /// <returns></returns>
+        public PosServiceResponseVM SignOnRequest(bool IsSecured = false)
+        {
+            return PostPosRequest(new PosServiceRequestVM()
+            {
+                ProcessFlag = "display",
+                DisplayLine = IsSecured ? "1<61>": "1<78>1<61>",
+                IPDevice = "",
+                ListenerFlag = "1",
+                qty = ""
+            });
+        }
+
+        /// <summary>
+        /// Close the transaction with total
+        /// </summary>
+        /// <returns></returns>
+        public PosServiceResponseVM TotalReceipt()
+        {
+            return PostPosRequest(new PosServiceRequestVM()
+            {
+                ProcessFlag = "display",
+                DisplayLine = "<81>",
+                IPDevice = "",
+                ListenerFlag = "1",
+                qty = ""
+            });
+        }
+
+        /// <summary>
+        /// Process payment in cash and complete transaction
+        /// </summary>
+        /// <param name="Amount"></param>
+        /// <returns></returns>
+        public PosServiceResponseVM CashPayment(string Amount)
+        {
+            if (Amount.Contains("."))
+            {
+                decimal amount = decimal.Parse(Amount);
+                amount = amount * 100;
+                Amount = Convert.ToInt32(amount).ToString();
+            }
+            return PostPosRequest(new PosServiceRequestVM()
+            {
+                ProcessFlag = "display",
+                DisplayLine = Amount + "<91>",
+                IPDevice = "",
+                ListenerFlag = "1",
+                qty = ""
+            });
+        }
+
+        /// <summary>
+        /// Process payment by card and complete transaction
+        /// </summary>
+        /// <param name="Amount"></param>
+        /// <returns></returns>
+        public PosServiceResponseVM CardPayment(string Amount)
+        {
+            if (Amount.Contains("."))
+            {
+                decimal amount = decimal.Parse(Amount);
+                amount = amount * 100;
+                Amount = Convert.ToInt32(amount).ToString();
+            }
+            return PostPosRequest(new PosServiceRequestVM()
+            {
+                ProcessFlag = "display",
+                DisplayLine = Amount + "<96>",
+                IPDevice = "",
+                ListenerFlag = "1",
+                qty = ""
+            });
+        }
+
+        #endregion
     }
 }

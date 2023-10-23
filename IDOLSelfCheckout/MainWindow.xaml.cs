@@ -67,11 +67,17 @@ namespace IDOLSelfCheckout
             timer.Tick += ServiceCallWorker;
             timer.Start();
         }
+
+        /// <summary>
+        /// Service for receipt to display
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ServiceCallWorker(object sender, EventArgs e)
         {
             if(new ucMainScreen().Receipt_Text != null)
             {
-                PosServiceResponseVM responseVM = serverIntegration.PostPosRequest(null);
+                PosServiceResponseVM responseVM = serverIntegration.GetReceipt();
                 new ucMainScreen().UpdateReceipt(responseVM);
             }
         }
@@ -143,15 +149,7 @@ namespace IDOLSelfCheckout
                         }
                         else
                         {
-                            PosServiceRequestVM serviceRequest = new PosServiceRequestVM()
-                            {
-                                ProcessFlag = "display",
-                                DisplayLine = sco_data.ScannedBarcode + "<80>",
-                                ListenerFlag = "1",
-                                IPDevice = "",
-                                qty = ""
-                            };
-                            serverIntegration.PostPosRequest(serviceRequest);
+                            serverIntegration.AddItemToReceipt(sco_data.ScannedBarcode);
                         }
                         
                     }
