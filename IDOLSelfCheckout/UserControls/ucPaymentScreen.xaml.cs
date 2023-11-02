@@ -87,16 +87,23 @@ namespace IDOLSelfCheckout.UserControls
             }
         }
 
+        bool IsAllDigits(string s) => s.Replace(",","").Replace(".","").All(char.IsDigit);
+
         private void btnFacePay_Click(object sender, RoutedEventArgs e)
         {
-            int total = Convert.ToInt32(decimal.Parse(sco_data.TransactionTotal));
-            if (total > 0)
+            if (!string.IsNullOrEmpty(sco_data.TransactionTotal) && IsAllDigits(sco_data.TransactionTotal))
             {
-                ServerIntegration serverIntegration = new ServerIntegration();
-                serverIntegration.TotalReceipt();
-                FacePay facePay = new FacePay();
-                facePay.IdentifyPerson();
+                int total = Convert.ToInt32(decimal.Parse(sco_data.TransactionTotal));
+                if (total > 0)
+                {
+                    ServerIntegration serverIntegration = new ServerIntegration();
+                    serverIntegration.TotalReceipt();
+                    FacePay facePay = new FacePay();
+                    facePay.IdentifyPerson();
+                }
             }
+            else
+                Basepage.logWrite("FacePay - Invalid Transaction amount requested: " + sco_data.TransactionTotal);
         }
         //BackgroundWorker worker;
 

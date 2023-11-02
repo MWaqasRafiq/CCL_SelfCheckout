@@ -1,4 +1,5 @@
 ﻿using IDOLSelfCheckout.Classes;
+using IDOLSelfCheckout.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace IDOLSelfCheckout.UserControls
 {
@@ -28,6 +30,7 @@ namespace IDOLSelfCheckout.UserControls
         public static Label ItemInfo;
         public static TextBlock ReceiptText;
         private readonly view_models viewModels;
+        private ServerIntegration serverIntegration;
         public ucMainScreen()
         {
             InitializeComponent();
@@ -42,6 +45,12 @@ namespace IDOLSelfCheckout.UserControls
             };
             ItemListDataGrid.DataContext = this.viewModels;
 
+            //Server API
+            serverIntegration = new ServerIntegration();
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(500);
+            timer.Tick += ServiceCallWorker;
+            timer.Start();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -88,7 +97,8 @@ namespace IDOLSelfCheckout.UserControls
 
         public void UpdateReceipt(PosServiceResponseVM responseVM)
         {
-            if (responseVM != null && responseVM.Receipt != null && ReceiptText != null)
+            if (responseVM != null && responseVM.Receipt != null && ReceiptText != null 
+                )//&& responseVM.PosSubState == "1008")
             {
                 ReceiptText.Text = responseVM.Receipt;
                 
@@ -116,6 +126,8 @@ namespace IDOLSelfCheckout.UserControls
                 sco_data.TransactionTotal = "0.00";
                 if(ucMainScreen.TransactionTotal != null)
                 {
+                    if (ReceiptText != null) 
+                        { ReceiptText.Text = ""; }
                     ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED: " + sco_data.TransactionTotal);
                     ucMainScreen.TransactionVat.Content = (object)("VAT   AED: " + sco_data.TransactionVat);
                 }
@@ -128,6 +140,19 @@ namespace IDOLSelfCheckout.UserControls
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
         }
 
-        
+        /// <summary>
+        /// Service for receipt to display
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ServiceCallWorker(object sender, EventArgs e)
+        {
+            if (Receipt_Text != null)
+            {
+                PosServiceResponseVM responseVM = serverIntegration.GetReceipt();
+                UpdateReceipt(responseVM);
+            }
+        }
+
     }
 }

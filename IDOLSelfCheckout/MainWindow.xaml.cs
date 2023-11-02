@@ -59,28 +59,10 @@ namespace IDOLSelfCheckout
             this._timer.Elapsed += new ElapsedEventHandler(this._timer_Elapsed);
             this._timer.Enabled = true;
             this._timer.Start();
-           
-            //Server API
+
             serverIntegration = new ServerIntegration();
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(500);
-            timer.Tick += ServiceCallWorker;
-            timer.Start();
         }
 
-        /// <summary>
-        /// Service for receipt to display
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void ServiceCallWorker(object sender, EventArgs e)
-        {
-            if(new ucMainScreen().Receipt_Text != null)
-            {
-                PosServiceResponseVM responseVM = serverIntegration.GetReceipt();
-                new ucMainScreen().UpdateReceipt(responseVM);
-            }
-        }
         private void Window_Loaded(
 #nullable enable
         object sender, RoutedEventArgs e)

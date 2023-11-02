@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="5*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
@@ -62,8 +62,6 @@
                         <Image  Source="C:/IDOL/images/icons/cash.png" MaxHeight="120" Stretch="Fill"  />
                     </Button>
                 </Border>
-                
-          
 
                 <Border Background="White" Grid.Column="1" Grid.Row="1">
 
@@ -76,8 +74,8 @@
             </Grid>
         </Border>
 
-        <Border Background="Blue" Grid.Column="0" Grid.Row="4">
-            <Button x:Name="btn_pay_back" FontSize="36" FontWeight="Bold" Foreground="White" Click="btn_pay_back_Click" >
+        <Border Background="Blue" Grid.Column="0" Grid.Row="2">
+            <Button x:Name="btn_pay" FontSize="36" FontWeight="Bold" Foreground="White" Click="btn_pay_back_Click">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="Black"/>
@@ -89,6 +87,19 @@
             </Button>
 
         </Border>
+        <!--<Border Background="Blue" Grid.Column="0" Grid.Row="4">
+            <Button x:Name="btn_pay_back" FontSize="30" FontWeight="Bold" Foreground="White" Click="btn_pay_back_Click" >
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FFB81D1D" Offset="0.763"/>
+                        <GradientStop Color="#FF909090" Offset="0.018"/>
+                    </LinearGradientBrush>
+                </Button.Background> BACK
+
+            </Button>
+
+        </Border>-->
 
 
     </Grid>

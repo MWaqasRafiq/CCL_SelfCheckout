@@ -61,28 +61,33 @@ namespace IDOLSelfCheckout
             string result = string.Empty;
             try
             {
-                if (socketClient.State == WebSocketState.Open)
+                if (string.IsNullOrEmpty(sco_data.SessionId))
                 {
-                    Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
+                    if (socketClient.State == WebSocketState.Open)
+                    {
+                        Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
                     {
                         { "type", "CREATE_SESSION" }
                     };
-                    string mes = JsonConvert.SerializeObject(keyValuePairs);
-                    byte[] sendBytes = Encoding.UTF8.GetBytes(mes);
-                    socketClient.SendAsync(new ArraySegment<byte>(sendBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+                        string mes = JsonConvert.SerializeObject(keyValuePairs);
+                        byte[] sendBytes = Encoding.UTF8.GetBytes(mes);
+                        socketClient.SendAsync(new ArraySegment<byte>(sendBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+                    }
+                    else
+                    {
+                        //if(count < 100)
+                        //    IdentifyPerson();
+                    }
+                    Basepage.logWrite("FacePay - Search request sent.");
+
+                    var buffer = new byte[1024];
+                    var segment = new ArraySegment<byte>(buffer);
+                    var receivedMessage = socketClient.ReceiveAsync(segment, CancellationToken.None);
+                    result = Encoding.UTF8.GetString(buffer, 0, receivedMessage.Result.Count);
+                    Basepage.logWrite("FacePay - " + receivedMessage);
                 }
                 else
-                {
-                    //if(count < 100)
-                    //    IdentifyPerson();
-                }
-                Basepage.logWrite("FacePay - Search request sent.");
-
-                var buffer = new byte[1024];
-                var segment = new ArraySegment<byte>(buffer);
-                var receivedMessage = socketClient.ReceiveAsync(segment, CancellationToken.None);
-                result = Encoding.UTF8.GetString(buffer, 0, receivedMessage.Result.Count);
-                Basepage.logWrite("FacePay - " + receivedMessage);
+                    result = "CREATE_SESSION";
             }
             catch (Exception ex) {
                 Basepage.logWrite("FacePay - " + ex.Message);
@@ -100,17 +105,27 @@ namespace IDOLSelfCheckout
         {
             try
             {
-                if (Text.Contains("CREATE_SESSION"))
+                if (Text.Contains("CREATE_SESSION") || string.IsNullOrEmpty(Text))
                 {
                     Text = CreateSession(Text);
                 }
                 if (Text.Contains("IDENTIFIED") && Text.Contains("USER_FOUND"))
                 {
-                    Text = PayAfterFaceDetection(Text);
+                    if (Text.Contains("2FA_REQUIRED"))
+                    {
+                        // open screen with keyboard for PIN
+                    }
+                    else
+                        Text = PayAfterFaceDetection(Text);
                 }
                 if (Text.Contains("PAYMENT") && Text.Contains("APPROVED") && Text.Contains("TRANSACTION_COMPLETED"))
                 {
-                    CompleteTransaction(Text);
+                    if (Text.Contains("2FA_REQUIRED"))
+                    {
+                        // open screen with keyboard for PIN
+                    }
+                    else
+                        CompleteTransaction(Text);
                 }
                 else
                 {
@@ -147,17 +162,11 @@ namespace IDOLSelfCheckout
         {
             try
             {
-                var responseJson = JsonConvert.DeserializeObject<SessionInfoVM>(Text);
-                if (responseJson != null && responseJson.sessionStatus.ToUpper() == "ACTIVE")
+                if(!string.IsNullOrEmpty(sco_data.SessionId))
                 {
-                    //////
-                    //will create session here
-                    sco_data.SessionId = responseJson.sessionId;
-                    //////
-                    ///
                     IdentifyVM session = new IdentifyVM()
                     {
-                        sessionId = responseJson.sessionId,
+                        sessionId = sco_data.SessionId,
                         type = "IDENTIFY",
                         identifyFields = "[FIRST_NAME]"
                     };
@@ -167,7 +176,28 @@ namespace IDOLSelfCheckout
                 }
                 else
                 {
-                    throw new Exception("Session was not created!");
+                    var responseJson = JsonConvert.DeserializeObject<SessionInfoVM>(Text);
+                    if (responseJson != null && responseJson.sessionStatus.ToUpper() == "ACTIVE")
+                    {
+                        //////
+                        //will create session here
+                        sco_data.SessionId = responseJson.sessionId;
+                        //////
+                        ///
+                        IdentifyVM session = new IdentifyVM()
+                        {
+                            sessionId = responseJson.sessionId,
+                            type = "IDENTIFY",
+                            identifyFields = "[FIRST_NAME]"
+                        };
+
+                        string serializedJson = JsonConvert.SerializeObject(session);
+                        Text = SendAndReceiveMessage(serializedJson);
+                    }
+                    else
+                    {
+                        throw new Exception("Session was not created!");
+                    }
                 }
             }
             catch (Exception ex)
