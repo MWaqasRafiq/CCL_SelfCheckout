@@ -201,11 +201,11 @@ namespace IDOLSelfCheckout.LSRetail
 
                 Printer.PrintNormal(2, "\n -------------------------------------------- \n");
 
-                Printer.PrintBitmap(2, "C:\\IDOL\\images\\bits\\logo20.bpm", 100, -2);
-                string ArabicChars = "اللغة العربية";
-                var arabic = Encoding.GetEncoding(1256);
-                Printer.PrintNormal(2, arabic.GetString(arabic.GetBytes(ArabicChars)));
-                Printer.PrintNormal(2, "\n --------------------------------------------");
+                //Printer.PrintBitmap(2, "C:\\IDOL\\images\\bits\\logo20.bpm", 100, -2);
+                //string ArabicChars = "اللغة العربية";
+                //var arabic = Encoding.GetEncoding(1256);
+                //Printer.PrintNormal(2, arabic.GetString(arabic.GetBytes(ArabicChars)));
+                //Printer.PrintNormal(2, "\n --------------------------------------------");
                 //Printer.PrintBarCode(2,"Test",);
                 Printer.PrintNormal(2, "\n     **THANK YOU, HAPPY TO SEE YOU AGAIN** \n\n\n\n\n\n");
                 //////////////////Printer.PrintNormal(2, "\x1B|cA\x1B|2COPOS POSPrinter\x1B|1C\nvia Microsoft.NET\n\n");//Make sure about this line seems to be tricky

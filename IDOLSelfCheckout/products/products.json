@@ -1,6 +1,31 @@
 ﻿{
 	"prices": [
 		{
+			"name": "Dummy barcode 0.25",
+			"price": "0.25",
+			"barcode": "2000005462672"
+		},
+		{
+			"name": "Dummy barcode 0.5",
+			"price": "0.50",
+			"barcode": "6224665582259"
+		},
+		{
+			"name": "Dummy barcode 0.75",
+			"price": "0.75",
+			"barcode": "6223004687495"
+		},
+		{
+			"name": "Dummy barcode 1",
+			"price": "1.00",
+			"barcode": "8002713083273"
+		},
+		{
+			"name": "Dummy barcode 99",
+			"price": "99.00",
+			"barcode": "2000003245581"
+		},
+		{
 			"name": "Test Item 410  عنصر اختبار",
 			"price": "4.10",
 			"barcode": "6294003562120"

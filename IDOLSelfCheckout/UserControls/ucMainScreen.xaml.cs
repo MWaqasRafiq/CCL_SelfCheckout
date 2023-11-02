@@ -147,7 +147,7 @@ namespace IDOLSelfCheckout.UserControls
         /// <param name="e"></param>
         void ServiceCallWorker(object sender, EventArgs e)
         {
-            if (Receipt_Text != null)
+            if (Receipt_Text != null && !Basepage.IsLocalConsumption)
             {
                 PosServiceResponseVM responseVM = serverIntegration.GetReceipt();
                 UpdateReceipt(responseVM);
