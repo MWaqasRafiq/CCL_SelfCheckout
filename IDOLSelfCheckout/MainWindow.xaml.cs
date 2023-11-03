@@ -61,6 +61,7 @@ namespace IDOLSelfCheckout
             this._timer.Start();
 
             serverIntegration = new ServerIntegration();
+
         }
 
         private void Window_Loaded(
@@ -99,52 +100,56 @@ namespace IDOLSelfCheckout
                         uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucPaymentScreen());
                     return;
                 }
-                Basepage.logWrite("Scanned barcode=" + _barcode);
-                if (sco_data.TransactionProcess == "STARTED")
+                else
                 {
-                    string bar = _barcode;
-                    Basepage.logWrite("Scanned Barcode=" + bar);
-                    if (_barcode == "1111111111116")
+
+                    Basepage.logWrite("Scanned barcode=" + _barcode);
+                    if (sco_data.TransactionProcess == "STARTED")
                     {
-                        uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucAsistantScreen());
-                    }
-                    else
-                    {
-                        sco_data.ScannedBarcode = _barcode;
-                        Basepage.logWrite("sco_data.ScannedBarcode=" + sco_data.ScannedBarcode);
-                        if (Basepage.IsLocalConsumption)
+                        string bar = _barcode;
+                        Basepage.logWrite("Scanned Barcode=" + bar);
+                        if (_barcode == "1111111111116")
                         {
-                            masafiPricesRequest masafiPricesRequest = new LSscoApi().productList();
-                            prices prices = new prices();
-                            prices product = Array.Find<prices>(masafiPricesRequest.prices, (Predicate<prices>)(element => element.barcode == sco_data.ScannedBarcode));
-                            if (product != null)
+                            uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucAsistantScreen());
+                        }
+                        else
+                        {
+                            sco_data.ScannedBarcode = _barcode;
+                            Basepage.logWrite("sco_data.ScannedBarcode=" + sco_data.ScannedBarcode);
+                            if (Basepage.IsLocalConsumption)
                             {
-                                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name);
-                                Basepage basepage = new Basepage();
-                                Basepage.logWrite("basepage reinitialized");
-                                if (basepage.addItem(sco_data.ReceiptNumber, sco_data.ScannedBarcode, product))
+                                masafiPricesRequest masafiPricesRequest = new LSscoApi().productList();
+                                prices prices = new prices();
+                                prices product = Array.Find<prices>(masafiPricesRequest.prices, (Predicate<prices>)(element => element.barcode == sco_data.ScannedBarcode));
+                                if (product != null)
                                 {
-                                    Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Added");
-                                    basepage.updateTransactionDetails(product);
-                                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+                                    Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name);
+                                    Basepage basepage = new Basepage();
+                                    Basepage.logWrite("basepage reinitialized");
+                                    if (basepage.addItem(sco_data.ReceiptNumber, sco_data.ScannedBarcode, product))
+                                    {
+                                        Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Added");
+                                        basepage.updateTransactionDetails(product);
+                                        uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+                                    }
+                                    else
+                                    {
+                                        uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
+                                        Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Went to Help");
+
+                                    }
                                 }
                                 else
                                 {
-                                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
-                                    Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Went to Help");
-
+                                    Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Not Found");
                                 }
                             }
                             else
                             {
-                                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Not Found");
+                                serverIntegration.AddItemToReceipt(sco_data.ScannedBarcode);
                             }
+
                         }
-                        else
-                        {
-                            serverIntegration.AddItemToReceipt(sco_data.ScannedBarcode);
-                        }
-                        
                     }
                 }
                 this._barcode = "";

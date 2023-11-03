@@ -4,6 +4,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -60,7 +61,8 @@ namespace IDOLSelfCheckout.UserControls
         private void barcodeData(string barcode)
         {
             Basepage basepage = new Basepage();
-            if (basepage.addItem(sco_data.ReceiptNumber, barcode, this.product))
+            this.product = this.list.prices.Where(x => x.barcode == barcode).FirstOrDefault();
+            if (this.product != null && basepage.addItem("", barcode, this.product))
             {
                 basepage.updateTransactionDetails(this.product);
                 uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());

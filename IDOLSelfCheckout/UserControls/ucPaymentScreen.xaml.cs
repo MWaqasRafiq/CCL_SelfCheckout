@@ -48,19 +48,19 @@ namespace IDOLSelfCheckout.UserControls
         private void btn_creditcard_Click(object sender, RoutedEventArgs e)
         {
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucCreditCardScreen());
-            Thread.Sleep(2000);
-            //Basepage bp = new Basepage();
-            //Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
-            //if (status)
-            //{
-            //    uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreen());
-            //}
-            //else
-            //{
-            //    uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
-               
-            //}
-        
+            //Thread.Sleep(2000);
+            Basepage bp = new Basepage();
+            Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
+            if (status)
+            {
+                uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreen());
+            }
+            else
+            {
+                uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
+
+            }
+
 
         }
 

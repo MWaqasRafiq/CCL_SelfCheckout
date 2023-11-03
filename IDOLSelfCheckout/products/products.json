@@ -1,51 +1,6 @@
 ﻿{
 	"prices": [
 		{
-			"name": "Dummy barcode 0.25",
-			"price": "0.25",
-			"barcode": "2000005462672"
-		},
-		{
-			"name": "Dummy barcode 0.5",
-			"price": "0.50",
-			"barcode": "6224665582259"
-		},
-		{
-			"name": "Dummy barcode 0.75",
-			"price": "0.75",
-			"barcode": "6223004687495"
-		},
-		{
-			"name": "Dummy barcode 1",
-			"price": "1.00",
-			"barcode": "8002713083273"
-		},
-		{
-			"name": "Dummy barcode 99",
-			"price": "99.00",
-			"barcode": "2000003245581"
-		},
-		{
-			"name": "Test Item 410  عنصر اختبار",
-			"price": "4.10",
-			"barcode": "6294003562120"
-		},
-		{
-			"name": "Test Item 10",
-			"price": "10.4",
-			"barcode": "6294002562121"
-		},
-		{
-			"name": "Test QR 1",
-			"price": "1.4",
-			"barcode": "0099999990261"
-		},
-		{
-			"name": "Test Receipt Scan",
-			"price": "1",
-			"barcode": "6006401702432310022036"
-		},
-		{
 			"name": "Masafi Pure 500ml",
 			"price": "AED 1.95",
 			"barcode": "8965412356231"
@@ -139,6 +94,91 @@
 			"name": "DU 525",
 			"price": "525.00",
 			"barcode": "1220066554456"
+		},
+		{
+			"name": "ETISALAT 30",
+			"price": "525.00",
+			"barcode": "1166444551908"
+		},
+		{
+			"name": "ETISALAT 55",
+			"price": "525.00",
+			"barcode": "5699100006040"
+		},
+		{
+			"name": "ETISALAT 110",
+			"price": "525.00",
+			"barcode": "5690020025418"
+		},
+		{
+			"name": "ETISALAT 525",
+			"price": "525.00",
+			"barcode": "5699100005869"
+		},
+		{
+			"name": "VIRGIN 30",
+			"price": "525.00",
+			"barcode": "5699100006965"
+		},
+		{
+			"name": "VIRGIN 55",
+			"price": "525.00",
+			"barcode": "5699100006613"
+		},
+		{
+			"name": "VIRGIN 110",
+			"price": "525.00",
+			"barcode": "5699100006873"
+		},
+		{
+			"name": "VIRGIN 525",
+			"price": "525.00",
+			"barcode": "5699100006668"
+		},
+		{
+			"name": "Dummy barcode 0.25",
+			"price": "0.25",
+			"barcode": "2000005462672"
+		},
+		{
+			"name": "Dummy barcode 0.5",
+			"price": "0.50",
+			"barcode": "6224665582259"
+		},
+		{
+			"name": "Dummy barcode 0.75",
+			"price": "0.75",
+			"barcode": "6223004687495"
+		},
+		{
+			"name": "Dummy barcode 1",
+			"price": "1.00",
+			"barcode": "8002713083273"
+		},
+		{
+			"name": "Dummy barcode 99",
+			"price": "99.00",
+			"barcode": "2000003245581"
+		},
+		{
+			"name": "Test Item 410  عنصر اختبار",
+			"price": "4.10",
+			"barcode": "6294003562120"
+		},
+		{
+			"name": "Test Item 10",
+			"price": "10.4",
+			"barcode": "6294002562121"
+		},
+		{
+			"name": "Test QR 1",
+			"price": "1.4",
+			"barcode": "0099999990261"
+		},
+		{
+			"name": "Test Receipt Scan",
+			"price": "1",
+			"barcode": "6006401702432310022036"
 		}
 	]
 }

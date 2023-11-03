@@ -100,33 +100,41 @@ namespace IDOLSelfCheckout.LSRetail
 
                 if (itemList.Count == 0) { return status; }
 
+                if (string.IsNullOrEmpty(sco_data.TransactionDateTime))
+                    sco_data.TransactionDateTime = DateTime.Now.ToString("dd-MMM-yy HH:mm");
+                if (string.IsNullOrEmpty(sco_data.TransactionNo))
+                    sco_data.TransactionNo = "98509798583585";
+                if (string.IsNullOrEmpty(sco_data.ReceiptNumber))
+                    sco_data.ReceiptNumber = "98509798524383";
+
+
                 foreach (items item in itemList)
                 {
                     string name = item.Qty + "x " + item.Name + "                           ";
                     name = name.Substring(0, 27);
                     string price = "          " + (item.Price.Contains(".") ? item.Price : item.Price + ".00");
                     price = price.Substring(price.Length - 10, 10);
-                    items += name + price + "\n";
+                    items += " "+name + price + "\n";
                 }
 
-                string receipt = "\n ===========================================\n" +
-                             " \t\t Choithrams       \n" +
-                             " ===========================================\n" +
-                             " \t full of goodness\n" +
+                string receipt = "\n ============================================\n" +
+                             " \t\t  Choithrams       \n" +
+                             " ============================================\n" +
+                             " \t      full of goodness\n" +
                              " --------------------------------------------\n" +
-                             " Slip:\t\t " + sco_data.ReceiptNumber + "\n" +
-                             " Staff:101 \t\t Trans: " + sco_data.TransactionNo + "\n" +
-                             " Date: \t\t " + (string.IsNullOrEmpty(sco_data.TransactionDateTime) ? "0.00" : sco_data.TransactionDateTime) + "\n" +
+                             " Slip:  " + sco_data.ReceiptNumber + "\n" +
+                             " Staff: 101    Trans: " + sco_data.TransactionNo + "\n" +
+                             " Date:  " + sco_data.TransactionDateTime + "\n" +
                              " --------------------------------------------\n\n" +
-                             " Description و\t\t Amount م\n" +
+                             " Description \t\t\t Amount \n" +
                              " --------------------------------------------\n" +
                                items +
                              " --------------------------------------------\n" +
-                             " Discount\t\t\t" + (string.IsNullOrEmpty(sco_data.TransactionDiscount) ? "0.00" : sco_data.TransactionDiscount) + "\n" +
-                             " Cards \t\t\t\t" + (string.IsNullOrEmpty(sco_data.TransactionTotal) ? "0.00" : sco_data.TransactionTotal) + "\n\n" +
+                             " Discount\t\t\t  " + (string.IsNullOrEmpty(sco_data.TransactionDiscount) ? "0.00" : sco_data.TransactionDiscount) + "\n" +
+                             " Cards \t\t\t\t  " + (string.IsNullOrEmpty(sco_data.TransactionTotal) ? "0.00" : sco_data.TransactionTotal) + "\n\n" +
                              " --------------------------------------------\n" +
                              " Total       \t\t\t Amount\n" +
-                             " " + itemList.Count.ToString() + " \t\t\t\t" + itemList.Sum(x => Convert.ToDecimal(x.Price)).ToString() + "\n" +
+                             " " + itemList.Count.ToString() + " \t\t\t\t " + itemList.Sum(x => Convert.ToDecimal(x.Price)).ToString() + "\n" +
                              " --------------------------------------------\n\n";
 
 

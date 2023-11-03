@@ -41,7 +41,8 @@ namespace IDOLSelfCheckout.UserControls
             {
                 sco_data.TransactionProcess = "FINISHED";
                 OposPrinterCall pp = new OposPrinterCall();
-                Boolean statu= pp.print();
+                Boolean statu= pp.OPOSprint();
+                //Boolean statu= pp.print();
                 if (statu)
                 {
                     uc_call.Uc_Add(MainWindow.Main_SCO, new ucStartScreen());

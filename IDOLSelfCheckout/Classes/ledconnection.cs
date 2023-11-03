@@ -15,7 +15,8 @@ namespace IDOLSelfCheckout.Classes
         {
             try
             {
-
+                //_serialPort = new SerialPort();
+                //_serialPort.Open();
                 Basepage.logWrite(" >> ledconnection...color:" + color + " voice:" + voice);
                 Basepage.logWrite(" >> Basepage.LSRetail_LedComPort:" + Basepage.LSRetail_PaymentDeviceComPort);
                 // Closing serial port if it is open
@@ -27,6 +28,9 @@ namespace IDOLSelfCheckout.Classes
                     _serialPort.WriteTimeout = 500;
                     _serialPort.Open();
 
+                    Basepage.logWrite("LED Connection opened");
+
+
                     byte[] data = new byte[] { (byte)'0' };
                     _serialPort.Write(data, 0, data.Length);
                     data = new byte[] { (byte)'2' };
@@ -37,7 +41,9 @@ namespace IDOLSelfCheckout.Classes
                     _serialPort.Write(data, 0, data.Length);
                     if (color != ' ')
                         data = new byte[] { (byte)voice };
+                    Basepage.logWrite("LED Write data: "+data);
                     _serialPort.Write(data, 0, data.Length);
+                    Basepage.logWrite("LED Write data success");
                     _serialPort.Close();
                 }
                 else
@@ -50,7 +56,7 @@ namespace IDOLSelfCheckout.Classes
             }
             catch (Exception ex)
             {
-                Basepage.logWrite("errorled:" + ex.Message);
+                Basepage.logWrite("error led:" + ex.Message);
             }
         }
 

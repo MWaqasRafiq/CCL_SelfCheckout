@@ -1,8 +1,10 @@
 ﻿using IDOLSelfCheckout.Classes;
+using IDOLSelfCheckout.LSRetail;
 using System;
 using System.CodeDom.Compiler;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -20,8 +22,14 @@ namespace IDOLSelfCheckout.UserControls
         internal Button _btn_virgin_item3;
         internal Button _btn_virgin_item4;
         internal Button _btn_back;
-
-        public ucVirginScreen() => this.InitializeComponent();
+        private prices product = new prices();
+        private masafiPricesRequest list = new masafiPricesRequest();
+        public ucVirginScreen()
+        {
+            this.InitializeComponent();
+            LSscoApi lsscoApi = new LSscoApi();
+            this.list = lsscoApi.productList();
+        } 
 
         private void btn_back_Click(
 #nullable enable
@@ -38,8 +46,12 @@ namespace IDOLSelfCheckout.UserControls
         private void barcodeData(string barcode)
         {
             Basepage basepage = new Basepage();
-            if (true)
+            this.product = this.list.prices.Where(x => x.barcode == barcode).FirstOrDefault();
+            if (this.product != null && basepage.addItem("", barcode, this.product))
+            {
+                basepage.updateTransactionDetails(this.product);
                 uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+            }
             else
                 uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
         }
