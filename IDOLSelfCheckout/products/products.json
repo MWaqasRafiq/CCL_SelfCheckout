@@ -31,7 +31,7 @@
 			"barcode": "8965412356236"
 		},
 		{
-			"name": "NEW MINI BRAD",
+			"name": "NEW MINI BREAD",
 			"price": "1.00",
 			"barcode": "8965412356237"
 		},
@@ -61,7 +61,7 @@
 			"barcode": "8965412356242"
 		},
 		{
-			"name": "DONATION 20 هبة",
+			"name": "DONATION 20",
 			"price": "20.00",
 			"barcode": "9880000000726"
 		},
@@ -136,28 +136,28 @@
 			"barcode": "5699100006668"
 		},
 		{
-			"name": "Dummy barcode 0.25",
-			"price": "0.25",
+			"name": "Cotton Candy",
+			"price": "0.50",
 			"barcode": "2000005462672"
 		},
 		{
-			"name": "Dummy barcode 0.5",
-			"price": "0.50",
+			"name": "CRF Hair CMB bg",
+			"price": "4.30",
 			"barcode": "6224665582259"
 		},
 		{
-			"name": "Dummy barcode 0.75",
-			"price": "0.75",
+			"name": "Cold Coffee",
+			"price": "7.99",
 			"barcode": "6223004687495"
 		},
 		{
-			"name": "Dummy barcode 1",
+			"name": "Masafi 330ml",
 			"price": "1.00",
 			"barcode": "8002713083273"
 		},
 		{
-			"name": "Dummy barcode 99",
-			"price": "99.00",
+			"name": "Bayara Cashews Jumbo",
+			"price": "43.00",
 			"barcode": "2000003245581"
 		},
 		{
