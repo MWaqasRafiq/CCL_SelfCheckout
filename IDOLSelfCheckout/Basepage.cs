@@ -46,6 +46,8 @@ namespace IDOLSelfCheckout
         public static bool IsLocalConsumption;
         public static string HostTerminalId;
         public static string StoreNumber;
+        public static bool LoyaltyRequested;
+        public static bool LoyaltyScaned;
         //private TsgcWebSocketClient socketClient;
 
         public void loadValues()

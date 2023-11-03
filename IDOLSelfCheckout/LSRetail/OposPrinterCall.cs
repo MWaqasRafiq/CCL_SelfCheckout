@@ -47,9 +47,9 @@ namespace IDOLSelfCheckout.LSRetail
                 }
 
                 string receipt = " ===================================\n" +
-                             " \t\t GEANT  مانشلضرون     \n" +
+                             " \t\t  Choithrams \n" +
                              " ===================================\n" +
-                             " \t Cronous Food Market South\n" +
+                             " \t full of goodness\n" +
                              " ----------------------------------------------------\n" +
                              " Slip:\t\t " + sco_data.ReceiptNumber + "\n" +
                              " Staff:101 \t Trans: " + sco_data.TransactionNo + "\n" +
@@ -76,58 +76,7 @@ namespace IDOLSelfCheckout.LSRetail
                 doc.FontFamily = new System.Windows.Media.FontFamily("Calibri");
 
                 printDlg.PrintDocument((doc as IDocumentPaginatorSource).DocumentPaginator, "Print Receipt");
-                //string GS = Convert.ToString((char)29);
-                //string ESC = Convert.ToString((char)27);
-                //string Cutter = "";
-                //Cutter = ESC + "@";
-                //Cutter += GS + "V" + (char)48;
-                //doc = new FlowDocument(new Paragraph(new Run(Cutter)));
-                //printDlg.PrintDocument((doc as IDocumentPaginatorSource).DocumentPaginator, "Print Caption");
-
-                //OposPOSPrinter_CCO.OPOSPOSPrinter Printer = new OposPOSPrinter_CCO.OPOSPOSPrinter(); //Make sure you don`t need to initialize anything and check overloaded constructors
-
-                //Printer.Open(_oposDeviceName); // Check your printer class after executing this line and make sure there is no fault on the instantiated class (printer)
-                //Basepage.logWrite("device Opened");
-                //Printer.ClaimDevice(2000); //Is it enought to pool your device
-                //Printer.CharacterSet = 1256;
-                //Printer.DeviceEnabled = true;
-                //Printer.PrintNormal(2, receipt);
-                //Printer.PrintBarCode(2, sco_data.ReceiptNumber, 108, 100, 200, -2, -13);
-                //Printer.PrintNormal(2, "\n        Happy To See You Again \n\n\n\n\n\n \x1b\x0C");
-
-                //string GS = Convert.ToString((char)29);
-                //string ESC = Convert.ToString((char)27);
-                //string Cutter = "";
-                //Cutter = ESC + "@";
-                //Cutter += GS + "V" + (char)48;
-                //Printer.PrintNormal(2, Cutter);
                 Basepage.logWrite("printed");
-                //Printer.PrintNormal(2, "\x1B|cA\x1B|2COPOS POSPrinter\x1B|1C\nvia Microsoft.NET\n\n");//Make sure about this line seems to be tricky
-
-                //Printer.SetLogo(1, (char)0x1B + (char)0x7C + (char)0x74 + (char)0x4C + "");
-                //// Printer.SetLogo(1, "\x1b\xa\xd");    
-                //Printer.PrintNormal(2, (char)0x1B + (char)0x7C + (char)0x74 + (char)0x4C + "");
-
-                //Printer.SetLogo(1, "\x1b|tL");
-                //Printer.PrintNormal(2, "logo print." + "\n");
-
-                //Printer.SetLogo(0, (char)0x1B + (char)0x7C + (char)0x74 + (char)0x4C + "");
-                //Printer.SetLogo(1, "\x1b|tL");
-                //Printer.PrintNormal(2, "logo print." + "\n");
-                //Printer.PrintNormal(2, " \x1b\x0C");
-                //Printer.PrintNormal(2, "arabic print." + "\n");
-                //Printer.DirectIO(111, 1, "-2");
-                //string arabic = "مانشلضرون";
-                ////string CodeArabic1256 = ASCIIEncoding.Default.GetString(Encoding.GetEncoding(1256).GetBytes(arabic));
-                ////byte[] winByte = Encoding.GetEncoding(1256).GetBytes(receipt);
-                ////string result = Encoding.GetEncoding(1256).GetString(winByte);
-                //Printer.PrintNormal(2, arabic);
-                //Printer.CharacterSet = 864;
-                //Printer.PrintNormal(2, arabic);
-                //Printer.PrintNormal(2, Cutter);
-                //Basepage.logWrite("printed2");
-
-
                 //Printer.Close();
                 status = true;
             }
@@ -161,15 +110,15 @@ namespace IDOLSelfCheckout.LSRetail
                 }
 
                 string receipt = "\n ===========================================\n" +
-                             " \t\t GEANT       \n" +
+                             " \t\t Choithrams       \n" +
                              " ===========================================\n" +
-                             " \t Cronous Food Market South\n" +
+                             " \t full of goodness\n" +
                              " --------------------------------------------\n" +
                              " Slip:\t\t " + sco_data.ReceiptNumber + "\n" +
                              " Staff:101 \t\t Trans: " + sco_data.TransactionNo + "\n" +
                              " Date: \t\t " + (string.IsNullOrEmpty(sco_data.TransactionDateTime) ? "0.00" : sco_data.TransactionDateTime) + "\n" +
                              " --------------------------------------------\n\n" +
-                             " Description وصف\t\t Amount كمية\n" +
+                             " Description و\t\t Amount م\n" +
                              " --------------------------------------------\n" +
                                items +
                              " --------------------------------------------\n" +
@@ -197,7 +146,7 @@ namespace IDOLSelfCheckout.LSRetail
                 //Printer.PrintBitmap(2, "C:\\IDOL\\images\\bits\\logo122.bpm", 100, -2);
                 Printer.PrintNormal(2, receipt);
                 Basepage.logWrite("Printed main part");
-                Printer.PrintBarCode(2, string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "1234567890" : sco_data.ReceiptNumber, 108, 100, 200, -2, -13);
+                Printer.PrintBarCode(2, string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "98509798524383" : sco_data.ReceiptNumber, 108, 100, 200, -2, -13);
 
                 Printer.PrintNormal(2, "\n -------------------------------------------- \n");
 

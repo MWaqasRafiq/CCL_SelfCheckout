@@ -88,6 +88,17 @@ namespace IDOLSelfCheckout
 
             if (e.Key == Key.Return)
             {
+                if (Basepage.LoyaltyRequested && !Basepage.LoyaltyScaned)
+                {
+                    Basepage.logWrite("Loyalty Scanned: " + _barcode);
+
+                    Basepage.LoyaltyRequested = false;
+                    Basepage.LoyaltyScaned = true;
+
+                    if (true)
+                        uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucPaymentScreen());
+                    return;
+                }
                 Basepage.logWrite("Scanned barcode=" + _barcode);
                 if (sco_data.TransactionProcess == "STARTED")
                 {

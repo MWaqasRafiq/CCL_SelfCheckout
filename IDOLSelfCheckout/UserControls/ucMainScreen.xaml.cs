@@ -93,6 +93,7 @@ namespace IDOLSelfCheckout.UserControls
                 item_list_parent.Visibility = Visibility.Hidden;
                 Receipt_Text_parent.Visibility = Visibility.Visible;
             }
+            ucMainScreen.TransactionDetails.Content = (object)("Store No: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber );
         }
 
         public void UpdateReceipt(PosServiceResponseVM responseVM)

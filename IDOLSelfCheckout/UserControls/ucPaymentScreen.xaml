@@ -22,8 +22,8 @@
                 <Label FontSize="36" FontWeight="Normal" FontStretch="Normal">Select Payment Method</Label>
             </DockPanel>
         </Border>
-        
-        <Border Background="Yellow" Grid.Column="0" Grid.Row="1">
+
+        <Border Background="White" Grid.Column="0" Grid.Row="1">
             <Grid x:Name="payGrid">
                 <Grid.Resources >
                     <Style TargetType="Border" >
@@ -35,6 +35,7 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
@@ -70,11 +71,18 @@
                     </Button>
                     <!--<Image Name="imgCircle" Visibility="Collapsed" Width="100" Height="100" gif:AnimationBehavior.SourceUri="C:/IDOL/images/circle.gif"/>-->
                 </Border>
+
+                <Border Background="White" Grid.Column="0" Grid.Row="2">
+                    <Button x:Name="btn_loyalty" Click="btn_loyalty_Click"  >
+                        <Image  Source="C:/IDOL/images/icons/loyalty-card.jpg" Stretch="Fill"  />
+                    </Button>
+                </Border>
+                
                 
             </Grid>
         </Border>
 
-        <Border Background="Blue" Grid.Column="0" Grid.Row="2">
+        <Border Background="LightGray" Grid.Column="0" Grid.Row="2">
             <Button x:Name="btn_pay" FontSize="36" FontWeight="Bold" Foreground="White" Click="btn_pay_back_Click">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -87,19 +95,6 @@
             </Button>
 
         </Border>
-        <!--<Border Background="Blue" Grid.Column="0" Grid.Row="4">
-            <Button x:Name="btn_pay_back" FontSize="30" FontWeight="Bold" Foreground="White" Click="btn_pay_back_Click" >
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="Black"/>
-                        <GradientStop Color="#FFB81D1D" Offset="0.763"/>
-                        <GradientStop Color="#FF909090" Offset="0.018"/>
-                    </LinearGradientBrush>
-                </Button.Background> BACK
-
-            </Button>
-
-        </Border>-->
 
 
     </Grid>

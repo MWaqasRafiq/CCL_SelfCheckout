@@ -9,7 +9,7 @@
 
     <Grid>
 
-        <Border Background="Blue" Grid.Column="0" Grid.Row="0">
+        <Border Background="LightGray" Grid.Column="0" Grid.Row="0">
 
 
             <Button Name="btn_closed_sco" Click="btn_closed_sco_Click"    >

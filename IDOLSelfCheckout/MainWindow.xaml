@@ -27,12 +27,12 @@
                 </Grid.RowDefinitions>
                 <Border Grid.Column="0" Grid.Row="0">
                     <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Image Source="C:/IDOL/images/geantheader.jpg" Stretch="Fill"/>
+                        <Image Source="C:/IDOL/images/Choithramsheader.jpg" Stretch="Fill"/>
                     </DockPanel>
                 </Border>
             </Grid>
         </Border>
-        <Border Grid.Column="0" Grid.Row="1">
+        <Border Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"  BorderBrush="LightGray" BorderThickness="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
@@ -40,13 +40,13 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Border Grid.Column="0" Grid.Row="0">
+                <Border Grid.Column="0" Grid.Row="0" >
                     <Image x:Name="sceneriesBtn" Source="C:/IDOL/images/advertise/1.jpg" VerticalAlignment="Bottom"
                  Stretch="Fill"/>
                 </Border>
             </Grid>
         </Border>
-        <Border Background="Blue" Grid.Column="0" Grid.Row="2">
+        <Border Background="DimGray" Grid.Column="0" Grid.Row="2">
             <Grid x:Name="Main_sco">
                 <StackPanel>
                     <TextBlock Width="300" Height="20">

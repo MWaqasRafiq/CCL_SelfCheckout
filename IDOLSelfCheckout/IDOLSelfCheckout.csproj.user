@@ -39,6 +39,9 @@
     <Compile Update="UserControls\ucItemScreen.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UserControls\ucLoyalty.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UserControls\ucMainScreen.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -93,6 +96,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\ucItemScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ucLoyalty.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\ucMainScreen.xaml">

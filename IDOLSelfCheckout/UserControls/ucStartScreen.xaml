@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Border Background="Blue" Grid.Column="0" Grid.Row="1">
+        <Border Background="LightGray" Grid.Column="0" Grid.Row="1">
 
             <Button Name="btn_start_sco" Click="btn_start_sco_Click"  >
                 <Image Source="C:/IDOL/images/scostart.png" Stretch="Fill"  />

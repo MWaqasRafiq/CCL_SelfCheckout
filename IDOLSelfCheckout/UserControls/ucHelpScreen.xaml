@@ -9,7 +9,7 @@
     
     <Grid>
         
-        <Border Background="Blue" Grid.Column="0" Grid.Row="1">
+        <Border Background="LightGray" Grid.Column="0" Grid.Row="1">
 
 
             <Button Name="btn_help_sco" Click="btn_help_sco_Click"   >

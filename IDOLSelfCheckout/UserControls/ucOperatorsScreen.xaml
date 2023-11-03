@@ -68,7 +68,7 @@
             </Grid>
         </Border>
 
-        <Border Background="Blue" Grid.Column="0" Grid.Row="4">
+        <Border Background="LightGray" Grid.Column="0" Grid.Row="4">
             <Button x:Name="btn_back" FontSize="36" FontWeight="Bold" Foreground="White" Click="btn_back_Click" >
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

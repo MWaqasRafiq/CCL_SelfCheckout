@@ -39,10 +39,16 @@ namespace IDOLSelfCheckout.UserControls
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucItemScreen());
         }
 
+        private void btn_loyalty_Click(object sender, RoutedEventArgs e)
+        {
+            Basepage.LoyaltyRequested = true;
+            Basepage.LoyaltyScaned = false;
+            uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucLoyalty());
+        }
         private void btn_creditcard_Click(object sender, RoutedEventArgs e)
         {
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucCreditCardScreen());
-            //Thread.Sleep(200);
+            Thread.Sleep(2000);
             //Basepage bp = new Basepage();
             //Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
             //if (status)
@@ -93,14 +99,14 @@ namespace IDOLSelfCheckout.UserControls
         {
             if (!string.IsNullOrEmpty(sco_data.TransactionTotal) && IsAllDigits(sco_data.TransactionTotal))
             {
-                int total = Convert.ToInt32(decimal.Parse(sco_data.TransactionTotal));
-                if (total > 0)
-                {
-                    ServerIntegration serverIntegration = new ServerIntegration();
-                    serverIntegration.TotalReceipt();
-                    FacePay facePay = new FacePay();
-                    facePay.IdentifyPerson();
-                }
+                //int total = Convert.ToInt32(decimal.Parse(sco_data.TransactionTotal));
+                //if (total > 0)
+                //{
+                //    ServerIntegration serverIntegration = new ServerIntegration();
+                //    serverIntegration.TotalReceipt();
+                //    FacePay facePay = new FacePay();
+                //    facePay.IdentifyPerson();
+                //}
             }
             else
                 Basepage.logWrite("FacePay - Invalid Transaction amount requested: " + sco_data.TransactionTotal);

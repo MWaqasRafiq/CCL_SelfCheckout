@@ -21,7 +21,7 @@
             </DockPanel>
         </Border>
 
-        <Border Background="Blue" Grid.Column="0" Grid.Row="1">
+        <Border Background="LightGray" Grid.Column="0" Grid.Row="1">
 
             <Button Name="btn_cardpayment_sco"  >
                 <Image Source="C:/IDOL/images/scoeftpayment.png" Stretch="Fill" />

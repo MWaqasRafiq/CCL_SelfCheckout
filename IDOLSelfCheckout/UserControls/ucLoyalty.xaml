@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="IDOLSelfCheckout.UserControls.ucLoyalty"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IDOLSelfCheckout.UserControls"
+             mc:Ignorable="d" 
+             d:MinHeight="100" d:MinWidth="100" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <Border  Background="White" Grid.Column="0" Grid.Row="0">
+            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Label x:Name="PinpadInfo" FontSize="28" FontWeight="Normal" FontStretch="Normal">
+                    Please scan your loyalty card</Label>
+            </DockPanel>
+        </Border>
+
+        <Border Background="white" Grid.Column="0" Grid.Row="1">
+
+            <Button Name="btn_loyalty_sco"  >
+                <Image Source="C:/IDOL/images/loyalty-card.jpg" Stretch="Fill" />
+            </Button>
+        </Border>
+        <Border Background="LightGray" Grid.Column="0" Grid.Row="2">
+            <Button x:Name="btn_pay" FontSize="36" FontWeight="Bold" Foreground="White" Click="btn_loyalty_back_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FFB81D1D" Offset="0.763"/>
+                        <GradientStop Color="#FF909090" Offset="0.018"/>
+                    </LinearGradientBrush>
+                </Button.Background> BACK
+
+            </Button>
+
+        </Border>
+
+    </Grid>
+</UserControl>

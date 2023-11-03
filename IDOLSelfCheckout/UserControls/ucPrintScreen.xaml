@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:MinHeight="100" d:MinWidth="100">
     <Grid>
-        <Border Background="Blue" Grid.Column="0" Grid.Row="1">
+        <Border Background="LightGray" Grid.Column="0" Grid.Row="1">
 
             <Button Name="btn_print_sco"   >
                 <Image Source="C:/IDOL/images/receiptimageen.png" Stretch="Fill" />
