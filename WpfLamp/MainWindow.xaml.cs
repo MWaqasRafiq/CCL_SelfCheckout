@@ -191,7 +191,6 @@ namespace WpfLamp
                     port = uint.Parse(cbPort.SelectedItem.ToString().Substring(3));
                 }
 
-
                 bool ret = InitCCLLamp(lampType, port);
                 if (!ret)
                 {

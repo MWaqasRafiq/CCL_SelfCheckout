@@ -24,13 +24,11 @@ namespace IDOLSelfCheckout.UserControls
     public partial class ucAsistantScreen : UserControl
     {
         public static TextBox MessageText;
-        //WpfLamp.MainWindow _Lamp;
         public ucAsistantScreen()
         {
             InitializeComponent();
             //MessageText = messageTxt;
             messageTxt.Text = sco_data.ErrorMessage;
-            //_Lamp = new WpfLamp.MainWindow();
         }
 
         private void btn_assistant_sco_Click(object sender, RoutedEventArgs e)
