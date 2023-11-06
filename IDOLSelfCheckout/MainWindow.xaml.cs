@@ -19,6 +19,7 @@ using System.Windows.Threading;
 using static IDOLSelfCheckout.FacePay;
 using IDOLSelfCheckout.DataModel;
 using System.Threading;
+using System.Runtime.InteropServices;
 
 
 #nullable enable
@@ -41,6 +42,12 @@ namespace IDOLSelfCheckout
         internal TextBlock _textBlock1;
         internal Image _imgCircle;
         private ServerIntegration serverIntegration;
+
+
+        [DllImport("CCLLampDll452.dll", EntryPoint = "InitCCLLamp")]
+        public static extern bool InitCCLLamp(uint lampType, uint portNo);
+        [DllImport("CCLLampDll452.dll", EntryPoint = "GreenOpenCCLLamp")]
+        public static extern void GreenOpenCCLLamp();
 
         public MainWindow()
         {
@@ -74,6 +81,17 @@ namespace IDOLSelfCheckout
             uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucStartScreen());
             new ucAsistantScreen().setLabel();
             this.PreviewKeyDown += new KeyEventHandler(this.labelBarCode_PreviewKeyDown);
+
+            bool ret = InitCCLLamp(6, 1);
+            if (!ret)
+            {
+                MessageBox.Show("OpenFail");
+            }
+            else
+            {
+                MessageBox.Show("Opened");
+                GreenOpenCCLLamp();
+            }
         }
 
         private void labelBarCode_PreviewKeyDown(object sender, KeyEventArgs e)

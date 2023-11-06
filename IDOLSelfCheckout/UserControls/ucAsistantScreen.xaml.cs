@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,12 +24,13 @@ namespace IDOLSelfCheckout.UserControls
     public partial class ucAsistantScreen : UserControl
     {
         public static TextBox MessageText;
+        //WpfLamp.MainWindow _Lamp;
         public ucAsistantScreen()
         {
             InitializeComponent();
             //MessageText = messageTxt;
             messageTxt.Text = sco_data.ErrorMessage;
-           
+            //_Lamp = new WpfLamp.MainWindow();
         }
 
         private void btn_assistant_sco_Click(object sender, RoutedEventArgs e)
@@ -93,11 +95,27 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btn_led_Click(object sender, RoutedEventArgs e)
         {
-            Basepage.ledWelcome();
-            Basepage.ledHelp();
-            Basepage.ledCardPayment();
-            Basepage.ledReceipt();
-            Basepage.ledClosed();
+            //WpfLamp.MainWindow lamp = new WpfLamp.MainWindow();
+            //Basepage.logWrite("Lamp Opening Red.");
+            //Thread.Sleep(500);
+            //lamp.btnOpen_Click();
+            //Thread.Sleep(500);
+            //lamp.BlueOpen_Click();
+            //Basepage.logWrite("Lamp Opened Red.");
+            //_Lamp.GreenOpen();
+            //Thread.Sleep(500);
+            //_Lamp.YellowOpen();
+            //Thread.Sleep(500);
+            //_Lamp.BlueOpen();
+            //Thread.Sleep(500);
+            //Basepage.logWrite("Lamp closing.");
+            //_Lamp.Close();
+
+            //Basepage.ledWelcome();
+            //Basepage.ledHelp();
+            //Basepage.ledCardPayment();
+            //Basepage.ledReceipt();
+            //Basepage.ledClosed();
         }
     }
 }

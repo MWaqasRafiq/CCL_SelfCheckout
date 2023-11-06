@@ -214,11 +214,12 @@ namespace IDOLSelfCheckout
                 flag = new Oma880().PaymentDeviceCom("100", tenderedAmount);
                 if (flag)
                 {
-                    //LSscoApi lsscoApi = new LSscoApi();
-                    flag = true;//lsscoApi.tenderKeyPressed(receiptNo, tenderedAmount, creditCardNo, creditCardExpriyDate);
+                    LSscoApi lsscoApi = new LSscoApi();
+                    //flag = true;
+                    flag = lsscoApi.tenderKeyPressed(receiptNo, tenderedAmount, creditCardNo, creditCardExpriyDate);
                     if (flag)
                     {
-                        //flag = lsscoApi.FinishPosTransaction(receiptNo);
+                        flag = lsscoApi.FinishPosTransaction(receiptNo);
                         if (flag)
                             sco_data.TransactionProcess = "FINISHED";
                     }

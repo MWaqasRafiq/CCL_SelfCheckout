@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
         xmlns:local="clr-namespace:IDOLSelfCheckout"
-        Loaded="Window_Loaded" Title="MainWindow" WindowState="Maximized">
+        Loaded="Window_Loaded" Title="MainWindow" 
+        WindowState="Maximized" 
+        WindowStyle="SingleBorderWindow">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>

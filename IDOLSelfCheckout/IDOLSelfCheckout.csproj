@@ -29,12 +29,16 @@
   <ItemGroup>
     <None Remove="leaflet1.jpg" />
   </ItemGroup>
+	
+
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.8.0.20230708" />
     <PackageReference Include="OpenCvSharp4.WpfExtensions" Version="4.8.0.20230708" />
-    <PackageReference Include="System.Device.Gpio" Version="3.0.0" />
     <PackageReference Include="System.IO.Ports" Version="7.0.0" />
     <PackageReference Include="XamlAnimatedGif" Version="2.2.0" />
   </ItemGroup>
@@ -62,10 +66,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="CCLLampDll452.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CCLLampDll452.lib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="haarcascade_frontalface_default.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="images\leaflet1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="LoadWinRing.lib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PosCfg.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="products\products.json">
@@ -74,6 +90,18 @@
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="WinRing0.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="WinRing0.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="WinRing0x64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="WinRing0x64.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
@@ -86,12 +114,5 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
-	<ItemGroup>
-		<Content Update="C:\Users\Muhammad Waqas\.nuget\packages\esegece.sgcwebsockets\2023.7.0\build\win32\sgcWebSockets.dll">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="C:\Users\Muhammad Waqas\.nuget\packages\esegece.sgcwebsockets\2023.7.0\build\win64\sgcWebSockets.dll">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
+
 </Project>
