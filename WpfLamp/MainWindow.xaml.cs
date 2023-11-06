@@ -21,63 +21,26 @@ namespace WpfLamp
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        /// <returns></returns>
         [DllImport("CCLLampDll452.dll", EntryPoint = "InitAutoCCLLamp")]
         public static extern bool InitAutoCCLLamp();
-        /// <summary>
-        /// 备用，初始化，需要传入警示灯类型
-        /// </summary>
-        /// <param name="lampType">警示灯类型</param>
-        /// <param name="portNo">串口号</param>
-        /// <returns></returns>
         [DllImport("CCLLampDll452.dll", EntryPoint = "InitCCLLamp")]
         public static extern bool InitCCLLamp(uint lampType, uint portNo);
-        /// <summary>
-        /// 红灯亮
-        /// </summary>
         [DllImport("CCLLampDll452.dll", EntryPoint = "RedOpenCCLLamp")]
         public static extern void RedOpenCCLLamp();
-        /// <summary>
-        /// 红灯灭
-        /// </summary>
         [DllImport("CCLLampDll452.dll", EntryPoint = "RedCloseCCLLamp")]
         public static extern void RedCloseCCLLamp();
-        /// <summary>
-        /// 绿灯亮
-        /// </summary>
         [DllImport("CCLLampDll452.dll", EntryPoint = "GreenOpenCCLLamp")]
         public static extern void GreenOpenCCLLamp();
-        /// <summary>
-        /// 绿灯灭
-        /// </summary>
         [DllImport("CCLLampDll452.dll", EntryPoint = "GreenCloseCCLLamp")]
         public static extern void GreenCloseCCLLamp();
-        /// <summary>
-        /// 蓝灯亮
-        /// </summary>
         [DllImport("CCLLampDll452.dll", EntryPoint = "BlueOpenCCLLamp")]
         public static extern void BlueOpenCCLLamp();
-        /// <summary>
-        /// 蓝灯灭
-        /// </summary>
         [DllImport("CCLLampDll452.dll", EntryPoint = "BlueCloseCCLLamp")]
         public static extern void BlueCloseCCLLamp();
-        /// <summary>
-        /// 黄灯亮
-        /// </summary>
         [DllImport("CCLLampDll452.dll", EntryPoint = "YellowOpenCCLLamp")]
         public static extern void YellowOpenCCLLamp();
-        /// <summary>
-        /// 黄灯灭
-        /// </summary>
         [DllImport("CCLLampDll452.dll", EntryPoint = "YellowCloseCCLLamp")]
         public static extern void YellowCloseCCLLamp();
-        /// <summary>
-        /// 关闭连接
-        /// </summary>
         [DllImport("CCLLampDll452.dll", EntryPoint = "CloseConnectCCLLamp")]
         public static extern void CloseConnectCCLLamp();
 
@@ -108,7 +71,6 @@ namespace WpfLamp
 
         [DllImport("kernel32")]
         private static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
-        //读INI文件
         public static int IniReadValue(string Section, string Key)
         {
             try
