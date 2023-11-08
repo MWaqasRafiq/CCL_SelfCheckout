@@ -137,7 +137,7 @@
                     <Button Name="btn_led"  Background="White" Click="btn_led_Click"  >
                         <DockPanel LastChildFill="True">
                             <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">LED TEST</Label>
-                            <Image  Source="C:/IDOL/images/icons/reset.png"   />
+                            <Image  Source="C:/IDOL/images/icons/operator.png"   />
 
                         </DockPanel>
                     </Button>

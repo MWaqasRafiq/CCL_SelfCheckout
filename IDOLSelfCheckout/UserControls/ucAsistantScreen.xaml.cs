@@ -93,13 +93,13 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btn_led_Click(object sender, RoutedEventArgs e)
         {
-            //WpfLamp.MainWindow lamp = new WpfLamp.MainWindow();
-            //Basepage.logWrite("Lamp Opening Red.");
-            //Thread.Sleep(500);
-            //lamp.btnOpen_Click();
-            //Thread.Sleep(500);
-            //lamp.BlueOpen_Click();
-            //Basepage.logWrite("Lamp Opened Red.");
+            WpfLamp.MainWindow lamp = new WpfLamp.MainWindow();
+            Basepage.logWrite("Lamp Opening Blue.");
+            Thread.Sleep(1000);
+            lamp.btnOpen_Click();
+            Thread.Sleep(1000);
+            lamp.BlueOpen_Click();
+            Basepage.logWrite("Lamp Opened Blue.");
             //_Lamp.GreenOpen();
             //Thread.Sleep(500);
             //_Lamp.YellowOpen();

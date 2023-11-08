@@ -44,6 +44,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WpfLamp\WpfLamp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="POS.Devices.OPOSPOSPrinter">
       <HintPath>POS.Devices.OPOSPOSPrinter.dll</HintPath>
       <Private>True</Private>
@@ -66,9 +70,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="CCLLampDll452.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="CCLLampDll452.lib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -76,12 +77,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="images\leaflet1.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="LoadWinRing.lib">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="PosCfg.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="products\products.json">
@@ -94,13 +89,7 @@
     <None Update="WinRing0.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="WinRing0.sys">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="WinRing0x64.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="WinRing0x64.sys">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
