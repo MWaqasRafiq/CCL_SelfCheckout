@@ -21,11 +21,13 @@ namespace IDOLSelfCheckout.UserControls
         internal Button _btn_herbs_add;
         internal Button _btn_operators_add;
         internal Button _btn_pay;
-
+        CCL_Lamp lamp;
         public ucItemScreen()
         {
             this.InitializeComponent();
-            Basepage.ledItemScreen();
+            lamp = new CCL_Lamp();
+            //Basepage.ledItemScreen();
+            lamp.BlueOpen();
         }
 
         private void btn_pay_Click(

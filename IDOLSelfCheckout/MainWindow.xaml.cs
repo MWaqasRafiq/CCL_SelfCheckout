@@ -42,13 +42,9 @@ namespace IDOLSelfCheckout
         internal TextBlock _textBlock1;
         internal Image _imgCircle;
         private ServerIntegration serverIntegration;
+        CCL_Lamp lamp;
 
-
-        [DllImport("CCLLampDll452.dll", EntryPoint = "InitCCLLamp")]
-        public static extern bool InitCCLLamp(uint lampType, uint portNo);
-        [DllImport("CCLLampDll452.dll", EntryPoint = "GreenOpenCCLLamp")]
-        public static extern void GreenOpenCCLLamp();
-
+       
         public MainWindow()
         {
             this.InitializeComponent();
@@ -68,7 +64,8 @@ namespace IDOLSelfCheckout
             this._timer.Start();
 
             serverIntegration = new ServerIntegration();
-
+            lamp = new CCL_Lamp();
+            lamp.GreenOpen();
         }
 
         private void Window_Loaded(
@@ -79,19 +76,20 @@ namespace IDOLSelfCheckout
             MainWindow.Img_Circle = this.imgCircle;
             MainWindow.Main_SCO = this.Main_sco;
             uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucStartScreen());
-            new ucAsistantScreen().setLabel();
+
+            //new ucAsistantScreen().setLabel();
             this.PreviewKeyDown += new KeyEventHandler(this.labelBarCode_PreviewKeyDown);
 
-            bool ret = InitCCLLamp(6, 1);
-            if (!ret)
-            {
-                MessageBox.Show("OpenFail");
-            }
-            else
-            {
-                MessageBox.Show("Opened");
-                GreenOpenCCLLamp();
-            }
+            //bool ret = InitCCLLamp(6, 1);
+            //if (!ret)
+            //{
+            //    MessageBox.Show("OpenFail");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Opened");
+            //    GreenOpenCCLLamp();
+            //}
         }
 
         private void labelBarCode_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -209,7 +207,5 @@ namespace IDOLSelfCheckout
                 this.count1 = 0;
             this.sceneriesBtn.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("C:\\IDOL\\images\\advertise\\" + this.Images1[this.count1].ToString());
         }
-
-
     }
 }

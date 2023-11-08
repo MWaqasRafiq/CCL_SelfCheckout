@@ -21,10 +21,13 @@ namespace IDOLSelfCheckout.UserControls
     /// </summary>
     public partial class ucStartScreen : UserControl
     {
+        CCL_Lamp lamp;
         public ucStartScreen()
         {
             InitializeComponent();
-            Basepage.ledNewCustomer();
+            //Basepage.ledNewCustomer();
+            lamp = new CCL_Lamp();
+            lamp.GreenOpen();
         }
 
         private void btn_start_sco_Click(object sender, RoutedEventArgs e)

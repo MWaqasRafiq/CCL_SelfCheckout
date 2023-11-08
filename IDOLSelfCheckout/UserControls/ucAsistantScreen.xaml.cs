@@ -3,9 +3,11 @@ using IDOLSelfCheckout.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace IDOLSelfCheckout.UserControls
 {
@@ -23,12 +26,17 @@ namespace IDOLSelfCheckout.UserControls
     /// </summary>
     public partial class ucAsistantScreen : UserControl
     {
+        private System.Timers.Timer _timer;
         public static TextBox MessageText;
+        CCL_Lamp lamp;
         public ucAsistantScreen()
         {
             InitializeComponent();
             //MessageText = messageTxt;
             messageTxt.Text = sco_data.ErrorMessage;
+            lamp = new CCL_Lamp();
+            lamp.RedOpen();
+            setLabel();
         }
 
         private void btn_assistant_sco_Click(object sender, RoutedEventArgs e)
@@ -91,29 +99,32 @@ namespace IDOLSelfCheckout.UserControls
             }
         }
 
-        private void btn_led_Click(object sender, RoutedEventArgs e)
+        private async void btn_led_Click(object sender, RoutedEventArgs e)
         {
-            WpfLamp.MainWindow lamp = new WpfLamp.MainWindow();
-            Basepage.logWrite("Lamp Opening Blue.");
-            Thread.Sleep(1000);
-            lamp.btnOpen_Click();
-            Thread.Sleep(1000);
-            lamp.BlueOpen_Click();
-            Basepage.logWrite("Lamp Opened Blue.");
-            //_Lamp.GreenOpen();
-            //Thread.Sleep(500);
-            //_Lamp.YellowOpen();
-            //Thread.Sleep(500);
-            //_Lamp.BlueOpen();
-            //Thread.Sleep(500);
-            //Basepage.logWrite("Lamp closing.");
-            //_Lamp.Close();
+            try
+            {
+                lamp.RedOpen();
+                Thread.Sleep(1000);
+                lamp.RedClose();
+                lamp.BlueOpen();
+                Thread.Sleep(1000);
+                lamp.BlueClose();
+                lamp.GreenOpen();
+                Thread.Sleep(1000);
+                lamp.GreenClose();
+                await lamp.BlueBlinkOpen(10);
+                lamp.Close();
 
-            //Basepage.ledWelcome();
-            //Basepage.ledHelp();
-            //Basepage.ledCardPayment();
-            //Basepage.ledReceipt();
-            //Basepage.ledClosed();
+                lamp.RedOpen();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
+
+     
+
     }
 }

@@ -50,6 +50,7 @@ namespace IDOLSelfCheckout.UserControls
             Basepage bp = new Basepage();
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucCreditCardScreen());
             Thread.Sleep(100);
+            Basepage.logWrite("Credit Card payment starting for "+ sco_data.ReceiptNumber);
             Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
             if (status)
             {

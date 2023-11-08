@@ -23,19 +23,22 @@ namespace IDOLSelfCheckout.UserControls
     /// </summary>
     public partial class ucPrintScreenOPOS : UserControl
     {
+        CCL_Lamp lamp;
         public ucPrintScreenOPOS()
         {
             InitializeComponent();
-            Basepage.ledReceipt();
+            lamp = new CCL_Lamp();
+            //Basepage.ledReceipt();
             Task.Factory.StartNew(() =>
             {
                 printScreenWait();
             });
         }
 
-        public void printScreenWait()
+        public async void printScreenWait()
         {
 
+            await lamp.BlueBlinkOpen(10);
             Thread.Sleep(500);
             Dispatcher.Invoke(() =>
             {

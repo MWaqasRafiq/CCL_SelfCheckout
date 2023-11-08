@@ -49,7 +49,7 @@ namespace IDOLSelfCheckout
         public static bool LoyaltyRequested;
         public static bool LoyaltyScaned;
         //private TsgcWebSocketClient socketClient;
-
+        
         public void loadValues()
         {
             try
@@ -215,13 +215,19 @@ namespace IDOLSelfCheckout
                 if (flag)
                 {
                     LSscoApi lsscoApi = new LSscoApi();
-                    //flag = true;
-                    flag = lsscoApi.tenderKeyPressed(receiptNo, tenderedAmount, creditCardNo, creditCardExpriyDate);
+                    flag = true;
+                    //flag = lsscoApi.tenderKeyPressed(receiptNo, tenderedAmount, creditCardNo, creditCardExpriyDate);
                     if (flag)
                     {
-                        flag = lsscoApi.FinishPosTransaction(receiptNo);
+                        //flag = lsscoApi.FinishPosTransaction(receiptNo);
                         if (flag)
                             sco_data.TransactionProcess = "FINISHED";
+                        sco_data.TransactionTotal = Convert.ToDecimal("0").ToString("0.00");
+                        sco_data.TransactionVat = Convert.ToDecimal("0").ToString("0.00"); ;
+                        ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
+                        ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED " + sco_data.TransactionTotal);
+                        ucMainScreen.TransactionVat.Content = (object)("VAT   AED " + sco_data.TransactionVat);
+
                     }
                 }
                 else
@@ -291,7 +297,11 @@ namespace IDOLSelfCheckout
             ucMainScreen.ItemInfo.Content = (object)sco_data.LastItemDescription;
         }
 
-        public void errorMessage() => ucAsistantScreen.MessageText.Text = sco_data.ErrorMessage;
+        public void errorMessage()
+        {
+            if(ucAsistantScreen.MessageText != null)
+                ucAsistantScreen.MessageText.Text = sco_data.ErrorMessage;
+        } 
 
         public static void ledWelcome()
         {

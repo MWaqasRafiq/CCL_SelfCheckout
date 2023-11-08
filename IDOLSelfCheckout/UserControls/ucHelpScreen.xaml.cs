@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,16 +22,36 @@ namespace IDOLSelfCheckout.UserControls
     /// </summary>
     public partial class ucHelpScreen : UserControl
     {
+        CCL_Lamp lamp;
         public ucHelpScreen()
         {
             InitializeComponent();
-            Basepage.ledHelp();
+            //Basepage.ledHelp();
+            lamp = new CCL_Lamp();
+            lamp.RedOpen();
+            Loaded += MyLoadedRoutedEventHandler;
+            
         }
-
+        void MyLoadedRoutedEventHandler(Object sender, RoutedEventArgs e)
+        {
+            BlinkLamp(2);
+        }
         private void btn_help_sco_Click(object sender, RoutedEventArgs e)
         {
             btn_help_sco.Focusable = false;
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucAsistantScreen());
+        }
+        private void BlinkLamp(int seconds)
+        {
+            var sec = DateTime.Now.AddSeconds(seconds + 1);
+            while (DateTime.Now < sec)
+            {
+                lamp.RedOpen();
+                Task.Delay(500).Wait();
+                lamp.RedClose();
+                Task.Delay(300).Wait();
+            }
+            lamp.RedOpen();
         }
     }
 }

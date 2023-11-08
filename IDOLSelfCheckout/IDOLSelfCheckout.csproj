@@ -44,10 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WpfLamp\WpfLamp.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="POS.Devices.OPOSPOSPrinter">
       <HintPath>POS.Devices.OPOSPOSPrinter.dll</HintPath>
       <Private>True</Private>

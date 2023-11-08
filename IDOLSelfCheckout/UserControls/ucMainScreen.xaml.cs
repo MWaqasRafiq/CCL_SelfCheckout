@@ -31,10 +31,12 @@ namespace IDOLSelfCheckout.UserControls
         public static TextBlock ReceiptText;
         private readonly view_models viewModels;
         private ServerIntegration serverIntegration;
+        CCL_Lamp lamp;
         public ucMainScreen()
         {
             InitializeComponent();
-
+            lamp = new CCL_Lamp();
+            lamp.BlueOpen();
             ItemListDataGrid = item_list;
             this.viewModels = new view_models
             {
@@ -75,7 +77,6 @@ namespace IDOLSelfCheckout.UserControls
                 else
                 {
                     uc_call.Uc_Add(MainWindow.Item_SCO, new ucItemScreen());
-                    Basepage.ledWelcome();
                 }
             }
             else
