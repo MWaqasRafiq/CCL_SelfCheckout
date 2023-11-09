@@ -31,7 +31,7 @@
                     </Grid.RowDefinitions>
                     <Border Background="White" Grid.Column="0" Grid.Row="0">
                         <DockPanel VerticalAlignment="Center" HorizontalAlignment="Left">
-                            <Label x:Name="item_info" FontSize="23" FontWeight="Normal" FontStretch="Normal">Scan Item</Label>
+                            <Label x:Name="item_info" FontSize="23" FontWeight="Normal" FontStretch="Normal">Scan item</Label>
                         </DockPanel>
                     </Border>
                     <Border Background="White" Grid.Column="1" Grid.Row="0">

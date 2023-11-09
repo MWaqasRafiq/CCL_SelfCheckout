@@ -17,7 +17,7 @@
 
         <Border Background="White" Grid.Column="0" Grid.Row="0">
             <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Label x:Name="PinpadInfo" FontSize="28" FontWeight="Normal" FontStretch="Normal">Please follow EFT instractions..</Label>
+                <Label x:Name="PinpadInfo" FontSize="28" FontWeight="Normal" FontStretch="Normal">Please follow EFT instructions.</Label>
             </DockPanel>
         </Border>
 

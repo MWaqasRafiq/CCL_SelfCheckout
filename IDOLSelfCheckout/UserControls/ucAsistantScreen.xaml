@@ -52,7 +52,7 @@
                     <Button x:Name="btn_bakery_item1" Background="White" Command="{Binding ButtonClickCommand}" CommandParameter="423432432432"   >
                         <DockPanel LastChildFill="True">
                             <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" >VOID</Label>
-                            <Image  Source="C:/IDOL/images/icons/reset.png"   />
+                            <Image  Source="C:/IDOL/images/icons/voiddisc.png"   />
 
                         </DockPanel>
 
@@ -77,7 +77,7 @@
                     <Button Name="btn_assistant_sco"  Background="White" Click="btn_assistant_sco_Click"  >
                         <DockPanel LastChildFill="True">
                             <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">NEW TRANSACTION</Label>
-                            <Image  Source="C:/IDOL/images/icons/reset.png"   />
+                            <Image  Source="C:/IDOL/images/icons/refresh.png"   />
 
                         </DockPanel>
                     </Button>
@@ -89,7 +89,7 @@
                     <Button Name="btn_donation_item4"  Background="White"  >
                         <DockPanel LastChildFill="True">
                             <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">SETTINGS</Label>
-                            <Image  Source="C:/IDOL/images/icons/reset.png"   />
+                            <Image  Source="C:/IDOL/images/icons/nosale.png"   />
 
                         </DockPanel>
                     </Button>
@@ -137,7 +137,7 @@
                     <Button Name="btn_led"  Background="White" Click="btn_led_Click"  >
                         <DockPanel LastChildFill="True">
                             <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">LED TEST</Label>
-                            <Image  Source="C:/IDOL/images/icons/operator.png"   />
+                            <Image  Source="C:/IDOL/images/icons/enter.png"   />
 
                         </DockPanel>
                     </Button>
