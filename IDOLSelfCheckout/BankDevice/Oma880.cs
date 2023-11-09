@@ -20,7 +20,7 @@ namespace IDOLSelfCheckout.BankDevice
         string ResponseCode = "";
         string TxnDescription = "";
         string Reversed = "";
-
+        int countloop = 0;
 
         byte[] ack = new byte[] { (byte)0x06 };
 
@@ -37,8 +37,8 @@ namespace IDOLSelfCheckout.BankDevice
                 {
                     // Setting serial port settings
                     _serialPort = new SerialPort(Basepage.LSRetail_PaymentDeviceComPort, 115200, Parity.None, 8, StopBits.One);
-                    _serialPort.ReadTimeout = 4000;
-                    _serialPort.WriteTimeout = 500;
+                    _serialPort.ReadTimeout = 40000;
+                    _serialPort.WriteTimeout = 50000;
                     _serialPort.Open();
                     Thread.Sleep(100);
                     //   _serialPort.DataReceived +=
@@ -48,17 +48,22 @@ namespace IDOLSelfCheckout.BankDevice
                     // _serialPort.DataReceived += _serialPort_DataReceived;
                 }
 
-
                 byte[] data = reqData(amount, cmdType, "");
                 _serialPort.Write(data, 0, data.Length);
                 statu = listenDevice();
                 Basepage.logWrite("response status:" + statu);
+               
             }
             catch(Exception ex)
             {
                 Basepage.logWrite("1-Error:" + ex.Message);
                 sco_data.ErrorMessage = ex.Message;
                 statu = false;
+            }
+
+            if (_serialPort != null && _serialPort.IsOpen == true)
+            {
+                StopListening();
             }
 
             return statu;
@@ -73,7 +78,7 @@ namespace IDOLSelfCheckout.BankDevice
           
                 var serialPort = _serialPort;
 
-                int countloop = 0;
+                countloop = 0;
                 Boolean debug = true;
                 while (debug)
                 {
@@ -88,7 +93,7 @@ namespace IDOLSelfCheckout.BankDevice
                         byte[] buffer = new byte[lenn];
                         serialPort.Read(buffer, 0, buffer.Length);
                         string responseData = System.Text.Encoding.ASCII.GetString(buffer, 0, lenn);
-                        Basepage.logWrite(" >>data received..:" + responseData);
+                        //Basepage.logWrite(" >>data received..:" + responseData);
                         string d = Basepage.hostDataLogFormat(buffer, "Response=>");
 
                         string val1 = buffer[0].ToString("X2");
@@ -129,11 +134,11 @@ namespace IDOLSelfCheckout.BankDevice
                                 if (CommandType == "047")
                                 {
                                     serialPort.Write(ack, 0, ack.Length);
-                                    Basepage.logWrite("send ack CommandType:" + CommandType);
+                                    Basepage.logWrite("send ack 047 CommandType:" + CommandType);
                                     statu = false;
                                     debug = false;
                                     StopListening();
-                                    PaymentDeviceCom("106","");
+                                    PaymentDeviceCom("106", "");// need to confirm the bank
                                 }
                                 else
                                 {
@@ -145,8 +150,6 @@ namespace IDOLSelfCheckout.BankDevice
                                         TxnDescription = a[3].ToString();
                                         Reversed = a[4].ToString();
 
-
-
                                         serialPort.Write(ack, 0, ack.Length);
                                         Basepage.logWrite("send ack CommandType:" + CommandType);
                                         Basepage.logWrite("ErrorCode:" + ErrorCode);
@@ -154,42 +157,51 @@ namespace IDOLSelfCheckout.BankDevice
                                         if (ErrorCode == "E067")
                                         {
                                             statu = false;
-                                            PaymentDeviceCom("106","");
+                                            PaymentDeviceCom("106", "");// need to confirm the bank
                                         }
-                                        else if(ErrorCode == "E000" && ResponseCode== "APPROVED" && TxnDescription== "SALE" && Reversed=="0")
+                                        else if(ErrorCode == "E000" && ResponseCode == "APPROVED" && TxnDescription== "SALE" && Reversed=="0")
                                         {
                                             sco_data.MaskCardNumber = a[5].ToString();
                                             sco_data.ExpiryDate = a[6].ToString();
                                             sco_data.AuthCode = a[7].ToString();
                                             statu = true;
                                         }
+                                        else
+                                        {
+                                            Basepage.logWrite("Else condition of: ErrorCode == E067");
+                                        }
                                        
                                         debug = false;
                                         StopListening();
-
-
+                                    }
+                                    else
+                                    {
+                                        Basepage.logWrite("Else condition of: ErrorCode.Length > 3");
                                     }
                                 }
-
                             }
                             else
                             {
-
+                                Basepage.logWrite("Else condition of:  if (a != null)");
                             }
+                        }
+                        else
+                        {
+                            Basepage.logWrite("Else condition of:  if (val3 == 03)");
                         }
                         Basepage.logWrite(" >> Completed. >>>>>>");
                     }
                     else
                     {
-                        Thread.Sleep(1000);
+                        Thread.Sleep(800);
                         countloop++;
-                        if (countloop > 40)
+                        if (countloop > 50)
                         {
                             debug = false;
-                            //item.ResCode = "timeout";
                             Basepage.logWrite("timeout:" + countloop);
                         }
-                        Basepage.logWrite("countloop:" + countloop);
+                        else
+                            Basepage.logWrite("countloop:" + countloop);
                     }
                 }
 
@@ -254,9 +266,8 @@ namespace IDOLSelfCheckout.BankDevice
         /// Closes the serial port
         public void StopListening()
         {
-
+            countloop = 51;
             _serialPort.Close();
-            Thread.Sleep(200);
             Basepage.logWrite("serial port stopped.");
         }
 

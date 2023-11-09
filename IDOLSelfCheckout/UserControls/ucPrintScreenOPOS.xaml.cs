@@ -23,11 +23,9 @@ namespace IDOLSelfCheckout.UserControls
     /// </summary>
     public partial class ucPrintScreenOPOS : UserControl
     {
-        CCL_Lamp lamp;
         public ucPrintScreenOPOS()
         {
             InitializeComponent();
-            lamp = new CCL_Lamp();
             //Basepage.ledReceipt();
             Task.Factory.StartNew(() =>
             {
@@ -38,7 +36,6 @@ namespace IDOLSelfCheckout.UserControls
         public async void printScreenWait()
         {
 
-            await lamp.BlueBlinkOpen(10);
             Thread.Sleep(500);
             Dispatcher.Invoke(() =>
             {

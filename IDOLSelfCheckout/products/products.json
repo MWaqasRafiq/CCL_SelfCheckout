@@ -32,7 +32,7 @@
 		},
 		{
 			"name": "NEW MINI BREAD",
-			"price": "1.00",
+			"price": "1.50",
 			"barcode": "8965412356237"
 		},
 		{
@@ -52,7 +52,7 @@
 		},
 		{
 			"name": "NEW HERBS 2",
-			"price": "2.00",
+			"price": "2.50",
 			"barcode": "8965412356241"
 		},
 		{
@@ -97,17 +97,17 @@
 		},
 		{
 			"name": "ETISALAT 30",
-			"price": "525.00",
+			"price": "30.00",
 			"barcode": "1166444551908"
 		},
 		{
 			"name": "ETISALAT 55",
-			"price": "525.00",
+			"price": "55.00",
 			"barcode": "5699100006040"
 		},
 		{
 			"name": "ETISALAT 110",
-			"price": "525.00",
+			"price": "110.00",
 			"barcode": "5690020025418"
 		},
 		{
@@ -117,17 +117,17 @@
 		},
 		{
 			"name": "VIRGIN 30",
-			"price": "525.00",
+			"price": "30.00",
 			"barcode": "5699100006965"
 		},
 		{
 			"name": "VIRGIN 55",
-			"price": "525.00",
+			"price": "55.00",
 			"barcode": "5699100006613"
 		},
 		{
 			"name": "VIRGIN 110",
-			"price": "525.00",
+			"price": "110.00",
 			"barcode": "5699100006873"
 		},
 		{

@@ -33,10 +33,10 @@ namespace IDOLSelfCheckout.UserControls
             PinPadInfo = PinpadInfo;
             //PinPadInfo.Content = "test";
 
-            Task.Factory.StartNew(() =>
-            {
-                CardProcessStarted();
-            });
+            //Task.Factory.StartNew(() =>
+            //{
+            //    CardProcessStarted();
+            //});
 
 
         }
@@ -68,7 +68,7 @@ namespace IDOLSelfCheckout.UserControls
         private void CardProcessStarted()
         {
             //loop = true;
-            Thread.Sleep(500);
+            Thread.Sleep(200);
             //ThreadPool.QueueUserWorkItem(o =>
             //{
             //    while (loop)
@@ -90,7 +90,7 @@ namespace IDOLSelfCheckout.UserControls
                 Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
                 if (status)
                 {
-                    uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreen());
+                    uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreenOPOS());
                     //loop = false;
 
                 }

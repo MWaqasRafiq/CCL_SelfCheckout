@@ -7,6 +7,7 @@
 		<UseWPF>true</UseWPF>
 		<PlatformTarget>x86</PlatformTarget>
 		<Platforms>x86;AnyCPU</Platforms>
+		<ApplicationIcon>idollogo.ico</ApplicationIcon>
 	</PropertyGroup>
 
   <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -33,6 +34,7 @@
 
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <Content Include="idollogo.ico" />
   </ItemGroup>
 
   <ItemGroup>

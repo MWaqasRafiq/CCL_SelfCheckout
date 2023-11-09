@@ -20,6 +20,9 @@ using System.Windows.Shapes;
 using System.IO;
 using POS.Devices;
 using IDOLSelfCheckout.DataModel;
+using System.Windows.Threading;
+using System.Xml.Linq;
+using Microsoft.VisualBasic;
 
 namespace IDOLSelfCheckout.UserControls
 {
@@ -47,21 +50,42 @@ namespace IDOLSelfCheckout.UserControls
         }
         private void btn_creditcard_Click(object sender, RoutedEventArgs e)
         {
-            Basepage bp = new Basepage();
+            //Basepage bp = new Basepage();
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucCreditCardScreen());
             Thread.Sleep(100);
-            Basepage.logWrite("Credit Card payment starting for "+ sco_data.ReceiptNumber);
-            Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
-            if (status)
+            Thread thread = new Thread(StartThreadOfCreditCardPayment);
+            thread.Start();
+            //Basepage.logWrite("Credit Card payment starting for "+ sco_data.ReceiptNumber);
+            //Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
+            //if (status)
+            //{
+            //    uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreenOPOS());
+            //}
+            //else
+            //{
+            //    uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
+            //}
+        }
+        private void StartThreadOfCreditCardPayment()
+        {
+            // Simulate some work taking place
+            Thread.Sleep(100);
+            this.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+            (ThreadStart)delegate ()
             {
-                uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreenOPOS());
-            }
-            else
-            {
-                uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
+                Basepage bp = new Basepage();
+                Basepage.logWrite("Credit Card payment starting for " + sco_data.ReceiptNumber);
+                Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
+                if (status)
+                {
+                    uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreenOPOS());
+                }
+                else
+                {
+                    uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
 
-            }
-
+                }
+            });
 
         }
 

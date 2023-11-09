@@ -24,19 +24,22 @@ namespace IDOLSelfCheckout.LSRetail
                 masafiPricesRequest masafiPricesRequest;
                 using (StreamReader streamReader = new StreamReader(Directory.GetCurrentDirectory() + "\\products" + "\\products.json"))
                     masafiPricesRequest = JsonConvert.DeserializeObject<masafiPricesRequest>(streamReader.ReadToEnd());
-                string requestUriString = "https://api.ommasign.com/v1/datasource/2118/force";
-                Console.WriteLine("baseurl: {0}", (object)requestUriString);
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(requestUriString);
-                string s = JsonConvert.SerializeObject((object)masafiPricesRequest).ToString();
-                byte[] bytes = Encoding.ASCII.GetBytes(s);
-                Console.WriteLine("productList request: {0}", (object)s);
-                httpWebRequest.Method = "POST";
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.ContentLength = (long)bytes.Length;
-                httpWebRequest.Headers.Add("Authorization", "3956e4248611923d479c83ed05d050448a827c0baa149fe04e5bac1a693a89aa");
-                using (Stream requestStream = httpWebRequest.GetRequestStream())
-                    requestStream.Write(bytes, 0, bytes.Length);
-                Console.WriteLine("productList responseString: {0}", (object)new StreamReader(httpWebRequest.GetResponse().GetResponseStream()).ReadToEnd());
+                if (!Basepage.IsLocalConsumption)
+                {
+                    string requestUriString = "https://api.ommasign.com/v1/datasource/2118/force";
+                    Console.WriteLine("baseurl: {0}", (object)requestUriString);
+                    HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(requestUriString);
+                    string s = JsonConvert.SerializeObject((object)masafiPricesRequest).ToString();
+                    byte[] bytes = Encoding.ASCII.GetBytes(s);
+                    Console.WriteLine("productList request: {0}", (object)s);
+                    httpWebRequest.Method = "POST";
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.ContentLength = (long)bytes.Length;
+                    httpWebRequest.Headers.Add("Authorization", "3956e4248611923d479c83ed05d050448a827c0baa149fe04e5bac1a693a89aa");
+                    using (Stream requestStream = httpWebRequest.GetRequestStream())
+                        requestStream.Write(bytes, 0, bytes.Length);
+                    Console.WriteLine("productList responseString: {0}", (object)new StreamReader(httpWebRequest.GetResponse().GetResponseStream()).ReadToEnd());
+                }
                 return masafiPricesRequest;
             }
             catch (WebException ex)

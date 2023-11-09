@@ -437,7 +437,7 @@ namespace IDOLSelfCheckout
                         ++num1;
                     }
                 }
-                Basepage.logWrite(stringBuilder.ToString());
+                //Basepage.logWrite(stringBuilder.ToString());
                 return stringBuilder.ToString();
             }
             catch (Exception ex)
