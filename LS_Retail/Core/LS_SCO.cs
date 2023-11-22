@@ -85,7 +85,14 @@ namespace LS_Retail.Core
                 httpWebRequest.Headers.Add("Authorization", "3956e4248611923d479c83ed05d050448a827c0baa149fe04e5bac1a693a89aa");
                 using (Stream requestStream = httpWebRequest.GetRequestStream())
                     requestStream.Write(bytes, 0, bytes.Length);
-                Console.WriteLine("productList responseString: {0}", (object)new StreamReader(httpWebRequest.GetResponse().GetResponseStream()).ReadToEnd());
+
+                var streamResponse = new StreamReader(httpWebRequest.GetResponse().GetResponseStream()).ReadToEnd();
+                
+                Console.WriteLine("productList responseString: ", streamResponse);
+                
+                var lsResponse = JsonConvert.DeserializeObject<LsResponseGet>(streamResponse);
+                
+                masafiPricesRequest = lsResponse.data;
                 return masafiPricesRequest;
             }
             catch (WebException ex)

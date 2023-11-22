@@ -21,6 +21,7 @@ using IDOLSelfCheckout.DataModel;
 using System.Threading;
 using System.Runtime.InteropServices;
 using Toshiba_SIT.Core;
+using LS_Retail.Core;
 
 
 #nullable enable
@@ -103,7 +104,8 @@ namespace IDOLSelfCheckout
                 _barcode += c;
             Basepage.logWrite("_barcode=" + _barcode);
             Basepage.logWrite("e.Key=" + Convert.ToString(e.Key));
-
+            LS_SCO lS_SCO = new LS_SCO();
+            var a = lS_SCO.productList();
             if (e.Key == Key.Return)
             {
                 if (Basepage.LoyaltyRequested && !Basepage.LoyaltyScaned)
@@ -171,7 +173,8 @@ namespace IDOLSelfCheckout
                                         toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
                                         break;
                                     case "LS":
-
+                                        //LS_SCO lS_SCO = new LS_SCO();
+                                        //var a = lS_SCO.productList();
                                         break;
                                     default:
                                         // code block

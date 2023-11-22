@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LsRetail\items.cs" />
+    <Compile Include="LsRetail\LsResponseGet.cs" />
     <Compile Include="LsRetail\view_models.cs" />
     <Compile Include="prices.cs" />
     <Compile Include="PricesRequest.cs" />
