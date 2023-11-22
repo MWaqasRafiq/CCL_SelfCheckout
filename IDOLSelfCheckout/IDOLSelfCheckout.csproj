@@ -46,6 +46,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataModels\DataModels.csproj" />
+    <ProjectReference Include="..\LS_Retail\LS_Retail.csproj" />
+    <ProjectReference Include="..\On_Premises\On_Premises.csproj" />
+    <ProjectReference Include="..\Toshiba_SIT\Toshiba_SIT.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="POS.Devices.OPOSPOSPrinter">
       <HintPath>POS.Devices.OPOSPOSPrinter.dll</HintPath>
       <Private>True</Private>

@@ -20,6 +20,7 @@ using static IDOLSelfCheckout.FacePay;
 using IDOLSelfCheckout.DataModel;
 using System.Threading;
 using System.Runtime.InteropServices;
+using Toshiba_SIT.Core;
 
 
 #nullable enable
@@ -41,7 +42,7 @@ namespace IDOLSelfCheckout
         internal TextBox _textBox1;
         internal TextBlock _textBlock1;
         internal Image _imgCircle;
-        private ServerIntegration serverIntegration;
+        //private ServerIntegration serverIntegration;
         CCL_Lamp lamp;
 
        
@@ -63,7 +64,7 @@ namespace IDOLSelfCheckout
             this._timer.Enabled = true;
             this._timer.Start();
 
-            serverIntegration = new ServerIntegration();
+            //serverIntegration = new ServerIntegration();
             lamp = new CCL_Lamp();
             lamp.GreenOpen();
         }
@@ -162,7 +163,20 @@ namespace IDOLSelfCheckout
                             }
                             else
                             {
-                                serverIntegration.AddItemToReceipt(sco_data.ScannedBarcode);
+                                // here we will choose the server that we want to integrate
+                                switch (Basepage.ServerName) 
+                                {
+                                    case "SA":
+                                        ToshibaSA toshibaSA = new ToshibaSA();
+                                        toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
+                                        break;
+                                    case "LS":
+
+                                        break;
+                                    default:
+                                        // code block
+                                        break;
+                                }
                             }
 
                         }

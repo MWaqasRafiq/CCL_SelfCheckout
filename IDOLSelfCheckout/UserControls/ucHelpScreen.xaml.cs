@@ -33,7 +33,7 @@ namespace IDOLSelfCheckout.UserControls
         private void btn_help_sco_Click(object sender, RoutedEventArgs e)
         {
             btn_help_sco.Focusable = false;
-            //uc_call.Uc_Add(MainWindow.Item_SCO, new ucAsistantScreen());
+            uc_call.Uc_Add(MainWindow.Item_SCO, new ucAsistantScreen());
         }
      
     }

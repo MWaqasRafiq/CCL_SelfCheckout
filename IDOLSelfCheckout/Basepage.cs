@@ -48,8 +48,9 @@ namespace IDOLSelfCheckout
         public static string StoreNumber;
         public static bool LoyaltyRequested;
         public static bool LoyaltyScaned;
+        public static string ServerName;
         //private TsgcWebSocketClient socketClient;
-        
+
         public void loadValues()
         {
             try
@@ -103,6 +104,8 @@ namespace IDOLSelfCheckout
                     Basepage.HostTerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
                 if (ConfigurationManager.AppSettings["Store_No"] != null)
                     Basepage.StoreNumber = ConfigurationManager.AppSettings["Store_No"].ToString();
+                if (ConfigurationManager.AppSettings["ServerName"] != null)
+                    Basepage.ServerName = ConfigurationManager.AppSettings["ServerName"].ToString();
                 Basepage.logWrite("--------------------- Application Started -----------------------");
             }
             catch (Exception ex)

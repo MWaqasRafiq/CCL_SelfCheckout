@@ -23,6 +23,7 @@ using IDOLSelfCheckout.DataModel;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using Microsoft.VisualBasic;
+using Toshiba_SIT.Core;
 
 namespace IDOLSelfCheckout.UserControls
 {
@@ -34,7 +35,6 @@ namespace IDOLSelfCheckout.UserControls
         public ucPaymentScreen()
         {
             InitializeComponent();
-
         }
 
         private void btn_pay_back_Click(object sender, RoutedEventArgs e)
@@ -122,16 +122,17 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btnFacePay_Click(object sender, RoutedEventArgs e)
         {
+            
             if (!string.IsNullOrEmpty(sco_data.TransactionTotal) && IsAllDigits(sco_data.TransactionTotal))
             {
-                //int total = Convert.ToInt32(decimal.Parse(sco_data.TransactionTotal));
-                //if (total > 0)
-                //{
-                //    ServerIntegration serverIntegration = new ServerIntegration();
-                //    serverIntegration.TotalReceipt();
-                //    FacePay facePay = new FacePay();
-                //    facePay.IdentifyPerson();
-                //}
+                int total = Convert.ToInt32(decimal.Parse(sco_data.TransactionTotal));
+                if (total > 0)
+                {
+                    //ServerIntegration serverIntegration = new ServerIntegration();
+                    new ToshibaSA().TotalReceipt();
+                    FacePay facePay = new FacePay();
+                    facePay.IdentifyPerson();
+                }
             }
             else
                 Basepage.logWrite("FacePay - Invalid Transaction amount requested: " + sco_data.TransactionTotal);

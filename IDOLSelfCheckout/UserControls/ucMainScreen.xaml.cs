@@ -1,4 +1,5 @@
-﻿using IDOLSelfCheckout.Classes;
+﻿using DataModels.ToshibaSA;
+using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.DataModel;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Toshiba_SIT;
+using Toshiba_SIT.Core;
 
 namespace IDOLSelfCheckout.UserControls
 {
@@ -30,7 +33,8 @@ namespace IDOLSelfCheckout.UserControls
         public static Label ItemInfo;
         public static TextBlock ReceiptText;
         private readonly view_models viewModels;
-        private ServerIntegration serverIntegration;
+        //private ServerIntegration serverIntegration;
+        private ToshibaSA toshibaSA;
         CCL_Lamp lamp;
         public ucMainScreen()
         {
@@ -48,11 +52,15 @@ namespace IDOLSelfCheckout.UserControls
             ItemListDataGrid.DataContext = this.viewModels;
 
             //Server API
-            serverIntegration = new ServerIntegration();
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(500);
-            timer.Tick += ServiceCallWorker;
-            timer.Start();
+            //serverIntegration = new ServerIntegration();
+            toshibaSA = new ToshibaSA();
+            if(Basepage.ServerName == "SA")
+            {
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromMilliseconds(500);
+                timer.Tick += ServiceCallWorker;
+                timer.Start();
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -97,10 +105,9 @@ namespace IDOLSelfCheckout.UserControls
             ucMainScreen.TransactionDetails.Content = (object)("Store No: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber );
         }
 
-        public void UpdateReceipt(PosServiceResponseVM responseVM)
+        public void UpdateReceipt(InvoiceResponseVM responseVM)
         {
-            if (responseVM != null && responseVM.Receipt != null && ReceiptText != null 
-                )//&& responseVM.PosSubState == "1008")
+            if (responseVM != null && string.IsNullOrEmpty(responseVM.Receipt) == false && ReceiptText != null)//&& responseVM.PosSubState == "1008")
             {
                 ReceiptText.Text = responseVM.Receipt;
                 
@@ -151,8 +158,8 @@ namespace IDOLSelfCheckout.UserControls
         {
             if (Receipt_Text != null && !Basepage.IsLocalConsumption)
             {
-                PosServiceResponseVM responseVM = serverIntegration.GetReceipt();
-                UpdateReceipt(responseVM);
+                var response = toshibaSA.GetReceipt();
+                UpdateReceipt(response);
             }
         }
 

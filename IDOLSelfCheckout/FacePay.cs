@@ -15,6 +15,7 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Windows;
 using static System.Net.Mime.MediaTypeNames;
+using Toshiba_SIT.Core;
 
 namespace IDOLSelfCheckout
 {
@@ -279,8 +280,21 @@ namespace IDOLSelfCheckout
                 var response = JsonConvert.DeserializeObject<ResponseJson>(Text) ?? new ResponseJson();
 
                 //Card Payment
-                ServerIntegration serverIntegration = new ServerIntegration();
-                serverIntegration.CashPayment(responseJson.totalAmount.ToString());
+                switch (Basepage.ServerName)
+                {
+                    case "SA":
+                        ToshibaSA toshibaSA = new ToshibaSA();
+                        toshibaSA.CashPayment(responseJson.totalAmount.ToString());
+                        sco_data.TransactionProcess = "FINISHED";
+                        break;
+                    case "LS":
+
+                        break;
+                    default:
+                        // code block
+                        break;
+                }
+                
                 Thread.Sleep(300);
 
                 //print receipt
