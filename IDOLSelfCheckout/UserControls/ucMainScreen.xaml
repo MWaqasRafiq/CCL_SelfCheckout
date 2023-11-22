@@ -31,7 +31,7 @@
                     </Grid.RowDefinitions>
                     <Border Background="White" Grid.Column="0" Grid.Row="0">
                         <DockPanel VerticalAlignment="Center" HorizontalAlignment="Left">
-                            <Label x:Name="item_info" FontSize="23" FontWeight="Normal" FontStretch="Normal">Scan item</Label>
+                            <Label x:Name="item_info" FontSize="23" FontWeight="Normal" FontStretch="Normal">Scan item(s)</Label>
                         </DockPanel>
                     </Border>
                     <Border Background="White" Grid.Column="1" Grid.Row="0">
@@ -70,8 +70,7 @@
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <ScrollViewer Name="Receipt_Text_parent" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">
-                                <TextBlock IsEnabled="False" Name="Receipt_Text"  TextWrapping = "Wrap" Background="White"  FontSize="12" >
-                                </TextBlock>
+                                <TextBlock Padding="10" Name="Receipt_Text"  TextWrapping = "Wrap" Background="White"  FontSize="12" IsEnabled="False" />
                             </ScrollViewer>
                             <Border Visibility="Hidden" x:Name="item_list_parent" Background="Azure" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">
 

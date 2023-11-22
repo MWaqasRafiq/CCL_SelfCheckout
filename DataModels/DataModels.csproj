@@ -39,11 +39,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LsRetail\items.cs" />
+    <Compile Include="LsRetail\view_models.cs" />
+    <Compile Include="prices.cs" />
+    <Compile Include="PricesRequest.cs" />
+    <Compile Include="Shared\sco_data.cs" />
     <Compile Include="ToshibaSA\InvoiceRequestVM.cs" />
     <Compile Include="ToshibaSA\InvoiceResponseVM.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LsRetail\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

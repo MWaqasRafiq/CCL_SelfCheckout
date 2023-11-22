@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using DataModels.ToshibaSA;
+using System.IO;
 
 namespace Toshiba_SIT.Core
 {
@@ -17,6 +18,11 @@ namespace Toshiba_SIT.Core
         public static string HostServiceIp;
         public static string HostServiceEndpoint;
         public static string HostTerminalId;
+        public static string LogFilePath;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ToshibaSA()
         {
             if (ConfigurationManager.AppSettings["Service_Ip"] != null)
@@ -25,8 +31,15 @@ namespace Toshiba_SIT.Core
                 HostServiceEndpoint = ConfigurationManager.AppSettings["Service_EndPoint"].ToString();
             if (ConfigurationManager.AppSettings["Terminal_Id"] != null)
                 HostTerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
+            if (ConfigurationManager.AppSettings["LogFile"] != null)
+                LogFilePath = ConfigurationManager.AppSettings["LogFile"].ToString();
         }
   
+        /// <summary>
+        /// Private method for Toshiba SA call
+        /// </summary>
+        /// <param name="serviceRequest"></param>
+        /// <returns></returns>
         private InvoiceResponseVM PostPosRequest(InvoiceRequestVM serviceRequest)
         {
             InvoiceResponseVM serviceResponseVM = new InvoiceResponseVM();
@@ -51,7 +64,9 @@ namespace Toshiba_SIT.Core
                         var result = response.Content.ReadAsStringAsync().Result;
                         result = result.Remove(result.Length - (HostTerminalId.Length + 2), (HostTerminalId.Length + 2));
                         serviceResponseVM = JsonConvert.DeserializeObject<InvoiceResponseVM>(result) ?? new InvoiceResponseVM();
-                        //serviceResponseVM.Receipt = ConvertArabicText864To1256(serviceResponseVM.Receipt);
+                        
+                        serviceResponseVM.Receipt = ConvertArabicText864To1256(serviceResponseVM.Receipt);
+                        
                         if (result.ToLower().Contains("securemode"))
                         {
                             serviceResponseVM.IsSecured = true;
@@ -59,17 +74,18 @@ namespace Toshiba_SIT.Core
                     }
                     else
                     {
-                        //Basepage.logWrite("Display Error - Code:" + response.StatusCode + "Display Error - Message:" + response.ReasonPhrase);
+                        logWrite("ToshibaSA Display Error - Code:" + response.StatusCode + "Display Error - Message:" + response.ReasonPhrase);
                     }
                 }
             }
             catch (Exception ex)
             {
-                //Basepage.logWrite(ex.Message);
+                logWrite("ToshibaSA "+ ex.Message);
             }
 
             return serviceResponseVM;
         }
+
         /// <summary>
         /// Get Receipt from server using Display2
         /// </summary>
@@ -85,6 +101,7 @@ namespace Toshiba_SIT.Core
                 qty = ""
             });
         }
+
         /// <summary>
         /// Void/Remove an item from receipt
         /// </summary>
@@ -202,6 +219,92 @@ namespace Toshiba_SIT.Core
             });
 
             return result;
+        }
+
+        /// <summary>
+        /// Convert CodeBase code into Arabic letter
+        /// </summary>
+        /// <param name="arabic"></param>
+        /// <returns></returns>
+        public string ConvertArabicText864To1256(string arabic)
+        {
+            List<byte> Arabic864 = new List<byte>();
+            List<byte> revArabic = new List<byte>();
+            string result = string.Empty;
+            bool flag = false;
+
+
+            try
+            {
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                for (int i = 0; i < arabic.Length; i++)
+                {
+                    if (arabic[i] == '[' && arabic[i + 4] == ']')
+                    {
+                        flag = true;
+                        i++;
+                        string hh = arabic[i++].ToString() + arabic[i++].ToString() + arabic[i++].ToString();
+                        revArabic.Add((byte)int.Parse(hh));
+                    }
+                    else
+                    {
+                        if (flag)
+                        {
+                            if (arabic[i] == ' ' || arabic[i] == ',' || arabic[i] == '.' || arabic[i] == ':')
+                            {
+                                revArabic.Add((byte)arabic[i]);
+                            }
+                            else
+                            {
+                                byte[] B1 = revArabic.ToArray();
+                                for (int j = 0; j < B1.Length; j++)
+                                {
+                                    Arabic864.Add(B1[B1.Length - j - 1]);
+                                }
+                                revArabic.Clear();
+                                flag = false;
+                            }
+                        }
+                        Arabic864.Add((byte)arabic[i]);
+                    }
+                }
+                Arabic864.AddRange(revArabic);
+                byte[] B = Arabic864.ToArray();
+                result = Encoding.GetEncoding("windows-1256").GetString(B);
+            }
+            catch (Exception e)
+            {
+                logWrite("Arabic Encoding Error - " + e.Message);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Write Logs
+        /// </summary>
+        /// <param name="msg"></param>
+        public static void logWrite(string msg)
+        {
+            string format = "ddMMyyyy";
+            string path = LogFilePath + "POS" + DateTime.Now.ToString(format) + ".log";
+            string str = "1.3.0.2";
+            if (!File.Exists(path))
+            {
+                StreamWriter streamWriter = new StreamWriter(path);
+                streamWriter.WriteLine("[" + str.ToString() + "] " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss tt") + "==> " + msg);
+                streamWriter.Close();
+            }
+            else
+            {
+                using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                {
+                    using (StreamWriter streamWriter = new StreamWriter((Stream)fileStream))
+                    {
+                        streamWriter.WriteLine("[" + str.ToString() + "] " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss tt") + "==> " + msg);
+                        streamWriter.Close();
+                    }
+                }
+            }
         }
 
     }
