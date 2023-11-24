@@ -16,6 +16,7 @@ using System.Threading;
 using System.Windows;
 using static System.Net.Mime.MediaTypeNames;
 using Toshiba_SIT.Core;
+using DataModels.Shared;
 
 namespace IDOLSelfCheckout
 {

@@ -1,4 +1,5 @@
-﻿using DataModels.ToshibaSA;
+﻿using DataModels.Shared;
+using DataModels.ToshibaSA;
 using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.DataModel;
 using System;
@@ -92,16 +93,17 @@ namespace IDOLSelfCheckout.UserControls
                 uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
             }
             sco_data.StoreNumber = Basepage.StoreNumber;
-            if (Basepage.IsLocalConsumption)
-            {
-                item_list_parent.Visibility = Visibility.Visible;
-                Receipt_Text_parent.Visibility = Visibility.Hidden;
-            }
-            else
+            if (Basepage.ServerName == "SA" || Basepage.ServerName == "LS")//(Basepage.IsLocalConsumption)
             {
                 item_list_parent.Visibility = Visibility.Hidden;
                 Receipt_Text_parent.Visibility = Visibility.Visible;
             }
+            else
+            {
+                item_list_parent.Visibility = Visibility.Visible;
+                Receipt_Text_parent.Visibility = Visibility.Hidden;
+            }
+            
             ucMainScreen.TransactionDetails.Content = (object)("Store No: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber );
         }
 
@@ -156,7 +158,7 @@ namespace IDOLSelfCheckout.UserControls
         /// <param name="e"></param>
         void ServiceCallWorker(object sender, EventArgs e)
         {
-            if (Receipt_Text != null && !Basepage.IsLocalConsumption)
+            if (Receipt_Text != null)
             {
                 var response = toshibaSA.GetReceipt();
                 UpdateReceipt(response);

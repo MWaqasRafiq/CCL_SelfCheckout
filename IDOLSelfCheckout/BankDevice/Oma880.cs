@@ -1,4 +1,5 @@
-﻿using IDOLSelfCheckout.Classes;
+﻿using DataModels.Shared;
+using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.UserControls;
 using System;
 using System.Collections.Generic;

@@ -24,6 +24,7 @@ using System.Windows.Threading;
 using System.Xml.Linq;
 using Microsoft.VisualBasic;
 using Toshiba_SIT.Core;
+using DataModels.Shared;
 
 namespace IDOLSelfCheckout.UserControls
 {

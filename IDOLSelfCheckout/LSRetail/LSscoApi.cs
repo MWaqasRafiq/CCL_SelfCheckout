@@ -1,4 +1,6 @@
-﻿using IDOLSelfCheckout.Classes;
+﻿using DataModels.LsRetail;
+using DataModels.Shared;
+//using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.UserControls;
 using Newtonsoft.Json;
 using System;
@@ -24,7 +26,7 @@ namespace IDOLSelfCheckout.LSRetail
                 masafiPricesRequest masafiPricesRequest;
                 using (StreamReader streamReader = new StreamReader(Directory.GetCurrentDirectory() + "\\products" + "\\products.json"))
                     masafiPricesRequest = JsonConvert.DeserializeObject<masafiPricesRequest>(streamReader.ReadToEnd());
-                if (!Basepage.IsLocalConsumption)
+                //if (!Basepage.IsLocalConsumption)
                 {
                     string requestUriString = "https://api.ommasign.com/v1/datasource/2118/force";
                     Console.WriteLine("baseurl: {0}", (object)requestUriString);

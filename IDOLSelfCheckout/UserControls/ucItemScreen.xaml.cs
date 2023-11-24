@@ -1,4 +1,5 @@
-﻿using IDOLSelfCheckout.Classes;
+﻿using DataModels.Shared;
+using IDOLSelfCheckout.Classes;
 using System;
 using System.CodeDom.Compiler;
 using System.ComponentModel;

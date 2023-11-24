@@ -4,8 +4,11 @@
 // MVID: C67170A7-BC98-4C94-BBAA-42FB9B93CC1B
 // Assembly location: C:\Users\Hi\Downloads\APP Masafi\IDOLSelfCheckout.dll
 
+using DataModels.LsRetail;
+using DataModels.Shared;
 using IDOLSelfCheckout.BankDevice;
 using IDOLSelfCheckout.Classes;
+//using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
 using Newtonsoft.Json;
@@ -23,7 +26,7 @@ namespace IDOLSelfCheckout
 {
     public class Basepage
     {
-        private readonly view_models viewModels;
+        private readonly DataModels.LsRetail.view_models viewModels;
         public static string LogFilePath;
         public static string LSRetail_Header_Username;
         public static string LSRetail_Header_Password;
@@ -43,7 +46,7 @@ namespace IDOLSelfCheckout
         public static string PopId_Host;
         public static int PopId_Port;
         public static int PopId_SecondaryPort;
-        public static bool IsLocalConsumption;
+        //public static bool IsLocalConsumption;
         public static string HostTerminalId;
         public static string StoreNumber;
         public static bool LoyaltyRequested;
@@ -98,8 +101,8 @@ namespace IDOLSelfCheckout
                     Basepage.PopId_SecondaryPort = Convert.ToInt32(ConfigurationManager.AppSettings["PopId_SecondaryPort"]);
 
                 //Service API
-                if (ConfigurationManager.AppSettings["IsLocalConsumption"] != null)
-                    Basepage.IsLocalConsumption = Convert.ToBoolean(ConfigurationManager.AppSettings["IsLocalConsumption"]);
+                //if (ConfigurationManager.AppSettings["IsLocalConsumption"] != null)
+                    //Basepage.IsLocalConsumption = Convert.ToBoolean(ConfigurationManager.AppSettings["IsLocalConsumption"]);
                 if (ConfigurationManager.AppSettings["Terminal_Id"] != null)
                     Basepage.HostTerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
                 if (ConfigurationManager.AppSettings["Store_No"] != null)
@@ -149,7 +152,7 @@ namespace IDOLSelfCheckout
                 if (flag)
                 {
                     logWrite("addItem1");
-                    List<items> itemList = sco_data.ItemList;
+                    List<DataModels.LsRetail.items> itemList = sco_data.ItemList;
                     if(itemList.Where(x=>x.Name == product.name && x.Price == product.price).Any())
                     {
                         itemList.Where(w => w.Name == product.name && w.Price == product.price)
@@ -157,7 +160,7 @@ namespace IDOLSelfCheckout
                     }
                     else
                     {
-                        itemList.Add(new items()
+                        itemList.Add(new DataModels.LsRetail.items()
                         {
                             Name = product.name,
                             Qty = "1",
@@ -170,9 +173,9 @@ namespace IDOLSelfCheckout
                     if (itemList.Count <= 0)
                         return false;
                     logWrite("addItem3");
-                    view_models viewModels = new view_models()
+                    DataModels.LsRetail.view_models viewModels = new DataModels.LsRetail.view_models()
                     {
-                        items = (IEnumerable<items>)itemList
+                        items = (IEnumerable<DataModels.LsRetail.items>)itemList
                     };
                     logWrite("addItem4");
                     ucMainScreen.ItemListDataGrid.DataContext = (object)viewModels;
@@ -292,7 +295,7 @@ namespace IDOLSelfCheckout
             return flag;
         }
 
-        public void updateTransactionDetails(prices product)
+        public void updateTransactionDetails(prices product = null)
         {
             ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
             ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED " + sco_data.TransactionTotal);

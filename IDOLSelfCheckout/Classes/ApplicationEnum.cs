@@ -13,8 +13,8 @@ namespace IDOLSelfCheckout.Classes
     }
     public enum ServersEnum
     {
-        OP = 0, //On Premises // Offline
         SA = 1, //Toshiba SA SIT
-        LS = 2 // LS Retails
+        LS = 2, // LS Retails
+        D3 = 3 //Dynamics 365
     }
 }

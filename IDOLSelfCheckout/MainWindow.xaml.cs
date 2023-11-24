@@ -1,4 +1,4 @@
-﻿using IDOLSelfCheckout.Classes;
+﻿//using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
 using Newtonsoft.Json;
@@ -22,6 +22,10 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using Toshiba_SIT.Core;
 using LS_Retail.Core;
+using DataModels.Shared;
+using DataModels.LsRetail;
+using IDOLSelfCheckout.Classes;
+using On_Premises.Core;
 
 
 #nullable enable
@@ -50,7 +54,7 @@ namespace IDOLSelfCheckout
         public MainWindow()
         {
             this.InitializeComponent();
-            sco_data.ItemList = new List<items>();
+            sco_data.ItemList = new List<DataModels.LsRetail.items>();
             string[] filter = new string[4]
             {
         "*.jpg",
@@ -104,8 +108,8 @@ namespace IDOLSelfCheckout
                 _barcode += c;
             Basepage.logWrite("_barcode=" + _barcode);
             Basepage.logWrite("e.Key=" + Convert.ToString(e.Key));
-            LS_SCO lS_SCO = new LS_SCO();
-            var a = lS_SCO.productList();
+            //LS_SCO lS_SCO = new LS_SCO();
+            //var a = lS_SCO.productList();
             if (e.Key == Key.Return)
             {
                 if (Basepage.LoyaltyRequested && !Basepage.LoyaltyScaned)
@@ -135,52 +139,72 @@ namespace IDOLSelfCheckout
                         {
                             sco_data.ScannedBarcode = _barcode;
                             Basepage.logWrite("sco_data.ScannedBarcode=" + sco_data.ScannedBarcode);
-                            if (Basepage.IsLocalConsumption)
+                            // here we will choose the server that we want to integrate
+                            switch (Basepage.ServerName)
                             {
-                                masafiPricesRequest masafiPricesRequest = new LSscoApi().productList();
-                                prices prices = new prices();
-                                prices product = Array.Find<prices>(masafiPricesRequest.prices, (Predicate<prices>)(element => element.barcode == sco_data.ScannedBarcode));
-                                if (product != null)
-                                {
-                                    Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name);
-                                    Basepage basepage = new Basepage();
-                                    Basepage.logWrite("basepage reinitialized");
-                                    if (basepage.addItem(sco_data.ReceiptNumber, sco_data.ScannedBarcode, product))
-                                    {
-                                        Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Added");
-                                        basepage.updateTransactionDetails(product);
-                                        uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
-                                    }
-                                    else
-                                    {
-                                        uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
-                                        Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Went to Help");
+                                case "SA":
+                                    ToshibaSA toshibaSA = new ToshibaSA();
+                                    toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
+                                    break;
+                                case "LS":
+                                    //LS_SCO lS_SCO = new LS_SCO();
+                                    //var a = lS_SCO.productList();
+                                    break;
+                                case "D3":
+                                    break;
+                                default:
+                                    AddItemOnPremises();
+                                    break;
+                            }
+                            //if (Basepage.IsLocalConsumption)
+                            //{
+                            //    masafiPricesRequest masafiPricesRequest = new LSscoApi().productList();
+                            //    prices prices = new prices();
+                            //    prices product = Array.Find<prices>(masafiPricesRequest.prices, (Predicate<prices>)(element => element.barcode == sco_data.ScannedBarcode));
+                            //    if (product != null)
+                            //    {
+                            //        Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name);
+                            //        Basepage basepage = new Basepage();
+                            //        Basepage.logWrite("basepage reinitialized");
+                            //        if (basepage.addItem(sco_data.ReceiptNumber, sco_data.ScannedBarcode, product))
+                            //        {
+                            //            Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Added");
+                            //            basepage.updateTransactionDetails(product);
+                            //            uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+                            //        }
+                            //        else
+                            //        {
+                            //            uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
+                            //            Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Went to Help");
 
-                                    }
-                                }
-                                else
-                                {
-                                    Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Not Found");
-                                }
-                            }
-                            else
-                            {
-                                // here we will choose the server that we want to integrate
-                                switch (Basepage.ServerName) 
-                                {
-                                    case "SA":
-                                        ToshibaSA toshibaSA = new ToshibaSA();
-                                        toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
-                                        break;
-                                    case "LS":
-                                        //LS_SCO lS_SCO = new LS_SCO();
-                                        //var a = lS_SCO.productList();
-                                        break;
-                                    default:
-                                        // code block
-                                        break;
-                                }
-                            }
+                            //        }
+                            //    }
+                            //    else
+                            //    {
+                            //        Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Not Found");
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    // here we will choose the server that we want to integrate
+                            //    switch (Basepage.ServerName) 
+                            //    {
+                            //        case "SA":
+                            //            ToshibaSA toshibaSA = new ToshibaSA();
+                            //            toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
+                            //            break;
+                            //        case "LS":
+                            //            //LS_SCO lS_SCO = new LS_SCO();
+                            //            //var a = lS_SCO.productList();
+                            //            break;
+                            //        case "OP":
+                            //            AddItemOnPremises();
+                            //            break;
+                            //        default:
+                            //            // code block
+                            //            break;
+                            //    }
+                            //}
 
                         }
                     }
@@ -223,6 +247,26 @@ namespace IDOLSelfCheckout
             if (this.count1 >= this.Images1.Count)
                 this.count1 = 0;
             this.sceneriesBtn.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("C:\\IDOL\\images\\advertise\\" + this.Images1[this.count1].ToString());
+        }
+
+        private void AddItemOnPremises()
+        {
+            OnPremises_SCO onPremises = new OnPremises_SCO();
+            Basepage basepage = new Basepage();
+            var result = onPremises.AddItemOnPremises();
+
+            if (result != null && result.items !=null)
+            {
+                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+                ucMainScreen.ItemListDataGrid.DataContext = (object)result;
+                basepage.updateTransactionDetails();
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+            }
+            else
+            {
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
+                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
+            }
         }
     }
 }

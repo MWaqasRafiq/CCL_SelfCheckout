@@ -1,4 +1,5 @@
-﻿using IDOLSelfCheckout.BankDevice;
+﻿using DataModels.Shared;
+using IDOLSelfCheckout.BankDevice;
 using IDOLSelfCheckout.Classes;
 using System;
 using System.Collections.Generic;
@@ -41,8 +42,8 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btn_assistant_sco_Click(object sender, RoutedEventArgs e)
         {
-            sco_data.ItemList = new List<items>();
-            List<items> itemList = sco_data.ItemList;
+            sco_data.ItemList = new List<DataModels.LsRetail.items>();
+            List<DataModels.LsRetail.items> itemList = sco_data.ItemList;
             sco_data.TransactionTotal = Convert.ToDecimal("0").ToString("0.00");
             sco_data.TransactionVat = Convert.ToDecimal("0").ToString("0.00"); ;
             ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
