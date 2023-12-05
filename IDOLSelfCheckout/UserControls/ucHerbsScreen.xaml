@@ -39,7 +39,7 @@
                   CommandParameter="423432432432" Command="{Binding ButtonClickCommand}">
                         <DockPanel LastChildFill="True">
                             <Label Name="btn_herbs_label1" HorizontalContentAlignment="Center" DockPanel.Dock="Bottom"/>
-                            <Image Source="C:/IDOL/images/icons/freshherbs.png"/>
+                            <Image Source="C:/IDOL/images/icons/h1.jpg"/>
                         </DockPanel>
                     </Button>
                 </Border>
@@ -47,7 +47,7 @@
                     <Button Click="btn_herbs_item2_Click" Name="btn_herbs_item2" Background="White">
                         <DockPanel LastChildFill="True">
                             <Label Name="btn_herbs_label2" HorizontalContentAlignment="Center" DockPanel.Dock="Bottom"/>
-                            <Image Source="C:/IDOL/images/icons/freshherbs.png"/>
+                            <Image Source="C:/IDOL/images/icons/h2.jpg"/>
                         </DockPanel>
                     </Button>
                 </Border>
@@ -55,7 +55,7 @@
                     <Button Click="btn_herbs_item3_Click" Name="btn_herbs_item3" Background="White">
                         <DockPanel LastChildFill="True">
                             <Label Name="btn_herbs_label3" HorizontalContentAlignment="Center" DockPanel.Dock="Bottom"/>
-                            <Image Source="C:/IDOL/images/icons/freshherbs.png"/>
+                            <Image Source="C:/IDOL/images/icons/h3.jpg"/>
                         </DockPanel>
                     </Button>
                 </Border>

@@ -31,33 +31,33 @@
 			"barcode": "8965412356236"
 		},
 		{
-			"name": "NEW MINI BREAD",
+			"name": "First Aid Bandage",
 			"price": "1.50",
 			"barcode": "8965412356237"
 		},
 		{
-			"name": "NEW MINI VIENESE",
-			"price": "2.00",
+			"name": "First Aid Ointment",
+			"price": "20.50",
 			"barcode": "8965412356238"
 		},
 		{
-			"name": "NEW MUFFINS ASSORTED",
-			"price": "3.00",
+			"name": "NEW First Aid Kit",
+			"price": "98.75",
 			"barcode": "8965412356239"
 		},
 		{
-			"name": "HERBS 1",
-			"price": "1.00",
+			"name": "Daily Patient Care",
+			"price": "500.00",
 			"barcode": "8965412356240"
 		},
 		{
-			"name": "NEW HERBS 2",
-			"price": "2.50",
+			"name": "Emergency Treatment",
+			"price": "450.00",
 			"barcode": "8965412356241"
 		},
 		{
-			"name": "HERBS 3",
-			"price": "3.00",
+			"name": "Lab Sample Collection",
+			"price": "50.00",
 			"barcode": "8965412356242"
 		},
 		{
@@ -136,49 +136,139 @@
 			"barcode": "5699100006668"
 		},
 		{
-			"name": "Cotton Candy",
-			"price": "0.50",
-			"barcode": "2000005462672"
+			"name": "NAN 3 MILK 400GM",
+			"barcode": "493644",
+			"price": "41.57"
 		},
 		{
-			"name": "CRF Hair CMB bg",
-			"price": "4.30",
-			"barcode": "6224665582259"
+			"name": "SIMILAC 1 GOLD 800 GM",
+			"barcode": "18173630",
+			"price": "91.95"
 		},
 		{
-			"name": "Cold Coffee",
-			"price": "7.99",
-			"barcode": "6223004687495"
+			"name": "SIMILAC 1 GOLD 800 GM",
+			"barcode": "18173631",
+			"price": "91.95"
 		},
 		{
-			"name": "Masafi 330ml",
-			"price": "1.00",
-			"barcode": "8002713083273"
+			"name": "REDOXON (VITAMIN C) 1 G TEF 15'S",
+			"barcode": "2320832",
+			"price": "24.93"
 		},
 		{
-			"name": "Bayara Cashews Jumbo",
-			"price": "43.00",
-			"barcode": "2000003245581"
+			"name": "DETTOL SOAP FRESH 70 GM",
+			"barcode": "454920",
+			"price": "6.51"
 		},
 		{
-			"name": "Test Item 410  عنصر اختبار",
-			"price": "4.10",
-			"barcode": "6294003562120"
+			"name": "DETTOL SOAP FRESH 165 GM",
+			"barcode": "455135",
+			"price": "11.86"
 		},
 		{
-			"name": "Test Item 10",
-			"price": "10.4",
-			"barcode": "6294002562121"
+			"name": "BEPANTHEN 5% CR 30 G",
+			"barcode": "417494",
+			"price": "22.94"
 		},
 		{
-			"name": "Test QR 1",
-			"price": "1.4",
-			"barcode": "0099999990261"
+			"name": "CLEXANE 20 MG PFS 2'S",
+			"barcode": "151455140",
+			"price": "23.05"
 		},
 		{
-			"name": "Test Receipt Scan",
-			"price": "1",
-			"barcode": "6006401702432310022036"
+			"name": "CLEXANE 40 MG PFS 2'S",
+			"barcode": "151723228",
+			"price": "39.65"
+		},
+		{
+			"name": "CLEXANE 40 MG PFS 2'S",
+			"barcode": "151723227",
+			"price": "39.65"
+		},
+		{
+			"name": "CLEXANE 60 MG PFS 2'S",
+			"barcode": "154843111",
+			"price": "55.30"
+		},
+		{
+			"name": "CLEXANE 80 MG PFS 2'S",
+			"barcode": "142176105",
+			"price": "68.20"
+		},
+		{
+			"name": "CODIOVAN 160/12.5 MG TAB 28'S",
+			"barcode": "148702110",
+			"price": "42.50"
+		},
+		{
+			"name": "CODIOVAN 160/25 MG TAB 28'S",
+			"barcode": "15145867",
+			"price": "42.50"
+		},
+		{
+			"name": "CODIOVAN 320/12.5 MG TAB 28'S",
+			"barcode": "1682492",
+			"price": "57.85"
+		},
+		{
+			"name": "CODIOVAN 320/25 MG TAB 28'S",
+			"barcode": "16825194",
+			"price": "57.85"
+		},
+		{
+			"name": "CODIOVAN 80/12.5 MG TAB 28'S",
+			"barcode": "843490",
+			"price": "38.95"
+		},
+		{
+			"name": "OMRON THERMOMETER (YASEE)",
+			"barcode": "802048",
+			"price": "390.00"
+		},
+		{
+			"name": "OMRON THERMOMETER (YASEE)",
+			"barcode": "802049",
+			"price": "390.00"
+		},
+		{
+			"name": "PYLERA CAP 120'S(N)",
+			"barcode": "17720528",
+			"price": "545.20"
+		},
+		{
+			"name": "PYLERA CAP 120'S(N)",
+			"barcode": "17720529",
+			"price": "545.20"
+		},
+		{
+			"name": "PANADOL (BLUE) 500 MG TAB 24'S",
+			"barcode": "2430483",
+			"price": "5.80"
+		},
+		{
+			"name": "PANADOL (BLUE) 500 MG TAB 24'S",
+			"barcode": "2430484",
+			"price": "5.80"
+		},
+		{
+			"name": "PANADOL (BLUE) 500 MG TAB 24'S",
+			"barcode": "2430485",
+			"price": "5.80"
+		},
+		{
+			"name": "FORTI SAC 30'S",
+			"barcode": "19952247",
+			"price": "323.09"
+		},
+		{
+			"name": "FORTI SAC 30'S",
+			"barcode": "19952246",
+			"price": "323.09"
+		},
+		{
+			"name": "VOLTIC 75 MG AMP 5'S",
+			"barcode": "2291812",
+			"price": "26.10"
 		}
 	]
 }

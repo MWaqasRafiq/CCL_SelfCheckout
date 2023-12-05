@@ -47,16 +47,18 @@
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
                 <Border  Background="red"  Grid.Column="0" Grid.Row="0">
-                    <Button Name="btn_bakery_add" Click="btn_bakery_add_Click"  >
-                        <Image Source="C:/IDOL/images/icons/bakerybtn.png" Stretch="Fill"   />
+                    <Button Name="btn_bakery_add" Click="btn_bakery_add_Click"  Background="White" FontSize="50" FontWeight="DemiBold">
+                        First Aid
+                        <!--<Image Source="C:/IDOL/images/icons/bakerybtn.png" Stretch="Fill"   />-->
                     </Button>
                     
                     
 
                 </Border>
                 <Border Background="Yellow" Grid.Column="1" Grid.Row="0">
-                    <Button Name="btn_herbs_add" Click="btn_herbs_add_Click"  >
-                        <Image Source="C:/IDOL/images/icons/herbsbtn.png" Stretch="Fill" />
+                    <Button Name="btn_herbs_add" Click="btn_herbs_add_Click"  Background="White" FontSize="50" FontWeight="DemiBold">
+                        Home Care
+                        <!--<Image Source="C:/IDOL/images/icons/herbsbtn.png" Stretch="Fill" />-->
                     </Button>
                     
 

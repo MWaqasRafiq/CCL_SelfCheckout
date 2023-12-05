@@ -39,7 +39,7 @@
                   CommandParameter="423432432432" Command="{Binding ButtonClickCommand}">
                         <DockPanel LastChildFill="True">
                             <Label x:Name="btn_bakery_label1" HorizontalContentAlignment="Center" DockPanel.Dock="Bottom"/>
-                            <Image Source="C:/IDOL/images/icons/bakeryminibread.png"/>
+                            <Image Source="C:/IDOL/images/icons/f1.jpg"/>
                         </DockPanel>
                     </Button>
                 </Border>
@@ -47,7 +47,7 @@
                     <Button Click="btn_bakery_item2_Click" Name="btn_bakery_item2" Background="White">
                         <DockPanel LastChildFill="True">
                             <Label x:Name="btn_bakery_label2" HorizontalContentAlignment="Center" DockPanel.Dock="Bottom"/>
-                            <Image Source="C:/IDOL/images/icons/bakeryminivienese.png"/>
+                            <Image Source="C:/IDOL/images/icons/f2.jpg"/>
                         </DockPanel>
                     </Button>
                 </Border>
@@ -55,7 +55,7 @@
                     <Button Click="btn_bakery_item3_Click" Name="btn_bakery_item3" Background="White">
                         <DockPanel LastChildFill="True">
                             <Label x:Name="btn_bakery_label3" HorizontalContentAlignment="Center" DockPanel.Dock="Bottom"/>
-                            <Image Source="C:/IDOL/images/icons/bakerymuuinsassorted.png"/>
+                            <Image Source="C:/IDOL/images/icons/f3.jpg"/>
                         </DockPanel>
                     </Button>
                 </Border>
