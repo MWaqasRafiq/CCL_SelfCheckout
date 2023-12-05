@@ -34,3 +34,6 @@
 /WpfLamp/obj/Debug/WpfLamp_MarkupCompile.cache
 /WpfLamp/obj/Release/WpfLamp_Content.g.cs
 /WpfLamp/obj/Release/WpfLamp_MarkupCompile.cache
+/DataModels/bin/Debug
+/DataModels/obj/Debug
+/packages
