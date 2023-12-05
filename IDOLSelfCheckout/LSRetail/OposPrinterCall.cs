@@ -47,9 +47,9 @@ namespace IDOLSelfCheckout.LSRetail
                 }
 
                 string receipt = " ===================================\n" +
-                             " \t\t  Choithrams \n" +
+                             " \t\tIDOL Pharmacy \n" +
                              " ===================================\n" +
-                             " \t full of goodness\n" +
+                             " \t we care for your health\n" +
                              " ----------------------------------------------------\n" +
                              " Slip:\t\t " + sco_data.ReceiptNumber + "\n" +
                              " Staff:101 \t Trans: " + sco_data.TransactionNo + "\n" +
@@ -118,9 +118,9 @@ namespace IDOLSelfCheckout.LSRetail
                 }
 
                 string receipt = "\n ============================================\n" +
-                             " \t\t  Choithrams       \n" +
+                             " \t\tIDOL Pharmacy       \n" +
                              " ============================================\n" +
-                             " \t      full of goodness\n" +
+                             " \t we care for your health\n" +
                              " --------------------------------------------\n" +
                              " Slip:  " + sco_data.ReceiptNumber + "\n" +
                              " Staff: 101    Trans: " + sco_data.TransactionNo + "\n" +

@@ -38,7 +38,7 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btn_donation_item3_Click(object sender, RoutedEventArgs e) => this.barcodeData("9880000000764");
 
-        private void btn_donation_item4_Click(object sender, RoutedEventArgs e) => this.barcodeData("9880000000764");
+        private void btn_donation_item4_Click(object sender, RoutedEventArgs e) => this.barcodeData("9880000000765");
 
         private void btn_back_Click(object sender, RoutedEventArgs e) => uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
 
