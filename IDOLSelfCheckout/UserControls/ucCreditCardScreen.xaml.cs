@@ -38,7 +38,7 @@ namespace IDOLSelfCheckout.UserControls
             //    CardProcessStarted();
             //});
 
-
+           
         }
 
         private void MyLoadedRoutedEventHandler(object sender, RoutedEventArgs e)
