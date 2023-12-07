@@ -74,6 +74,9 @@
     <None Update="haarcascade_frontalface_default.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="images\leaflet1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="products\products.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
