@@ -98,7 +98,7 @@ namespace IDOLSelfCheckout.DataModel
             string result = string.Empty;
             bool flag = false;
 
-
+              
             try
             {
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
