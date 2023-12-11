@@ -27,6 +27,7 @@ namespace IDOLSelfCheckout
     public class Basepage
     {
         private readonly DataModels.LsRetail.view_models viewModels;
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public static string LogFilePath;
         public static string LSRetail_Header_Username;
         public static string LSRetail_Header_Password;
@@ -46,13 +47,12 @@ namespace IDOLSelfCheckout
         public static string PopId_Host;
         public static int PopId_Port;
         public static int PopId_SecondaryPort;
-        //public static bool IsLocalConsumption;
         public static string HostTerminalId;
         public static string StoreNumber;
         public static bool LoyaltyRequested;
         public static bool LoyaltyScaned;
         public static string ServerName;
-        //private TsgcWebSocketClient socketClient;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         public void loadValues()
         {
@@ -309,83 +309,6 @@ namespace IDOLSelfCheckout
                 ucAsistantScreen.MessageText.Text = sco_data.ErrorMessage;
         } 
 
-        public static void ledWelcome()
-        {
-            try
-            {
-                new ledconnection().ledCon('5', 'A');
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
-        public static void ledHelp()
-        {
-            try
-            {
-                new ledconnection().ledCon('6', 'B');
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
-        public static void ledCardPayment()
-        {
-            try
-            {
-                new ledconnection().ledCon('5', 'D');
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
-        public static void ledReceipt()
-        {
-            try
-            {
-                new ledconnection().ledCon('3', 'C');
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
-        public static void ledClosed()
-        {
-            try
-            {
-                new ledconnection().ledCon('1', 'C');
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
-        public static void ledNewCustomer()
-        {
-            try
-            {
-                new ledconnection().ledCon('3', 'A');
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
-        public static void ledItemScreen()
-        {
-            try
-            {
-                new ledconnection().ledCon('5', ' ');
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
         public static void logWrite(string msg)
         {
             string format = "ddMMyyyy";
@@ -453,5 +376,81 @@ namespace IDOLSelfCheckout
             }
         }
 
+        //public static void ledWelcome()
+        //{
+        //    try
+        //    {
+        //        new ledconnection().ledCon('5', 'A');
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //}
+
+        //public static void ledHelp()
+        //{
+        //    try
+        //    {
+        //        new ledconnection().ledCon('6', 'B');
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //}
+
+        //public static void ledCardPayment()
+        //{
+        //    try
+        //    {
+        //        new ledconnection().ledCon('5', 'D');
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //}
+
+        //public static void ledReceipt()
+        //{
+        //    try
+        //    {
+        //        new ledconnection().ledCon('3', 'C');
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //}
+
+        //public static void ledClosed()
+        //{
+        //    try
+        //    {
+        //        new ledconnection().ledCon('1', 'C');
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //}
+
+        //public static void ledNewCustomer()
+        //{
+        //    try
+        //    {
+        //        new ledconnection().ledCon('3', 'A');
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //}
+
+        //public static void ledItemScreen()
+        //{
+        //    try
+        //    {
+        //        new ledconnection().ledCon('5', ' ');
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //}
     }
 }

@@ -27,7 +27,6 @@ namespace IDOLSelfCheckout.UserControls
         public ucPrintScreen()
         {
             InitializeComponent();
-            Basepage.ledReceipt();
             Task.Factory.StartNew(() =>
             {
                 printScreenWait();

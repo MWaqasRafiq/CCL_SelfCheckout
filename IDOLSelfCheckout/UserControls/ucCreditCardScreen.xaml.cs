@@ -30,7 +30,6 @@ namespace IDOLSelfCheckout.UserControls
         public ucCreditCardScreen()
         {
             InitializeComponent();
-            Basepage.ledCardPayment();
             PinPadInfo = PinpadInfo;
             //PinPadInfo.Content = "test";
 

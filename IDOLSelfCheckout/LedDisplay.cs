@@ -11,16 +11,16 @@ namespace IDOLSelfCheckout
     {
         public void ChangeLedColor()
         {
-            Basepage.ledWelcome();
-            Thread.Sleep(1000);
-            Basepage.ledHelp();
-            Thread.Sleep(1000);
-            Basepage.ledCardPayment();
-            Thread.Sleep(1000);
-            Basepage.ledReceipt();
-            Thread.Sleep(1000);
-            Basepage.ledClosed();
-            Thread.Sleep(1000);
+            //Basepage.ledWelcome();
+            //Thread.Sleep(1000);
+            //Basepage.ledHelp();
+            //Thread.Sleep(1000);
+            //Basepage.ledCardPayment();
+            //Thread.Sleep(1000);
+            //Basepage.ledReceipt();
+            //Thread.Sleep(1000);
+            //Basepage.ledClosed();
+            //Thread.Sleep(1000);
         }
     }
 }

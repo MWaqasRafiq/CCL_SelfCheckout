@@ -46,7 +46,6 @@ namespace OposPrinter
             Loaded += CheckoutCamera_Loaded;
             Closing += MainWindow_Closing;
 
-            Basepage.ledReceipt();
         }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
