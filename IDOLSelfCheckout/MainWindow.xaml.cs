@@ -47,7 +47,7 @@ namespace IDOLSelfCheckout
         internal TextBlock _textBlock1;
         internal Image _imgCircle;
         CCL_Lamp lamp;
-       
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -136,7 +136,7 @@ namespace IDOLSelfCheckout
                                 case "D3":
                                     break;
                                 default:
-                                    AddItemOnPremises();
+                                    new Basepage().AddItemOnPremises();
                                     break;
                             }
                         }
@@ -148,17 +148,15 @@ namespace IDOLSelfCheckout
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-                if (e.Key == Key.Return)
-                {
-                    this.textBlock1.Text = "You Entered: " + this.textBox1.Text;
-                    sco_data.ScannedBarcode = this.textBlock1.Text;
-                    Basepage.logWrite("Scanned Barcode=" + sco_data.ScannedBarcode);
-                    Basepage basepage = new Basepage();
-                    if (true)
-                        uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
-                    else
-                        uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
-                }
+            if (e.Key == Key.Return)
+            {
+                this.textBlock1.Text = "You Entered: " + this.textBox1.Text;
+                sco_data.ScannedBarcode = this.textBlock1.Text;
+                Basepage.logWrite("Scanned Barcode=" + sco_data.ScannedBarcode);
+                Basepage basepage = new Basepage();
+
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+            }
         }
 
         private static string[] GetFileNames(string path, string[] filter)
@@ -182,24 +180,5 @@ namespace IDOLSelfCheckout
             this.sceneriesBtn.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("C:\\IDOL\\images\\advertise\\" + this.Images1[this.count1].ToString());
         }
 
-        private void AddItemOnPremises()
-        {
-            OnPremises_SCO onPremises = new OnPremises_SCO();
-            Basepage basepage = new Basepage();
-            var result = onPremises.AddItemOnPremises();
-
-            if (result != null && result.items !=null)
-            {
-                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
-                ucMainScreen.ItemListDataGrid.DataContext = (object)result;
-                basepage.updateTransactionDetails();
-                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
-            }
-            else
-            {
-                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
-                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
-            }
-        }
     }
 }

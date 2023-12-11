@@ -1,4 +1,5 @@
 ﻿using DataModels;
+using DataModels.Shared;
 using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using System;
@@ -48,7 +49,7 @@ namespace IDOLSelfCheckout.UserControls
         {
             Basepage basepage = new Basepage();
             this.product = this.list.prices.Where(x => x.barcode == barcode).FirstOrDefault();
-            if (this.product != null && basepage.addItem("", barcode, this.product))
+            if (this.product != null && basepage.addItem(sco_data.ReceiptNumber, barcode, this.product))
             {
                 basepage.updateTransactionDetails(this.product);
                 uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());

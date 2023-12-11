@@ -69,14 +69,12 @@ namespace On_Premises.Core
                         });
                     }
                     sco_data.LastItemDescription = product.name;
-                    //ucMainScreen.ItemListDataGrid.DataContext = (object)null;
                     if (itemList.Count <= 0)
                         return viewModels;
                     viewModels = new view_models()
                     {
                         items = (IEnumerable<items>)itemList
                     };
-                    //ucMainScreen.ItemListDataGrid.DataContext = (object)viewModels;
                 }
             }
             return viewModels;

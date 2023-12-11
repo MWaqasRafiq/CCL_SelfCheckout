@@ -1,17 +1,12 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: IDOLSelfCheckout.Basepage
-// Assembly: IDOLSelfCheckout, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: C67170A7-BC98-4C94-BBAA-42FB9B93CC1B
-// Assembly location: C:\Users\Hi\Downloads\APP Masafi\IDOLSelfCheckout.dll
-
-using DataModels.LsRetail;
+﻿using DataModels.LsRetail;
 using DataModels.Shared;
 using IDOLSelfCheckout.BankDevice;
 using IDOLSelfCheckout.Classes;
-//using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
+using LS_Retail.Core;
 using Newtonsoft.Json;
+using On_Premises.Core;
 using POS.Devices;
 using System;
 using System.Collections.Generic;
@@ -19,6 +14,8 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
+using Toshiba_SIT.Core;
 
 
 #nullable enable
@@ -26,8 +23,8 @@ namespace IDOLSelfCheckout
 {
     public class Basepage
     {
-        private readonly DataModels.LsRetail.view_models viewModels;
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        private readonly DataModels.LsRetail.view_models viewModels;
         public static string LogFilePath;
         public static string LSRetail_Header_Username;
         public static string LSRetail_Header_Password;
@@ -101,8 +98,6 @@ namespace IDOLSelfCheckout
                     Basepage.PopId_SecondaryPort = Convert.ToInt32(ConfigurationManager.AppSettings["PopId_SecondaryPort"]);
 
                 //Service API
-                //if (ConfigurationManager.AppSettings["IsLocalConsumption"] != null)
-                    //Basepage.IsLocalConsumption = Convert.ToBoolean(ConfigurationManager.AppSettings["IsLocalConsumption"]);
                 if (ConfigurationManager.AppSettings["Terminal_Id"] != null)
                     Basepage.HostTerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
                 if (ConfigurationManager.AppSettings["Store_No"] != null)
@@ -143,47 +138,48 @@ namespace IDOLSelfCheckout
 
         public bool addItem(string receiptNo, string barcodeNo, DataModels.prices product)
         {
-            bool flag = true;
-            if (flag)
+            sco_data.ScannedBarcode = barcodeNo;
+            sco_data.TransactionTotal = sco_data.TransactionTotal == "null" ? "0.00" : sco_data.TransactionTotal;
+            sco_data.TransactionTotal = (Convert.ToDouble(sco_data.TransactionTotal) + Convert.ToDouble(product.price)).ToString("0.00");
+            sco_data.TransactionVat = (Convert.ToDouble(sco_data.TransactionVat) + Convert.ToDouble(product.price) / 100.0 * 5.0).ToString("0.00");
+
+            switch (ServerName)
             {
-                logWrite("addItem0");
-                sco_data.TransactionTotal = (Convert.ToDouble(sco_data.TransactionTotal) + Convert.ToDouble(product.price)).ToString("0.00");
-                sco_data.TransactionVat = (Convert.ToDouble(sco_data.TransactionVat) + Convert.ToDouble(product.price) / 100.0 * 5.0).ToString("0.00");
-                if (flag)
-                {
-                    logWrite("addItem1");
-                    List<DataModels.LsRetail.items> itemList = sco_data.ItemList;
-                    if(itemList.Where(x=>x.Name == product.name && x.Price == product.price).Any())
-                    {
-                        itemList.Where(w => w.Name == product.name && w.Price == product.price)
-                                .ToList().ForEach(w => w.Qty = (Convert.ToInt32(w.Qty) + 1).ToString());
-                    }
-                    else
-                    {
-                        itemList.Add(new DataModels.LsRetail.items()
-                        {
-                            Name = product.name,
-                            Qty = "1",
-                            Price = product.price
-                        });
-                    }
-                    logWrite("addItem2");
-                    sco_data.LastItemDescription = product.name;
-                    ucMainScreen.ItemListDataGrid.DataContext = (object)null;
-                    if (itemList.Count <= 0)
-                        return false;
-                    logWrite("addItem3");
-                    DataModels.LsRetail.view_models viewModels = new DataModels.LsRetail.view_models()
-                    {
-                        items = (IEnumerable<DataModels.LsRetail.items>)itemList
-                    };
-                    logWrite("addItem4");
-                    ucMainScreen.ItemListDataGrid.DataContext = (object)viewModels;
-                    logWrite("addItem5");
-                    return true;
-                }
+                case "SA":
+                    ToshibaSA toshibaSA = new ToshibaSA();
+                    toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
+                    break;
+                case "LS":
+                    LS_SCO lS_SCO = new LS_SCO();
+                    //var a = lS_SCO.productList();
+                    break;
+                case "D3":
+                    break;
+                default:
+                    AddItemOnPremises();
+                    break;
             }
             return true;
+        }
+
+        public void AddItemOnPremises()
+        {
+            OnPremises_SCO onPremises = new OnPremises_SCO();
+            Basepage basepage = new Basepage();
+            var result = onPremises.AddItemOnPremises();
+
+            if (result != null && result.items != null)
+            {
+                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+                ucMainScreen.ItemListDataGrid.DataContext = (object)result;
+                basepage.updateTransactionDetails();
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+            }
+            else
+            {
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
+                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
+            }
         }
 
         public bool pressedTotal(string receiptNo)
@@ -285,7 +281,7 @@ namespace IDOLSelfCheckout
             bool flag = false;
             try
             {
-                new OposPrinterCall().print();
+                new OposPrinterCall().OPOSprint();
             }
             catch (Exception ex)
             {
@@ -305,15 +301,16 @@ namespace IDOLSelfCheckout
 
         public void errorMessage()
         {
-            if(ucAsistantScreen.MessageText != null)
+            if (ucAsistantScreen.MessageText != null)
                 ucAsistantScreen.MessageText.Text = sco_data.ErrorMessage;
-        } 
+        }
 
         public static void logWrite(string msg)
         {
             string format = "ddMMyyyy";
             string path = Basepage.LogFilePath + "POS" + DateTime.Now.ToString(format) + ".log";
             string str = "1.3.0.2";
+
             if (!File.Exists(path))
             {
                 StreamWriter streamWriter = new StreamWriter(path);
@@ -343,6 +340,7 @@ namespace IDOLSelfCheckout
                 int num3 = 0;
                 stringBuilder.Append(msg + "\r\n");
                 stringBuilder.Append("0000   ");
+
                 if (bankFull.Length > 16)
                 {
                     foreach (byte num4 in bankFull)
@@ -363,10 +361,10 @@ namespace IDOLSelfCheckout
                         }
                         else
                             stringBuilder.Append(str1);
+
                         ++num1;
                     }
                 }
-                //Basepage.logWrite(stringBuilder.ToString());
                 return stringBuilder.ToString();
             }
             catch (Exception ex)
@@ -376,81 +374,5 @@ namespace IDOLSelfCheckout
             }
         }
 
-        //public static void ledWelcome()
-        //{
-        //    try
-        //    {
-        //        new ledconnection().ledCon('5', 'A');
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //}
-
-        //public static void ledHelp()
-        //{
-        //    try
-        //    {
-        //        new ledconnection().ledCon('6', 'B');
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //}
-
-        //public static void ledCardPayment()
-        //{
-        //    try
-        //    {
-        //        new ledconnection().ledCon('5', 'D');
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //}
-
-        //public static void ledReceipt()
-        //{
-        //    try
-        //    {
-        //        new ledconnection().ledCon('3', 'C');
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //}
-
-        //public static void ledClosed()
-        //{
-        //    try
-        //    {
-        //        new ledconnection().ledCon('1', 'C');
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //}
-
-        //public static void ledNewCustomer()
-        //{
-        //    try
-        //    {
-        //        new ledconnection().ledCon('3', 'A');
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //}
-
-        //public static void ledItemScreen()
-        //{
-        //    try
-        //    {
-        //        new ledconnection().ledCon('5', ' ');
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //}
     }
 }
