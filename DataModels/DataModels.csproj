@@ -44,10 +44,13 @@
     <Compile Include="LsRetail\view_models.cs" />
     <Compile Include="prices.cs" />
     <Compile Include="PricesRequest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\sco_data.cs" />
     <Compile Include="ToshibaSA\InvoiceRequestVM.cs" />
     <Compile Include="ToshibaSA\InvoiceResponseVM.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

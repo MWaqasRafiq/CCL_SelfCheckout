@@ -74,7 +74,7 @@
 
                 <Border Background="White" Grid.Column="2" Grid.Row="0">
 
-                    <Button Name="btn_assistant_sco"  Background="White" Click="btn_assistant_sco_Click"  >
+                    <Button Name="btn_new_transaction"  Background="White" Click="btn_new_transaction_Click"  >
                         <DockPanel LastChildFill="True">
                             <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">NEW TRANSACTION</Label>
                             <Image  Source="C:/IDOL/images/icons/refresh.png"   />
@@ -124,7 +124,7 @@
 
                     <Button Name="btn_donation_item7"  Background="White"  >
                         <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">BUTTON</Label>
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">RESET</Label>
                             <Image  Source="C:/IDOL/images/icons/reset.png"   />
 
                         </DockPanel>

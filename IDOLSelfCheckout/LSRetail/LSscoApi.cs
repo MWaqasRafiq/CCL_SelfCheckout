@@ -1,4 +1,5 @@
-﻿using DataModels.LsRetail;
+﻿using DataModels;
+using DataModels.LsRetail;
 using DataModels.Shared;
 //using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.UserControls;
@@ -19,13 +20,13 @@ namespace IDOLSelfCheckout.LSRetail
     public class LSscoApi
     {
 
-        public masafiPricesRequest productList()
+        public PricesRequest productList()
         {
             try
             {
-                masafiPricesRequest masafiPricesRequest;
+                PricesRequest masafiPricesRequest;
                 using (StreamReader streamReader = new StreamReader(Directory.GetCurrentDirectory() + "\\products" + "\\products.json"))
-                    masafiPricesRequest = JsonConvert.DeserializeObject<masafiPricesRequest>(streamReader.ReadToEnd());
+                    masafiPricesRequest = JsonConvert.DeserializeObject<PricesRequest>(streamReader.ReadToEnd());
                 //if (!Basepage.IsLocalConsumption)
                 {
                     string requestUriString = "https://api.ommasign.com/v1/datasource/2118/force";
@@ -55,7 +56,7 @@ namespace IDOLSelfCheckout.LSRetail
                         using (StreamReader streamReader = new StreamReader(responseStream))
                         {
                             Console.WriteLine("ErrorResponse: {0}", (object)streamReader.ReadToEnd());
-                            return new masafiPricesRequest();
+                            return new PricesRequest();
                         }
                     }
                 }
@@ -63,7 +64,7 @@ namespace IDOLSelfCheckout.LSRetail
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return new masafiPricesRequest();
+                return new PricesRequest();
             }
         }
         public Boolean getTerminalDetails()

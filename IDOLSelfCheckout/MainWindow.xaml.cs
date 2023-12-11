@@ -17,7 +17,6 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Threading;
 using static IDOLSelfCheckout.FacePay;
-using IDOLSelfCheckout.DataModel;
 using System.Threading;
 using System.Runtime.InteropServices;
 using Toshiba_SIT.Core;
@@ -47,9 +46,7 @@ namespace IDOLSelfCheckout
         internal TextBox _textBox1;
         internal TextBlock _textBlock1;
         internal Image _imgCircle;
-        //private ServerIntegration serverIntegration;
         CCL_Lamp lamp;
-
        
         public MainWindow()
         {
@@ -57,10 +54,10 @@ namespace IDOLSelfCheckout
             sco_data.ItemList = new List<DataModels.LsRetail.items>();
             string[] filter = new string[4]
             {
-        "*.jpg",
-        "*.png",
-        "*.gif",
-        "*.jpeg"
+                "*.jpg",
+                "*.png",
+                "*.gif",
+                "*.jpeg"
             };
             foreach (string fileName in MainWindow.GetFileNames("C:\\IDOL\\images\\advertise\\", filter))
                 this.Images1.Add(fileName);
@@ -69,7 +66,6 @@ namespace IDOLSelfCheckout
             this._timer.Enabled = true;
             this._timer.Start();
 
-            //serverIntegration = new ServerIntegration();
             lamp = new CCL_Lamp();
             lamp.GreenOpen();
         }
@@ -83,19 +79,7 @@ namespace IDOLSelfCheckout
             MainWindow.Main_SCO = this.Main_sco;
             uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucStartScreen());
 
-            //new ucAsistantScreen().setLabel();
             this.PreviewKeyDown += new KeyEventHandler(this.labelBarCode_PreviewKeyDown);
-
-            //bool ret = InitCCLLamp(6, 1);
-            //if (!ret)
-            //{
-            //    MessageBox.Show("OpenFail");
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Opened");
-            //    GreenOpenCCLLamp();
-            //}
         }
 
         private void labelBarCode_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -106,10 +90,10 @@ namespace IDOLSelfCheckout
 
             if (char.IsNumber(c))
                 _barcode += c;
+
             Basepage.logWrite("_barcode=" + _barcode);
             Basepage.logWrite("e.Key=" + Convert.ToString(e.Key));
-            //LS_SCO lS_SCO = new LS_SCO();
-            //var a = lS_SCO.productList();
+
             if (e.Key == Key.Return)
             {
                 if (Basepage.LoyaltyRequested && !Basepage.LoyaltyScaned)
@@ -119,18 +103,17 @@ namespace IDOLSelfCheckout
                     Basepage.LoyaltyRequested = false;
                     Basepage.LoyaltyScaned = true;
 
-                    if (true)
-                        uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucPaymentScreen());
+                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucPaymentScreen());
                     return;
                 }
                 else
                 {
-
                     Basepage.logWrite("Scanned barcode=" + _barcode);
+
                     if (sco_data.TransactionProcess == "STARTED")
                     {
-                        string bar = _barcode;
-                        Basepage.logWrite("Scanned Barcode=" + bar);
+                        Basepage.logWrite("Scanned Barcode=" + _barcode);
+
                         if (_barcode == "1111111111116")
                         {
                             uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucAsistantScreen());
@@ -147,7 +130,7 @@ namespace IDOLSelfCheckout
                                     toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
                                     break;
                                 case "LS":
-                                    //LS_SCO lS_SCO = new LS_SCO();
+                                    LS_SCO lS_SCO = new LS_SCO();
                                     //var a = lS_SCO.productList();
                                     break;
                                 case "D3":
@@ -156,60 +139,10 @@ namespace IDOLSelfCheckout
                                     AddItemOnPremises();
                                     break;
                             }
-                            //if (Basepage.IsLocalConsumption)
-                            //{
-                            //    masafiPricesRequest masafiPricesRequest = new LSscoApi().productList();
-                            //    prices prices = new prices();
-                            //    prices product = Array.Find<prices>(masafiPricesRequest.prices, (Predicate<prices>)(element => element.barcode == sco_data.ScannedBarcode));
-                            //    if (product != null)
-                            //    {
-                            //        Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name);
-                            //        Basepage basepage = new Basepage();
-                            //        Basepage.logWrite("basepage reinitialized");
-                            //        if (basepage.addItem(sco_data.ReceiptNumber, sco_data.ScannedBarcode, product))
-                            //        {
-                            //            Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Added");
-                            //            basepage.updateTransactionDetails(product);
-                            //            uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
-                            //        }
-                            //        else
-                            //        {
-                            //            uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
-                            //            Basepage.logWrite("sco_data.ScannedBarcode.Product=" + product.name + " Went to Help");
-
-                            //        }
-                            //    }
-                            //    else
-                            //    {
-                            //        Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Not Found");
-                            //    }
-                            //}
-                            //else
-                            //{
-                            //    // here we will choose the server that we want to integrate
-                            //    switch (Basepage.ServerName) 
-                            //    {
-                            //        case "SA":
-                            //            ToshibaSA toshibaSA = new ToshibaSA();
-                            //            toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
-                            //            break;
-                            //        case "LS":
-                            //            //LS_SCO lS_SCO = new LS_SCO();
-                            //            //var a = lS_SCO.productList();
-                            //            break;
-                            //        case "OP":
-                            //            AddItemOnPremises();
-                            //            break;
-                            //        default:
-                            //            // code block
-                            //            break;
-                            //    }
-                            //}
-
                         }
                     }
                 }
-                this._barcode = "";
+                this._barcode = string.Empty;
             }
         }
 

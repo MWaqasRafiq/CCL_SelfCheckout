@@ -19,6 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using DataModels.LsRetail;
 
 namespace IDOLSelfCheckout.UserControls
 {
@@ -40,7 +41,7 @@ namespace IDOLSelfCheckout.UserControls
             setLabel();
         }
 
-        private void btn_assistant_sco_Click(object sender, RoutedEventArgs e)
+        private void btn_new_transaction_Click(object sender, RoutedEventArgs e)
         {
             sco_data.ItemList = new List<DataModels.LsRetail.items>();
             List<DataModels.LsRetail.items> itemList = sco_data.ItemList;
@@ -49,9 +50,9 @@ namespace IDOLSelfCheckout.UserControls
             ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
             ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED " + sco_data.TransactionTotal);
             ucMainScreen.TransactionVat.Content =   (object)("VAT   AED " + sco_data.TransactionVat);
-            view_models viewModels = new view_models()
+            DataModels.LsRetail.view_models viewModels = new DataModels.LsRetail.view_models()
             {
-                items = (IEnumerable<items>)itemList
+                items = (IEnumerable<DataModels.LsRetail.items>)itemList
             };
             ucMainScreen.ItemListDataGrid.DataContext = (object)viewModels;
             uc_call.Uc_Add(MainWindow.Main_SCO, new ucStartScreen());

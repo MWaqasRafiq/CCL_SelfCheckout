@@ -31,80 +31,26 @@ namespace IDOLSelfCheckout.UserControls
         {
             InitializeComponent();
             PinPadInfo = PinpadInfo;
-            //PinPadInfo.Content = "test";
-
-            //Task.Factory.StartNew(() =>
-            //{
-            //    CardProcessStarted();
-            //});
-
-
         }
-
-        private void MyLoadedRoutedEventHandler(object sender, RoutedEventArgs e)
-        {
-            //Thread.Sleep(1000);
-
-        }
-
-        //private void MainWindow_OnLayoutUpdated(object sender, EventArgs eventArgs)
-        //{
-        //    Basepage.ledCardPayment();
-        //    Basepage.logWrite("card process started");
-        //    Basepage bp = new Basepage();
-        //    Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
-        //    if (status)
-        //    {
-        //        uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreen());
-        //        Basepage.ledReceipt();
-        //    }
-        //    else
-        //    {
-        //        uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
-
-        //    }
-        //}
 
         private void CardProcessStarted()
         {
-            //loop = true;
             Thread.Sleep(200);
-            //ThreadPool.QueueUserWorkItem(o =>
-            //{
-            //    while (loop)
-            //    {
-            //        UpdateLabelContent(PinpadInfo, "Status: " + sco_data.TransactionPinpadInfo);
-            //        Thread.Sleep(1000);
-            //    }
-
-            //});
-
-            //ThreadPool.QueueUserWorkItem(o =>
-            //{
-            //string dsd = "";
             Dispatcher.Invoke(() =>
             {
-                //PinPadInfo.Content = "test";
-
                 Basepage bp = new Basepage();
                 Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
                 if (status)
                 {
                     uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreenOPOS());
-                    //loop = false;
-
                 }
                 else
                 {
-
+                    Basepage.logWrite("CardProcessStarted sco_data.ScannedBarcode=" + sco_data.ScannedBarcode + "Went to help");
                     uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
-                    //loop = false;
                 }
 
             });
-
-            //  });
-
         }
 
         private delegate void UpdateLabelDelegate(DependencyProperty dp, object value);
@@ -114,7 +60,7 @@ namespace IDOLSelfCheckout.UserControls
             ThreadPool.QueueUserWorkItem(o =>
             {
                 PinpadInfo.Dispatcher.Invoke(new UpdateLabelDelegate(label.SetValue), DispatcherPriority.Background, ContentProperty, newContent);
-                Basepage.logWrite("UpdateLabel=" + newContent);
+                //Basepage.logWrite("UpdateLabel=" + newContent);
             });
         }
 

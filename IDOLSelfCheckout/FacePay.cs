@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
-using IDOLSelfCheckout.DataModel;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Windows;

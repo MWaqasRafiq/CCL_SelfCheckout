@@ -1,4 +1,5 @@
-﻿using DataModels.Shared;
+﻿using DataModels;
+using DataModels.Shared;
 using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using System;
@@ -24,8 +25,8 @@ namespace IDOLSelfCheckout.UserControls
     /// </summary>
     public partial class ucBakeryScreen : UserControl, IComponentConnector
     {
-        private masafiPricesRequest list = new masafiPricesRequest();
-        private prices product = new prices();
+        private PricesRequest list = new PricesRequest();
+        private DataModels.prices product = new DataModels.prices();
         internal
 #nullable disable
         Button _btn_bakery_item1;
@@ -37,17 +38,12 @@ namespace IDOLSelfCheckout.UserControls
         internal Button _btn_back;
         public ucBakeryScreen()
         {
-            Basepage.logWrite("ucBakeryScreen >> 1");
             this.InitializeComponent();
-            Basepage.logWrite("ucBakeryScreen >> 2");
             LSscoApi lsscoApi = new LSscoApi();
-            Basepage.logWrite("ucBakeryScreen >> 3");
             this.list = lsscoApi.productList();
-            Basepage.logWrite("ucBakeryScreen >> 4");
             this.btn_bakery_label1.Content = (object)this.list.prices[6].name;
             this.btn_bakery_label2.Content = (object)this.list.prices[7].name;
             this.btn_bakery_label3.Content = (object)this.list.prices[8].name;
-            Basepage.logWrite("ucBakeryScreen >> 5");
         }
 
         private void btn_bakery_item1_Click(
@@ -72,7 +68,7 @@ namespace IDOLSelfCheckout.UserControls
             this.barcodeData(this.product.barcode, this.product);
         }
 
-        private void barcodeData(string barcode, prices product)
+        private void barcodeData(string barcode, DataModels.prices product)
         {
             Basepage basepage = new Basepage();
             if (basepage.addItem(sco_data.ReceiptNumber, barcode, product))

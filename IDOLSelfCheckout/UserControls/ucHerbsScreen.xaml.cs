@@ -1,4 +1,5 @@
-﻿using IDOLSelfCheckout.Classes;
+﻿using DataModels;
+using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using System;
 using System.CodeDom.Compiler;
@@ -15,8 +16,8 @@ namespace IDOLSelfCheckout.UserControls
 {
     public partial class ucHerbsScreen : UserControl, IComponentConnector
     {
-        private masafiPricesRequest list = new masafiPricesRequest();
-        private prices product = new prices();
+        private PricesRequest list = new PricesRequest();
+        private DataModels.prices product = new DataModels.prices();
         internal
 #nullable disable
         Button _btn_herbs_item1;

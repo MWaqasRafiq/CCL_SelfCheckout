@@ -1,4 +1,5 @@
-﻿using IDOLSelfCheckout.Classes;
+﻿using DataModels;
+using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using System;
 using System.CodeDom.Compiler;
@@ -22,8 +23,8 @@ namespace IDOLSelfCheckout.UserControls
         internal Button _btn_etisalat_item3;
         internal Button _btn_etisalat_item4;
         internal Button _btn_back;
-        private prices product = new prices();
-        private masafiPricesRequest list = new masafiPricesRequest();
+        private DataModels.prices product = new DataModels.prices();
+        private PricesRequest list = new PricesRequest();
 
         public ucEtisalatScreen() {
 

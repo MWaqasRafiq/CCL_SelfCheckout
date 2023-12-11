@@ -8,6 +8,14 @@
 		<PlatformTarget>x86</PlatformTarget>
 		<Platforms>x86;AnyCPU</Platforms>
 		<ApplicationIcon>idollogo.ico</ApplicationIcon>
+		<Company>IDOL Technologies</Company>
+		<Product>Self Check-out</Product>
+		<Authors>IDOL Development Team</Authors>
+		<Description>IDOL's Self Check-out</Description>
+		<Copyright>2024</Copyright>
+		<Title>IDOL's Self Check-Out</Title>
+		<Version>2.0.0.0</Version>
+		<AssemblyName>IDOL-SELF-CHECKOUT</AssemblyName>
 	</PropertyGroup>
 
   <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

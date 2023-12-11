@@ -141,7 +141,7 @@ namespace IDOLSelfCheckout
             return flag;
         }
 
-        public bool addItem(string receiptNo, string barcodeNo, prices product)
+        public bool addItem(string receiptNo, string barcodeNo, DataModels.prices product)
         {
             bool flag = true;
             if (flag)
@@ -295,7 +295,7 @@ namespace IDOLSelfCheckout
             return flag;
         }
 
-        public void updateTransactionDetails(prices product = null)
+        public void updateTransactionDetails(DataModels.prices product = null)
         {
             ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
             ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED " + sco_data.TransactionTotal);

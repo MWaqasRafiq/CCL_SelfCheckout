@@ -16,5 +16,6 @@ namespace IDOLSelfCheckout.Classes
         SA = 1, //Toshiba SA SIT
         LS = 2, // LS Retails
         D3 = 3 //Dynamics 365
+        //OP Default would be on prem
     }
 }

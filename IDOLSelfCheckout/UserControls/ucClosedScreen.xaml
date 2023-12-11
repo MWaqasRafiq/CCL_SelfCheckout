@@ -9,11 +9,10 @@
 
     <Grid>
 
-        <Border Background="LightGray" Grid.Column="0" Grid.Row="0">
-
-
-            <Button Name="btn_closed_sco" Click="btn_closed_sco_Click"    >
-                <Image Source="C:/IDOL/images/closedimage.png"  Stretch="Fill"  />
+        <Border Background="LightGray"  Grid.Column="0" Grid.Row="0">
+            <Button Background="White" FontWeight="Bold" FontSize="50" Name="btn_closed_sco" 
+                    Click="btn_closed_sco_Click">This lane is closed!
+                <!--<Image Source="C:/IDOL/images/closedimage.png"  Stretch="Fill"  />-->
             </Button>
         </Border>
 

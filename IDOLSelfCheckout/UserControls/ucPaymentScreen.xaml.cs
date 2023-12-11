@@ -19,7 +19,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using POS.Devices;
-using IDOLSelfCheckout.DataModel;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using Microsoft.VisualBasic;
@@ -51,26 +50,13 @@ namespace IDOLSelfCheckout.UserControls
         }
         private void btn_creditcard_Click(object sender, RoutedEventArgs e)
         {
-            //Basepage bp = new Basepage();
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucCreditCardScreen());
             Thread.Sleep(100);
             Thread thread = new Thread(StartThreadOfCreditCardPayment);
             thread.Start();
-            //Basepage.logWrite("Credit Card payment starting for "+ sco_data.ReceiptNumber);
-            //Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
-            //if (status)
-            //{
-            //    uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreenOPOS());
-            //}
-            //else
-            //{
-            //    uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
-            //}
         }
         private void StartThreadOfCreditCardPayment()
         {
-            // Simulate some work taking place
-            Thread.Sleep(100);
             this.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
             (ThreadStart)delegate ()
             {
@@ -129,7 +115,6 @@ namespace IDOLSelfCheckout.UserControls
                 int total = Convert.ToInt32(decimal.Parse(sco_data.TransactionTotal));
                 if (total > 0)
                 {
-                    //ServerIntegration serverIntegration = new ServerIntegration();
                     new ToshibaSA().TotalReceipt();
                     FacePay facePay = new FacePay();
                     facePay.IdentifyPerson();
@@ -138,24 +123,5 @@ namespace IDOLSelfCheckout.UserControls
             else
                 Basepage.logWrite("FacePay - Invalid Transaction amount requested: " + sco_data.TransactionTotal);
         }
-        //BackgroundWorker worker;
-
-       
-        //private void Worker_RunWorkerCompleted()
-        //{
-        //    //imgCircle.Visibility = Visibility.Collapsed;
-        //    MainWindow.Main_SCO.IsEnabled = true;
-
-        //}
-
-        //private void PerformTaskProcess()
-        //{
-        //    //imgCircle.Visibility = Visibility.Visible;
-        //    MainWindow.Main_SCO.IsEnabled = false; //Disabling the button
-
-        //}
-
-
-
     }
 }
