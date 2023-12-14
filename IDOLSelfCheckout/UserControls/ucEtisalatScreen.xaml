@@ -43,7 +43,7 @@
 
                     <Button x:Name="btn_etisalat_item1" Command="{Binding ButtonClickCommand}" CommandParameter="423432432432" Click="btn_etisalat_item1_Click"   >
                         <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" >ETISALAT 30 AED</Label>
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" >ETISALAT 30 SAR</Label>
                             <Image  Source="C:/IDOL/images/icons/scoetisalatlogo.png"   />
 
                         </DockPanel>
@@ -56,7 +56,7 @@
 
                     <Button Name="btn_etisalat_item2" Click="btn_etisalat_item2_Click"  >
                         <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">ETISALAT 55 AED</Label>
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">ETISALAT 55 SAR</Label>
                             <Image  Source="C:/IDOL/images/icons/scoetisalatlogo.png"   />
 
                         </DockPanel>
@@ -68,7 +68,7 @@
 
                     <Button Name="btn_etisalat_item3" Click="btn_etisalat_item3_Click"    >
                         <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">ETISALAT 110 AED</Label>
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">ETISALAT 110 SAR</Label>
                             <Image  Source="C:/IDOL/images/icons/scoetisalatlogo.png"   />
 
                         </DockPanel>
@@ -80,7 +80,7 @@
 
                     <Button Name="btn_etisalat_item4" Click="btn_etisalat_item4_Click"   >
                         <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">ETISALAT 525 AED</Label>
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">ETISALAT 525 SAR</Label>
                             <Image  Source="C:/IDOL/images/icons/scoetisalatlogo.png"   />
 
                         </DockPanel>

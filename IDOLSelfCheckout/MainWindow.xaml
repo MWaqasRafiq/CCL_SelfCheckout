@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:IDOLSelfCheckout"
         Loaded="Window_Loaded" Title="IDOL Pharmacy" 
         WindowState="Maximized" 
-        WindowStyle="SingleBorderWindow">
+        WindowStyle="None">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -29,7 +29,7 @@
                 </Grid.RowDefinitions>
                 <Border Grid.Column="0" Grid.Row="0">
                     <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Image Source="C:/IDOL/images/PharmacyLogo.jpg" Stretch="Fill"/>
+                        <Image Source="C:/IDOL/images/DrSulaimanAlHabibPharmacies.jpg" Stretch="Fill"/>
                     </DockPanel>
                 </Border>
             </Grid>

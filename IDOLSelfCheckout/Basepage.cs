@@ -225,8 +225,8 @@ namespace IDOLSelfCheckout
                         sco_data.TransactionTotal = Convert.ToDecimal("0").ToString("0.00");
                         sco_data.TransactionVat = Convert.ToDecimal("0").ToString("0.00"); ;
                         ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-                        ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED " + sco_data.TransactionTotal);
-                        ucMainScreen.TransactionVat.Content = (object)("VAT   AED " + sco_data.TransactionVat);
+                        ucMainScreen.TransactionTotal.Content = (object)("TOTAL SAR " + sco_data.TransactionTotal);
+                        ucMainScreen.TransactionVat.Content = (object)("VAT   SAR " + sco_data.TransactionVat);
 
                     }
                 }
@@ -260,8 +260,8 @@ namespace IDOLSelfCheckout
                     sco_data.TransactionTotal = Convert.ToDecimal("0").ToString("0.00");
                     sco_data.TransactionVat = Convert.ToDecimal("0").ToString("0.00"); ;
                     ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-                    ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED " + sco_data.TransactionTotal);
-                    ucMainScreen.TransactionVat.Content = (object)("VAT   AED " + sco_data.TransactionVat);
+                    ucMainScreen.TransactionTotal.Content = (object)("TOTAL SAR " + sco_data.TransactionTotal);
+                    ucMainScreen.TransactionVat.Content = (object)("VAT   SAR " + sco_data.TransactionVat);
                 }
                 else
                     this.errorMessage();
@@ -292,8 +292,8 @@ namespace IDOLSelfCheckout
         public void updateTransactionDetails(prices product)
         {
             ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-            ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED " + sco_data.TransactionTotal);
-            ucMainScreen.TransactionVat.Content = (object)("VAT   AED " + sco_data.TransactionVat);
+            ucMainScreen.TransactionTotal.Content = (object)("TOTAL SAR " + sco_data.TransactionTotal);
+            ucMainScreen.TransactionVat.Content = (object)("VAT   SAR " + sco_data.TransactionVat);
             ucMainScreen.ItemInfo.Content = (object)sco_data.LastItemDescription;
         }
 

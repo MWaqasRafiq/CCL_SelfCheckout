@@ -43,7 +43,7 @@
 
                     <Button x:Name="btn_virgin_item1" Command="{Binding ButtonClickCommand}" CommandParameter="423432432432" Click="btn_virgin_item1_Click"   >
                         <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" >VIRGIN 30 AED</Label>
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" >VIRGIN 30 SAR</Label>
                             <Image  Source="C:/IDOL/images/icons/scovirginlogo.png"   />
 
                         </DockPanel>
@@ -56,7 +56,7 @@
 
                     <Button Name="btn_virgin_item2" Click="btn_virgin_item2_Click"  >
                         <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">VIRGIN 55 AED</Label>
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">VIRGIN 55 SAR</Label>
                             <Image  Source="C:/IDOL/images/icons/scovirginlogo.png"   />
 
                         </DockPanel>
@@ -68,7 +68,7 @@
 
                     <Button Name="btn_virgin_item3" Click="btn_virgin_item3_Click"    >
                         <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">VIRGIN 110 AED</Label>
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">VIRGIN 110 SAR</Label>
                             <Image  Source="C:/IDOL/images/icons/scovirginlogo.png"   />
 
                         </DockPanel>
@@ -80,7 +80,7 @@
 
                     <Button Name="btn_virgin_item4" Click="btn_virgin_item4_Click"   >
                         <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">VIRGIN 525 AED</Label>
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">VIRGIN 525 SAR</Label>
                             <Image  Source="C:/IDOL/images/icons/scovirginlogo.png"   />
 
                         </DockPanel>

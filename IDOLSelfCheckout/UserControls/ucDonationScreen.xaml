@@ -42,7 +42,7 @@
                 <Border Background="White" Grid.Column="0" Grid.Row="0">
 
                     <Button x:Name="btn_donation_item1" Click="btn_donation_item1_Click"    >
-                        <Image  Source="C:/IDOL/images/icons/donation20.jpg" Stretch="Fill"   />
+                        <Image  Source="C:/IDOL/images/icons/Donate - 20.jpg" Stretch="Fill"   />
 
                     </Button>
 
@@ -51,7 +51,7 @@
                 <Border Background="White" Grid.Column="1" Grid.Row="0">
 
                     <Button Name="btn_donation_item2" Click="btn_donation_item2_Click" >
-                        <Image  Source="C:/IDOL/images/icons/donation50.jpg" Stretch="Fill"   />
+                        <Image  Source="C:/IDOL/images/icons/Donate - 50.jpg" Stretch="Fill"   />
                     </Button>
 
                 </Border>
@@ -59,7 +59,7 @@
                 <Border Background="White" Grid.Column="2" Grid.Row="0">
 
                     <Button Name="btn_donation_item3" Click="btn_donation_item3_Click"   >
-                        <Image  Source="C:/IDOL/images/icons/donation100.jpg" Stretch="Fill"  />
+                        <Image  Source="C:/IDOL/images/icons/Donate - 100.jpg" Stretch="Fill"  />
                     </Button>
 
                 </Border>
@@ -67,7 +67,7 @@
                 <Border Background="White" Grid.Column="0" Grid.Row="1">
 
                     <Button Name="btn_donation_item4" Click="btn_donation_item4_Click"   >
-                        <Image  Source="C:/IDOL/images/icons/donation100.jpg" Stretch="Fill"  />
+                        <Image  Source="C:/IDOL/images/icons/Donate - 100.jpg" Stretch="Fill"  />
                     </Button>
 
                 </Border>

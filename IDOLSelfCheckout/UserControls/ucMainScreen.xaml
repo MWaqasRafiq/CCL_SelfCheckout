@@ -76,7 +76,7 @@
                             <Border Visibility="Hidden" x:Name="item_list_parent" Background="Azure" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">
 
                                 <Grid>
-                                    <DataGrid x:Name="item_list" AutoGenerateColumns="False" CanUserResizeColumns="False"
+                                    <DataGrid x:Name="item_list" AutoGenerateColumns="False" CanUserResizeColumns="False" IsReadOnly="True"
                             GridLinesVisibility="None" ItemsSource="{Binding items}">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="Name" Width="250" Binding="{Binding Name}">
@@ -91,6 +91,7 @@
                                                         <Setter Property="TextBlock.FontSize" Value="20"/>
                                                         <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left"/>
                                                         <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+                                                        <Setter Property="Control.IsHitTestVisible" Value="False"/>
                                                     </Style>
                                                 </DataGridBoundColumn.ElementStyle>
                                             </DataGridTextColumn>
@@ -106,6 +107,7 @@
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="TextBlock.FontSize" Value="20"/>
                                                         <Setter Property="FrameworkElement.HorizontalAlignment" Value="Right"/>
+                                                        <Setter Property="Control.Focusable" Value="False"/>
                                                         <Setter Property="TextBlock.FontWeight" Value="Bold"/>
                                                     </Style>
                                                 </DataGridBoundColumn.ElementStyle>
@@ -122,6 +124,7 @@
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="TextBlock.FontSize" Value="20"/>
                                                         <Setter Property="FrameworkElement.HorizontalAlignment" Value="Right"/>
+                                                        <Setter Property="Control.Focusable" Value="False"/>
                                                         <Setter Property="TextBlock.FontWeight" Value="Bold"/>
                                                     </Style>
                                                 </DataGridBoundColumn.ElementStyle>

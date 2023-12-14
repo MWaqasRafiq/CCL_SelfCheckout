@@ -119,8 +119,8 @@ namespace IDOLSelfCheckout.UserControls
                     sco_data.TransactionVat = "0.00";
 
                 ucMainScreen.TransactionDetails.Content = (object)("Store No: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-                ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED: " + ((!string.IsNullOrEmpty(sco_data.TransactionTotal) && sco_data.TransactionTotal != "null") ?  sco_data.TransactionTotal : "0.00"));
-                ucMainScreen.TransactionVat.Content =   (object)("VAT   AED: " + sco_data.TransactionVat);
+                ucMainScreen.TransactionTotal.Content = (object)("TOTAL SAR: " + ((!string.IsNullOrEmpty(sco_data.TransactionTotal) && sco_data.TransactionTotal != "null") ?  sco_data.TransactionTotal : "0.00"));
+                ucMainScreen.TransactionVat.Content =   (object)("VAT   SAR: " + sco_data.TransactionVat);
             }
             else
             {
@@ -130,8 +130,8 @@ namespace IDOLSelfCheckout.UserControls
                 {
                     if (ReceiptText != null) 
                         { ReceiptText.Text = ""; }
-                    ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED: " + sco_data.TransactionTotal);
-                    ucMainScreen.TransactionVat.Content = (object)("VAT   AED: " + sco_data.TransactionVat);
+                    ucMainScreen.TransactionTotal.Content = (object)("TOTAL SAR: " + sco_data.TransactionTotal);
+                    ucMainScreen.TransactionVat.Content = (object)("VAT   SAR: " + sco_data.TransactionVat);
                 }
             }
         }

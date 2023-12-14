@@ -118,9 +118,9 @@ namespace IDOLSelfCheckout.LSRetail
                 }
 
                 string receipt = "\n ============================================\n" +
-                             " \t\tIDOL Pharmacy       \n" +
+                             " \tDR SULAIMAN AL HABIB Pharmacies \n" +
                              " ============================================\n" +
-                             " \t we care for your health\n" +
+                             "Pharmacies of Dr.Sulaiman Al-Habib Medical Group\n" +
                              " --------------------------------------------\n" +
                              " Slip:  " + sco_data.ReceiptNumber + "\n" +
                              " Staff: 101    Trans: " + sco_data.TransactionNo + "\n" +
