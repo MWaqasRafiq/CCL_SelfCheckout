@@ -7,7 +7,7 @@
     <ProjectGuid>{8CA5A2C6-6A0B-4E88-960B-1D8C5264C0CA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Toshiba_SIT</RootNamespace>
-    <AssemblyName>Toshiba_SIT</AssemblyName>
+    <AssemblyName>SIT</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
