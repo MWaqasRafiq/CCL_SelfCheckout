@@ -54,19 +54,7 @@ namespace IDOLSelfCheckout.UserControls
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucCreditCardScreen());
             Thread.Sleep(1000);
             Basepage bp = new Basepage();
-            Boolean status = bp.tenderPaymentOffline(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
-            if (status)
-            {
-                uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreenOPOS());
-            }
-            else
-            {
-                uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
-            }
-            //Thread thread = new Thread(StartThreadOfCreditCardPayment);
-            //thread.Start();
-            //Basepage.logWrite("Credit Card payment starting for "+ sco_data.ReceiptNumber);
-            //Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
+            //Boolean status = bp.tenderPaymentOffline(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
             //if (status)
             //{
             //    uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreenOPOS());
@@ -75,6 +63,18 @@ namespace IDOLSelfCheckout.UserControls
             //{
             //    uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
             //}
+            Thread thread = new Thread(StartThreadOfCreditCardPayment);
+            thread.Start();
+            Basepage.logWrite("Credit Card payment starting for " + sco_data.ReceiptNumber);
+            Boolean status = bp.tenderPayment(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
+            if (status)
+            {
+                uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreenOPOS());
+            }
+            else
+            {
+                uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
+            }
         }
         private void StartThreadOfCreditCardPayment()
         {

@@ -103,9 +103,9 @@ namespace IDOLSelfCheckout.LSRetail
                 if (string.IsNullOrEmpty(sco_data.TransactionDateTime))
                     sco_data.TransactionDateTime = DateTime.Now.ToString("dd-MMM-yy HH:mm");
                 if (string.IsNullOrEmpty(sco_data.TransactionNo))
-                    sco_data.TransactionNo = "98509798583585";
+                    sco_data.TransactionNo = "9"+DateTime.Now.ToString("ddMMyyyymmHH");//"98509798583585";
                 if (string.IsNullOrEmpty(sco_data.ReceiptNumber))
-                    sco_data.ReceiptNumber = "98509798524383";
+                    sco_data.ReceiptNumber = "9" + DateTime.Now.ToString("ddMMyyyymmss");//"98509798524383";
 
 
                 foreach (items item in itemList)
@@ -153,8 +153,8 @@ namespace IDOLSelfCheckout.LSRetail
                 //Printer.SetBitmap(1, 2, "C:\\IDOL\\images\\bits\\logo122.bpm", 100, -2);
                 //Printer.PrintBitmap(2, "C:\\IDOL\\images\\bits\\logo122.bpm", 100, -2);
                 Printer.PrintNormal(2, receipt);
-                Basepage.logWrite("Printed main part");
-                Printer.PrintBarCode(2, string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "98509798524383" : sco_data.ReceiptNumber, 108, 100, 200, -2, -13);
+                Basepage.logWrite("Printed main part"); 
+                Printer.PrintBarCode(2, string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "98509" + DateTime.Now.ToString("dMyyymmH") : sco_data.ReceiptNumber, 108, 100, 200, -2, -13);
 
                 Printer.PrintNormal(2, "\n -------------------------------------------- \n");
 
