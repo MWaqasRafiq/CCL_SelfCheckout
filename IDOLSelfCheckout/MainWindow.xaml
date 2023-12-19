@@ -22,12 +22,38 @@
         <Border Grid.Column="0" Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Border Grid.Column="0" Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Column="0" Grid.Row="0">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Button x:Name="btnEnglish" Click="btnEnglish_Click">
+                                    <Image Source="C:/IDOL/images/icons/eng.jpg" Stretch="Fill"/>
+                                </Button>
+                            </DockPanel>
+                        </Border>
+                        <Border Grid.Column="0" Grid.Row="1">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Button x:Name="btnArabic" Click="btnArabic_Click">
+                                    <Image Source="C:/IDOL/images/icons/arb.jpg"  Stretch="Fill"/>
+                                </Button>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="0">
                     <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Image Source="C:/IDOL/images/DrSulaimanAlHabibPharmacies.jpg" Stretch="Fill"/>
                     </DockPanel>

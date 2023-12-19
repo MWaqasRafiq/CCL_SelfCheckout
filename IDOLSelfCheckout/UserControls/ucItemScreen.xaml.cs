@@ -28,6 +28,14 @@ namespace IDOLSelfCheckout.UserControls
             lamp = new CCL_Lamp();
             //Basepage.ledItemScreen();
             lamp.BlueOpen();
+
+            btn_pay.SetResourceReference(ContentProperty, "pay");
+            btn_bakery_add.SetResourceReference(ContentProperty, "firstAid");
+            btn_herbs_add.SetResourceReference(ContentProperty, "homeCare");
+            btn_donation_add.SetResourceReference(ContentProperty, "donate");
+            //lbl
+            //lblScanItems.SetResourceReference(ContentProperty, "firstAid");
+            //lblScanItemsDtl.SetResourceReference(ContentProperty, "firstAid");
         }
 
         private void btn_pay_Click(

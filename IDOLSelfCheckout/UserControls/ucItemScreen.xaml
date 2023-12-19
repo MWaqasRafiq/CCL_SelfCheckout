@@ -18,11 +18,14 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <Border Background="Cyan"  Grid.Column="0" Grid.Row="0">
+        <Border Background="#fff"  Grid.Column="0" Grid.Row="0">
                 <!--<Image Source="pack://application:,,,/IDOLSelfCheckout;component/Resources/scanitemimg1.png" Stretch="Fill" />-->
-            <Image Source="C:/IDOL/images/icons/scanitemimg1.png" Stretch="Fill" />
+            <StackPanel Orientation="Vertical">
+                <Label Name="lbl_Scan_Items" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="45"  FontWeight="DemiBold" Background="#fff">Scan Your Items</Label>
+                <Label Name="lbl_Scan_Items_Dtl" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="DemiBold" Background="#fff">Use the scan tools under the screen</Label>
+                <Image Source="C:/IDOL/images/icons/scanitemimg.png" Stretch="Fill" />
+            </StackPanel>
 
-            
             <!--<Image Margin="78,84,22,66" Name="image1" Stretch="Fill" >
                 <Image.Source>
                     <BitmapImage UriSource="pack://application:,,,/IDOLSelfCheckout;component/images/icons/scanitemimg1.png"/>
@@ -30,10 +33,17 @@
             </Image>-->
         </Border>
 
-        <Border Background="Gray"  Grid.Column="0" Grid.Row="1">
-            <Button Name="btn_donation_add" Click="btn_donation_add_Click" >
-                <Image Name="donationimg" Source="C:/IDOL/images/icons/donationbtn1.png" Stretch="Fill" />
-            </Button>          
+        <Border Background="#fff"  Grid.Column="0" Grid.Row="1">
+            <Button Name="btn_donation_add" Click="btn_donation_add_Click"  Background="White" FontSize="50" FontWeight="DemiBold">
+                Donate
+                <!--<Image Source="C:/IDOL/images/icons/bakerybtn.png" Stretch="Fill"   />-->
+            </Button>
+            <!--<Button Background="White" Name="btn_donation_add" Click="btn_donation_add_Click" >
+                <StackPanel Orientation="Horizontal">
+                    <Label HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="50" BorderThickness="0" Background="#fff">Donate</Label>
+                    <Image Name="donationimg" Source="C:/IDOL/images/icons/donationbtn.png" Stretch="Fill" />
+                </StackPanel>
+            </Button>-->          
 
         </Border>
 

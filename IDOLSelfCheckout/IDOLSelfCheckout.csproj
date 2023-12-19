@@ -101,6 +101,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Resources\ar.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Update="Resources\en.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
     <Page Update="UserControls\ucItemScreen.xaml">
       <CopyToOutputDirectory></CopyToOutputDirectory>
       <Generator></Generator>

@@ -13,9 +13,12 @@ using POS.Devices;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Windows;
 
 
 #nullable enable
@@ -49,7 +52,8 @@ namespace IDOLSelfCheckout
         public static bool LoyaltyRequested;
         public static bool LoyaltyScaned;
         //private TsgcWebSocketClient socketClient;
-        
+       
+
         public void loadValues()
         {
             try

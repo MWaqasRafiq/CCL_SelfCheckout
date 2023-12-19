@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+    <System:String x:Key="pay">يدفع</System:String>
+    <System:String x:Key="back">خلف</System:String>
+    <System:String x:Key="start">يبدأ</System:String>
+    <System:String x:Key="startAgreement">باستخدام هذه الخدمة، فإنني أوافق على الشروط والأحكام</System:String>
+    <System:String x:Key="name">اسم</System:String>
+    <System:String x:Key="qty">كمية</System:String>
+    <System:String x:Key="price">سعر</System:String>
+    <System:String x:Key="scanItem">مسح العنصر</System:String>
+    <System:String x:Key="selectItem">حدد العنصر</System:String>
+    <System:String x:Key="scanYourItems">مسح العناصر الخاصة بك</System:String>
+    <System:String x:Key="ScanText">استخدم أدوات المسح الموجودة أسفل الشاشة</System:String>
+    <System:String x:Key="donate">يتبرع</System:String>
+    <System:String x:Key="firstAid">إسعافات أولية</System:String>
+    <System:String x:Key="homeCare">رعاية منزلية</System:String>
+    <System:String x:Key="help">يساعد</System:String>
+    <System:String x:Key="vat">ضريبة القيمة المضافة</System:String>
+    <System:String x:Key="total">المجموع</System:String>
+    <System:String x:Key="selectPaymentMethod">اختار طريقة الدفع</System:String>
+</ResourceDictionary>

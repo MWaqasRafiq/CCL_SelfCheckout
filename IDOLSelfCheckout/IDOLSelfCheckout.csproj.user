@@ -68,6 +68,12 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Resources\ar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\en.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="UserControls\ucAsistantScreen.xaml">
       <SubType>Designer</SubType>
     </Page>

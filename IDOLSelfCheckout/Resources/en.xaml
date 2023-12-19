@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+    <System:String x:Key="pay">PAY</System:String>
+    <System:String x:Key="back">BACK</System:String>
+    <System:String x:Key="start">START</System:String>
+    <System:String x:Key="startAgreement">By using this service, I agree to the Terms &#38; Conditions</System:String>
+    <System:String x:Key="name">Name</System:String>
+    <System:String x:Key="qty">Qty</System:String>
+    <System:String x:Key="price">Price</System:String>
+    <System:String x:Key="scanItem">Scan Item</System:String>
+    <System:String x:Key="selectItem">Select Item</System:String>
+    <System:String x:Key="scanYourItems">Scan Your Items</System:String>
+    <System:String x:Key="ScanText">Use the scan tools under the screen</System:String>
+    <System:String x:Key="donate">Donate</System:String>
+    <System:String x:Key="firstAid">First Aid</System:String>
+    <System:String x:Key="homeCare">Home Care</System:String>
+    <System:String x:Key="help">HELP</System:String>
+    <System:String x:Key="vat">VAT</System:String>
+    <System:String x:Key="total">TOTAL</System:String>
+    <System:String x:Key="selectPaymentMethod">Select Payment Method</System:String>
+</ResourceDictionary>

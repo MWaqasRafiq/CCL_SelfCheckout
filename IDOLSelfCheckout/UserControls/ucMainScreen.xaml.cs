@@ -53,6 +53,10 @@ namespace IDOLSelfCheckout.UserControls
             timer.Interval = TimeSpan.FromMilliseconds(500);
             timer.Tick += ServiceCallWorker;
             timer.Start();
+            item_info.SetResourceReference(ContentProperty, "scanItem");
+            item_list.SetResourceReference(ContentProperty, "scanItem");
+            item_info.SetResourceReference(ContentProperty, "scanItem");
+            item_info.SetResourceReference(ContentProperty, "scanItem");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

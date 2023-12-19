@@ -20,6 +20,8 @@ using static IDOLSelfCheckout.FacePay;
 using IDOLSelfCheckout.DataModel;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.Globalization;
+using System.Windows.Media.Imaging;
 
 
 #nullable enable
@@ -66,6 +68,7 @@ namespace IDOLSelfCheckout
             serverIntegration = new ServerIntegration();
             lamp = new CCL_Lamp();
             lamp.GreenOpen();
+
         }
 
         private void Window_Loaded(
@@ -92,6 +95,41 @@ namespace IDOLSelfCheckout
             //}
         }
 
+        private void btnEnglish_Click(object sender, RoutedEventArgs e)
+        {
+            SetLanguage("en");
+        }
+        private void btnArabic_Click(object sender, RoutedEventArgs e)
+        {
+            SetLanguage("ar");
+        }
+        public void SetLanguage(string language)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+
+            Application.Current.Resources.MergedDictionaries.Clear();
+            ResourceDictionary resourceDictionary = new ResourceDictionary()
+            {
+                Source = new Uri($"/Resources/{language}.xaml", UriKind.Relative)
+            };
+            Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
+            
+            btnEnglish.IsEnabled = true;
+            btnArabic.IsEnabled = true;
+
+            switch(language)
+            {
+                case "en":
+                    btnEnglish.IsEnabled = false;
+                    break;
+                case "ar":
+                    btnArabic.IsEnabled = false;
+                    break;
+                default:
+                    break;
+            }
+        }
         private void labelBarCode_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             int vkey = KeyInterop.VirtualKeyFromKey(e.Key == Key.System ? e.SystemKey : e.Key);
