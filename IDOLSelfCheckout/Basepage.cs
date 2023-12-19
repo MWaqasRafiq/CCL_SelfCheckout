@@ -4,9 +4,9 @@ using IDOLSelfCheckout.BankDevice;
 using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
-using GeneralSCO.Core;
+//using GeneralSCO.Core;
 using Newtonsoft.Json;
-using On_Premises.Core;
+//using On_Premises.Core;
 using POS.Devices;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
-using Toshiba_SIT.Core;
+//using Toshiba_SIT.Core;
 
 
 #nullable enable
@@ -146,11 +146,11 @@ namespace IDOLSelfCheckout
             switch (ServerName)
             {
                 case "SA":
-                    ToshibaSA toshibaSA = new ToshibaSA();
+                    Toshiba_SIT.Core.ToshibaSA toshibaSA = new Toshiba_SIT.Core.ToshibaSA();
                     toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
                     break;
                 case "LS":
-                    General_SCO lS_SCO = new General_SCO();
+                    GeneralSCO.Core.General_SCO lS_SCO = new GeneralSCO.Core.General_SCO();
                     //var a = lS_SCO.productList();
                     break;
                 case "D3":
@@ -164,7 +164,7 @@ namespace IDOLSelfCheckout
 
         public void AddItemOnPremises()
         {
-            OnPremises_SCO onPremises = new OnPremises_SCO();
+            On_Premises.Core.OnPremises_SCO onPremises = new On_Premises.Core.OnPremises_SCO();
             Basepage basepage = new Basepage();
             var result = onPremises.AddItemOnPremises();
 

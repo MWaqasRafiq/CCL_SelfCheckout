@@ -19,12 +19,12 @@ using System.Windows.Threading;
 using static IDOLSelfCheckout.FacePay;
 using System.Threading;
 using System.Runtime.InteropServices;
-using Toshiba_SIT.Core;
-using GeneralSCO.Core;
+//using Toshiba_SIT.Core;
+//using GeneralSCO.Core;
 using DataModels.Shared;
 using DataModels.LsRetail;
 using IDOLSelfCheckout.Classes;
-using On_Premises.Core;
+//using On_Premises.Core;
 
 
 #nullable enable
@@ -126,11 +126,11 @@ namespace IDOLSelfCheckout
                             switch (Basepage.ServerName)
                             {
                                 case "SA":
-                                    ToshibaSA toshibaSA = new ToshibaSA();
+                                    Toshiba_SIT.Core.ToshibaSA toshibaSA = new Toshiba_SIT.Core.ToshibaSA();
                                     toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
                                     break;
                                 case "LS":
-                                    General_SCO lS_SCO = new General_SCO();
+                                    GeneralSCO.Core.General_SCO lS_SCO = new GeneralSCO.Core.General_SCO();
                                     //var a = lS_SCO.productList();
                                     break;
                                 case "D3":
