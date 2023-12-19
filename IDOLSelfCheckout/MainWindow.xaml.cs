@@ -20,7 +20,7 @@ using static IDOLSelfCheckout.FacePay;
 using System.Threading;
 using System.Runtime.InteropServices;
 using Toshiba_SIT.Core;
-using LS_Retail.Core;
+using GeneralSCO.Core;
 using DataModels.Shared;
 using DataModels.LsRetail;
 using IDOLSelfCheckout.Classes;
@@ -130,7 +130,7 @@ namespace IDOLSelfCheckout
                                     toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
                                     break;
                                 case "LS":
-                                    LS_SCO lS_SCO = new LS_SCO();
+                                    General_SCO lS_SCO = new General_SCO();
                                     //var a = lS_SCO.productList();
                                     break;
                                 case "D3":

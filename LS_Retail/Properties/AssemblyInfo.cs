@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LS Retail")]
-[assembly: AssemblyDescription("Library for LS Retail")]
+[assembly: AssemblyTitle("General SCO")]
+[assembly: AssemblyDescription("Library for General SCO")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("IDOL Technologies")]
-[assembly: AssemblyProduct("Self Check-out")]
+[assembly: AssemblyProduct("General Self Check-out")]
 [assembly: AssemblyCopyright("2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

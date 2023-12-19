@@ -12,9 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace LS_Retail.Core
+namespace GeneralSCO.Core
 {
-    public class LS_SCO
+    public class General_SCO
     {
         public static string LSRetail_Header_Username;
         public static string LSRetail_Header_Password;
@@ -32,7 +32,7 @@ namespace LS_Retail.Core
         public static string LSRetail_LedComPort;
         public static string LogFilePath;
 
-        public LS_SCO()
+        public General_SCO()
         {
             if (ConfigurationManager.AppSettings["LSRetail_Header_Username"] != null)
                 LSRetail_Header_Username = ConfigurationManager.AppSettings["LSRetail_Header_Username"].ToString();

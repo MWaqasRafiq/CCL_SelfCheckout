@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toshiba_SIT", "Toshiba_SIT\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "On_Premises", "On_Premises\On_Premises.csproj", "{3C23915D-7F04-45A9-A52D-054C997325AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LS_Retail", "LS_Retail\LS_Retail.csproj", "{87BAB8CE-60B1-4E54-A52C-FFC2DFCA98B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneralSCO", "LS_Retail\GeneralSCO.csproj", "{87BAB8CE-60B1-4E54-A52C-FFC2DFCA98B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModels", "DataModels\DataModels.csproj", "{FEC0AD82-4494-426B-AE99-A73D06C85438}"
 EndProject

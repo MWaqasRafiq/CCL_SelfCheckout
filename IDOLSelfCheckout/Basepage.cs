@@ -4,7 +4,7 @@ using IDOLSelfCheckout.BankDevice;
 using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
-using LS_Retail.Core;
+using GeneralSCO.Core;
 using Newtonsoft.Json;
 using On_Premises.Core;
 using POS.Devices;
@@ -150,7 +150,7 @@ namespace IDOLSelfCheckout
                     toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
                     break;
                 case "LS":
-                    LS_SCO lS_SCO = new LS_SCO();
+                    General_SCO lS_SCO = new General_SCO();
                     //var a = lS_SCO.productList();
                     break;
                 case "D3":
