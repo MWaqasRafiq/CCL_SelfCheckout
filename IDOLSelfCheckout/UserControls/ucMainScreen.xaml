@@ -76,8 +76,8 @@
                             <Border Visibility="Hidden" x:Name="item_list_parent" Background="Azure" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">
 
                                 <Grid>
-                                    <DataGrid x:Name="item_list" AutoGenerateColumns="False" CanUserResizeColumns="False" IsReadOnly="True"
-                            GridLinesVisibility="None" ItemsSource="{Binding items}">
+                                    <DataGrid x:Name="item_list" AutoGenerateColumns="False" CanUserResizeColumns="False"
+GridLinesVisibility="None" ItemsSource="{Binding items}" IsReadOnly="True" CanUserReorderColumns="False" CanUserSortColumns = "False">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="Name" Width="250" Binding="{Binding Name}">
                                                 <DataGridColumn.HeaderStyle>

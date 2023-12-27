@@ -48,6 +48,8 @@ namespace IDOLSelfCheckout
         public static string StoreNumber;
         public static bool LoyaltyRequested;
         public static bool LoyaltyScaned;
+        public static bool VoidRequested;
+        public static bool VoidScaned;
         public static uint CCL_Lamp_Type;
         //private TsgcWebSocketClient socketClient;
 

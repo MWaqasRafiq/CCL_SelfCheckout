@@ -116,6 +116,16 @@ namespace IDOLSelfCheckout
                         uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucPaymentScreen());
                     return;
                 }
+                else if (Basepage.VoidRequested && !Basepage.VoidScaned)
+                {
+                    Basepage.logWrite("VOID Scanned: " + _barcode);
+                    view_models data = (view_models)ucMainScreen.ItemListDataGrid.DataContext;
+                    var items = data.items;
+                    Basepage.VoidRequested = false;
+                    Basepage.VoidScaned = true;
+
+                    return;
+                }
                 else
                 {
 
