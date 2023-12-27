@@ -48,8 +48,9 @@ namespace IDOLSelfCheckout
         public static string StoreNumber;
         public static bool LoyaltyRequested;
         public static bool LoyaltyScaned;
+        public static uint CCL_Lamp_Type;
         //private TsgcWebSocketClient socketClient;
-        
+
         public void loadValues()
         {
             try
@@ -103,6 +104,9 @@ namespace IDOLSelfCheckout
                     Basepage.HostTerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
                 if (ConfigurationManager.AppSettings["Store_No"] != null)
                     Basepage.StoreNumber = ConfigurationManager.AppSettings["Store_No"].ToString();
+                if (ConfigurationManager.AppSettings["cclLampType"] != null)
+                    Basepage.CCL_Lamp_Type = Convert.ToUInt32(ConfigurationManager.AppSettings["cclLampType"]);
+                
                 Basepage.logWrite("--------------------- Application Started -----------------------");
             }
             catch (Exception ex)

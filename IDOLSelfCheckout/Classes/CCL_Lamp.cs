@@ -45,7 +45,7 @@ namespace IDOLSelfCheckout.Classes
         public static extern void CloseConnectCCLLamp();
 
         uint cbPort = 1;
-        uint lampType = 6;
+        uint lampType = Basepage.CCL_Lamp_Type;
         
         public CCL_Lamp()
         {
