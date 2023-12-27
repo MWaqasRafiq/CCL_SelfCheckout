@@ -39,6 +39,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeneralSCO\SignTerminalRequest.cs" />
+    <Compile Include="GeneralSCO\SignTerminalResponse.cs" />
     <Compile Include="LsRetail\items.cs" />
     <Compile Include="LsRetail\LsResponseGet.cs" />
     <Compile Include="LsRetail\view_models.cs" />

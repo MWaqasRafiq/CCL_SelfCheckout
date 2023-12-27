@@ -1,4 +1,5 @@
-﻿using DataModels.Shared;
+﻿using DataModels.GeneralSCO;
+using DataModels.Shared;
 using IDOLSelfCheckout.Classes;
 using System;
 using System.CodeDom.Compiler;
@@ -40,6 +41,18 @@ namespace IDOLSelfCheckout.UserControls
                 && Convert.ToDecimal(sco_data.TransactionTotal) > 0)
             {
                 uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucPaymentScreen());
+            }
+            else
+            {
+                SignTerminalRequest terminalRequest = new SignTerminalRequest() {
+                    Type = "on",
+                    Password = "",
+                    StoreNo ="",
+                    TerminalNo = "",
+                    UserId = ""
+                };
+                GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
+                var res = general_SCO.SignTerminal(terminalRequest);
             }
         }
 

@@ -108,6 +108,7 @@ namespace IDOLSelfCheckout
                 if (ConfigurationManager.AppSettings["cclLampType"] != null)
                     Basepage.CCL_Lamp_Type = Convert.ToUInt32(ConfigurationManager.AppSettings["cclLampType"]);
 
+
                 Basepage.logWrite("--------------------- Application Started -----------------------");
             }
             catch (Exception ex)

@@ -1,6 +1,8 @@
 ﻿using DataModels;
+using DataModels.GeneralSCO;
 using DataModels.LsRetail;
 using DataModels.Shared;
+using DataModels.ToshibaSA;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,6 +10,8 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -31,6 +35,11 @@ namespace GeneralSCO.Core
         public static string LSRetail_PaymentDeviceComPort;
         public static string LSRetail_LedComPort;
         public static string LogFilePath;
+
+        public static string HostServiceIp;
+        public static string HostServiceEndpoint;
+        public static string HostTerminalId;
+        public static string PosApiAddress;
 
         public General_SCO()
         {
@@ -64,7 +73,49 @@ namespace GeneralSCO.Core
                 LSRetail_LedComPort = ConfigurationManager.AppSettings["LSRetail_LedComPort"].ToString();
             if (ConfigurationManager.AppSettings["LogFile"] != null)
                 LogFilePath = ConfigurationManager.AppSettings["LogFile"].ToString();
+
+            if (ConfigurationManager.AppSettings["Service_Ip"] != null)
+                HostServiceIp = ConfigurationManager.AppSettings["Service_Ip"].ToString();
+            if (ConfigurationManager.AppSettings["Service_EndPoint"] != null)
+                HostServiceEndpoint = ConfigurationManager.AppSettings["Service_EndPoint"].ToString();
+            if (ConfigurationManager.AppSettings["Terminal_Id"] != null)
+                HostTerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
+            if (ConfigurationManager.AppSettings["LogFile"] != null)
+                LogFilePath = ConfigurationManager.AppSettings["LogFile"].ToString();
+            if (ConfigurationManager.AppSettings["PosApi"] != null)
+                PosApiAddress = ConfigurationManager.AppSettings["PosApi"].ToString();
         }
+
+        public SignTerminalResponse SignTerminal(SignTerminalRequest terminalRequest)
+        {
+            
+             return PostRequest<SignTerminalRequest, SignTerminalResponse>(PosApiAddress + "/PosApi/SignTerminal", terminalRequest);
+        }
+
+        private TOut PostRequest<TIn, TOut>(string uri, TIn content) where TOut : new()
+        {
+            TOut @out = new TOut();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var serialized = new StringContent(JsonConvert.SerializeObject(content), 
+                                Encoding.UTF8, "application/json");
+
+                var postResult = client.PostAsync(uri, serialized);
+                postResult.Wait();
+
+                var response = postResult.Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = response.Content.ReadAsStringAsync().Result;
+                    @out =  JsonConvert.DeserializeObject<TOut>(result);
+                }
+            }
+            return @out;
+        }
+        
 
         public PricesRequest productList()
         {
