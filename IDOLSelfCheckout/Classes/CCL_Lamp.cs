@@ -45,13 +45,13 @@ namespace IDOLSelfCheckout.Classes
         public static extern void CloseConnectCCLLamp();
 
         uint cbPort = 1;
-        uint lampType = 6;
-        
+        uint lampType = Basepage.CCL_Lamp_Type;
+
         public CCL_Lamp()
         {
             btnOpen();
         }
-        
+
         public void btnOpen()
         {
             try
@@ -63,11 +63,14 @@ namespace IDOLSelfCheckout.Classes
                 Basepage.logWrite("Lamp Error Open:" + ex.Message);
             }
         }
-        
+
         public void RedOpen()
         {
             try
             {
+                GreenCloseCCLLamp();
+                BlueCloseCCLLamp();
+
                 RedOpenCCLLamp();
             }
             catch (Exception ex)
@@ -75,7 +78,7 @@ namespace IDOLSelfCheckout.Classes
                 Basepage.logWrite("Lamp Error Red:" + ex.Message);
             }
         }
-        
+
         public void RedClose()
         {
             try
@@ -87,11 +90,14 @@ namespace IDOLSelfCheckout.Classes
                 Basepage.logWrite("Lamp Error Close red:" + ex.Message);
             }
         }
-        
+
         public void GreenOpen()
         {
             try
             {
+                RedCloseCCLLamp();
+                BlueCloseCCLLamp();
+
                 GreenOpenCCLLamp();
             }
             catch (Exception ex)
@@ -99,7 +105,7 @@ namespace IDOLSelfCheckout.Classes
                 Basepage.logWrite("Lamp Error Green:" + ex.Message);
             }
         }
-        
+
         public void GreenClose()
         {
             try
@@ -111,11 +117,14 @@ namespace IDOLSelfCheckout.Classes
                 Basepage.logWrite("Lamp Error Close green:" + ex.Message);
             }
         }
-        
+
         public void BlueOpen()
         {
             try
             {
+                RedCloseCCLLamp();
+                GreenCloseCCLLamp();
+
                 BlueOpenCCLLamp();
             }
             catch (Exception ex)
@@ -123,7 +132,7 @@ namespace IDOLSelfCheckout.Classes
                 Basepage.logWrite("Lamp Error Blue:" + ex.Message);
             }
         }
-        
+
         public void BlueClose()
         {
             try
@@ -135,7 +144,7 @@ namespace IDOLSelfCheckout.Classes
                 Basepage.logWrite("Lamp Error Close Blue:" + ex.Message);
             }
         }
-        
+
         public void Close()
         {
             try

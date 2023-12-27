@@ -49,6 +49,7 @@ namespace IDOLSelfCheckout
         public static bool LoyaltyRequested;
         public static bool LoyaltyScaned;
         public static string ServerName;
+        public static uint CCL_Lamp_Type;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         public void loadValues()
@@ -104,6 +105,9 @@ namespace IDOLSelfCheckout
                     Basepage.StoreNumber = ConfigurationManager.AppSettings["Store_No"].ToString();
                 if (ConfigurationManager.AppSettings["ServerName"] != null)
                     Basepage.ServerName = ConfigurationManager.AppSettings["ServerName"].ToString();
+                if (ConfigurationManager.AppSettings["cclLampType"] != null)
+                    Basepage.CCL_Lamp_Type = Convert.ToUInt32(ConfigurationManager.AppSettings["cclLampType"]);
+
                 Basepage.logWrite("--------------------- Application Started -----------------------");
             }
             catch (Exception ex)

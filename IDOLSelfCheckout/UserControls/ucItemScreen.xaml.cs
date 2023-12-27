@@ -4,6 +4,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -31,15 +32,15 @@ namespace IDOLSelfCheckout.UserControls
             lamp.BlueOpen();
         }
 
-        private void btn_pay_Click(
+        bool IsAllDigits(string s) => s.Replace(",", "").Replace(".", "").All(char.IsDigit);
 #nullable enable
-        object sender, RoutedEventArgs e)
+        private void btn_pay_Click(object sender, RoutedEventArgs e)
         {
-            Basepage basepage = new Basepage();
-            if (true)
+            if (!string.IsNullOrEmpty(sco_data.TransactionTotal) && IsAllDigits(sco_data.TransactionTotal)
+                && Convert.ToDecimal(sco_data.TransactionTotal) > 0)
+            {
                 uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucPaymentScreen());
-            else
-                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
+            }
         }
 
         private void btn_donation_add_Click(object sender, RoutedEventArgs e) => uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucDonationScreen());
