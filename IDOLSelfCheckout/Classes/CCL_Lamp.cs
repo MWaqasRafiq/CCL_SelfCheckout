@@ -68,6 +68,9 @@ namespace IDOLSelfCheckout.Classes
         {
             try
             {
+                GreenCloseCCLLamp();
+                BlueCloseCCLLamp();
+
                 RedOpenCCLLamp();
             }
             catch (Exception ex)
@@ -92,6 +95,9 @@ namespace IDOLSelfCheckout.Classes
         {
             try
             {
+                RedCloseCCLLamp();
+                BlueCloseCCLLamp();
+
                 GreenOpenCCLLamp();
             }
             catch (Exception ex)
@@ -116,6 +122,9 @@ namespace IDOLSelfCheckout.Classes
         {
             try
             {
+                RedCloseCCLLamp();
+                GreenCloseCCLLamp();
+
                 BlueOpenCCLLamp();
             }
             catch (Exception ex)

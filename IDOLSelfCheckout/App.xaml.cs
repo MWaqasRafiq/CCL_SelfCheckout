@@ -53,7 +53,9 @@ namespace IDOLSelfCheckout
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             CCL_Lamp lamp = new CCL_Lamp();
-            lamp.RedOpen();
+            lamp.BlueClose();
+            lamp.RedClose();
+            lamp.GreenClose();
         }
         void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {

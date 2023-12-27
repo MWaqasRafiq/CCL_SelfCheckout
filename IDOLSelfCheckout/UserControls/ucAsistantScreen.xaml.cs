@@ -104,16 +104,13 @@ namespace IDOLSelfCheckout.UserControls
             try
             {
                 Basepage.logWrite("lED test started.");
-                lamp.RedOpen();
-                Thread.Sleep(1000);
-                lamp.RedClose();
-                lamp.BlueOpen();
-                Thread.Sleep(1000);
-                lamp.BlueClose();
                 lamp.GreenOpen();
                 Thread.Sleep(1000);
-                lamp.GreenClose();
-                await lamp.BlueBlinkOpen(10);
+                lamp.RedOpen();
+                Thread.Sleep(1000);
+                lamp.BlueOpen();
+                Thread.Sleep(1000);
+                await lamp.BlueBlinkOpen(5);
                 lamp.Close();
 
                 lamp.RedOpen();
