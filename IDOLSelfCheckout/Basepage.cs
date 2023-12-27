@@ -188,6 +188,25 @@ namespace IDOLSelfCheckout
                 Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
             }
         }
+        public void VoidItemOnPremises()
+        {
+            On_Premises.Core.OnPremises_SCO onPremises = new On_Premises.Core.OnPremises_SCO();
+            Basepage basepage = new Basepage();
+            var result = onPremises.VoidItemOnPremises();
+
+            if (result != null && result.items != null)
+            {
+                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+                ucMainScreen.ItemListDataGrid.DataContext = (object)result;
+                basepage.updateTransactionDetails();
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+            }
+            else
+            {
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
+                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
+            }
+        }
 
         public bool pressedTotal(string receiptNo)
         {
