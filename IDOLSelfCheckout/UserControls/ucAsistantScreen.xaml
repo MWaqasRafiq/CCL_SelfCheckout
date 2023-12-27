@@ -49,7 +49,7 @@
 
                 <Border Background="White" Grid.Column="0" Grid.Row="0">
 
-                    <Button x:Name="btn_bakery_item1" Background="White" Command="{Binding ButtonClickCommand}" CommandParameter="423432432432"   >
+                    <Button x:Name="btn_void_item" Background="White" Command="{Binding ButtonClickCommand}" Click="btn_void_item_Click" CommandParameter="423432432432"   >
                         <DockPanel LastChildFill="True">
                             <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" >VOID</Label>
                             <Image  Source="C:/IDOL/images/icons/voiddisc.png"   />

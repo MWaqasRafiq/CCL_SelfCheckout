@@ -58,6 +58,12 @@ namespace IDOLSelfCheckout.UserControls
             uc_call.Uc_Add(MainWindow.Main_SCO, new ucStartScreen());
         }
 
+        private void btn_void_item_Click(object sender, RoutedEventArgs e)
+        {
+            Basepage.VoidRequested = true;
+            Basepage.VoidScaned = false;
+        }
+
         private void btn_back_Click(object sender, RoutedEventArgs e)
         {
             if (sco_data.TransactionProcess == "FINISHED")

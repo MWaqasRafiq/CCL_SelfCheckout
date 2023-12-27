@@ -76,9 +76,9 @@
 
                                 <Grid>
                                     <DataGrid x:Name="item_list" AutoGenerateColumns="False" CanUserResizeColumns="False"
-                            GridLinesVisibility="None" ItemsSource="{Binding items}">
+                            GridLinesVisibility="None" ItemsSource="{Binding items}" IsReadOnly="True" CanUserReorderColumns="False" CanUserSortColumns = "False">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Name" Width="250" Binding="{Binding Name}">
+                                            <DataGridTextColumn Header="Name" DisplayIndex="0" Width="250" Binding="{Binding Name}">
                                                 <DataGridColumn.HeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                                         <Setter Property="Control.FontSize" Value="20"/>
@@ -93,7 +93,7 @@
                                                     </Style>
                                                 </DataGridBoundColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Qty" Width="100" Binding="{Binding Qty}">
+                                            <DataGridTextColumn Header="Qty" DisplayIndex="1" Width="100" Binding="{Binding Qty}">
                                                 <DataGridColumn.HeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                                         <Setter Property="Control.FontSize" Value="20"/>
@@ -109,7 +109,7 @@
                                                     </Style>
                                                 </DataGridBoundColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Price" Width="100" Binding="{Binding Price}">
+                                            <DataGridTextColumn Header="Price" DisplayIndex="2" Width="100" Binding="{Binding Price}">
                                                 <DataGridColumn.HeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                                         <Setter Property="Control.FontSize" Value="20"/>

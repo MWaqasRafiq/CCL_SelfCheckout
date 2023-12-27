@@ -48,6 +48,8 @@ namespace IDOLSelfCheckout
         public static string StoreNumber;
         public static bool LoyaltyRequested;
         public static bool LoyaltyScaned;
+        public static bool VoidRequested;
+        public static bool VoidScaned;
         public static string ServerName;
         public static uint CCL_Lamp_Type;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
