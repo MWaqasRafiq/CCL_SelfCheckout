@@ -16,6 +16,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 
 
 #nullable enable
@@ -207,7 +208,51 @@ namespace IDOLSelfCheckout
             }
             return flag;
         }
+        public void VoidItemOnPremises()
+        {
+            view_models viewModels = new view_models();
+            masafiPricesRequest masafiPricesRequest;
+            using (StreamReader streamReader = new StreamReader(Directory.GetCurrentDirectory() + "\\products" + "\\products.json"))
+                masafiPricesRequest = JsonConvert.DeserializeObject<masafiPricesRequest>(streamReader.ReadToEnd());
 
+            prices prices = new prices();
+            prices product = Array.Find<prices>(masafiPricesRequest.prices, (Predicate<prices>)(element => element.barcode == sco_data.ScannedBarcode));
+            if (product != null)
+            {
+                logWrite("sco_data.ScannedBarcode.Product=" + product.name);
+                sco_data.TransactionTotal = (Convert.ToDouble(sco_data.TransactionTotal) - Convert.ToDouble(product.price)).ToString("0.00");
+                sco_data.TransactionVat = (Convert.ToDouble(sco_data.TransactionVat) - Convert.ToDouble(product.price) / 100.0 * 5.0).ToString("0.00");
+                List<items> itemList = sco_data.ItemList;
+                if (itemList.Where(x => x.Name == product.name && x.Price == product.price).Any())
+                {
+                    var item = itemList.Where(w => w.Name == product.name).FirstOrDefault();
+                    if (item != null)
+                        itemList.Remove(item);
+                }
+
+                if (itemList.Count <= 0)
+                    return;
+                viewModels = new view_models()
+                {
+                    items = (IEnumerable<items>)itemList
+                };
+            }
+
+            if (viewModels != null && viewModels.items != null)
+            {
+                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+                ucMainScreen.ItemListDataGrid.DataContext = (object)viewModels;
+                ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
+                ucMainScreen.TransactionTotal.Content = (object)("TOTAL SAR " + sco_data.TransactionTotal);
+                ucMainScreen.TransactionVat.Content = (object)("VAT   SAR " + sco_data.TransactionVat);
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+            }
+            else
+            {
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
+                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
+            }
+        }
         public bool tenderPayment(
           string receiptNo,
           string tenderedAmount,

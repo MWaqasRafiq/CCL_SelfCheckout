@@ -119,8 +119,8 @@ namespace IDOLSelfCheckout
                 else if (Basepage.VoidRequested && !Basepage.VoidScaned)
                 {
                     Basepage.logWrite("VOID Scanned: " + _barcode);
-                    view_models data = (view_models)ucMainScreen.ItemListDataGrid.DataContext;
-                    var items = data.items;
+
+                    new Basepage().VoidItemOnPremises();
                     Basepage.VoidRequested = false;
                     Basepage.VoidScaned = true;
 
