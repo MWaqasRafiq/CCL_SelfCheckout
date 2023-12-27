@@ -103,6 +103,7 @@ namespace IDOLSelfCheckout.UserControls
         {
             try
             {
+                Basepage.logWrite("lED test started.");
                 lamp.RedOpen();
                 Thread.Sleep(1000);
                 lamp.RedClose();
@@ -116,11 +117,12 @@ namespace IDOLSelfCheckout.UserControls
                 lamp.Close();
 
                 lamp.RedOpen();
+                Basepage.logWrite("lED test completed.");
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Basepage.logWrite(ex.Message);
             }
         }
 
