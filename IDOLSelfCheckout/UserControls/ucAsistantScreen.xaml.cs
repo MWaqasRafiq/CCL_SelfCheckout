@@ -74,6 +74,7 @@ namespace IDOLSelfCheckout.UserControls
             {
                 uc_call.Uc_Add(MainWindow.Item_SCO, new ucItemScreen());
             }
+            Basepage.VoidRequested = false;
         }
 
         private void btn_assistant_reconsulation_Click(object sender, RoutedEventArgs e)

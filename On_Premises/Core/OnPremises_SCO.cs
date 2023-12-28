@@ -53,12 +53,12 @@ namespace On_Premises.Core
             prices product = Array.Find<prices>(masafiPricesRequest.prices, (Predicate<prices>)(element => element.barcode == sco_data.ScannedBarcode));
             if (product != null)
             {
-                logWrite("sco_data.ScannedBarcode.Product=" + product.name);
+                logWrite("Void sco_data.ScannedBarcode.Product=" + product.name);
                 viewModels = voidItem(sco_data.ReceiptNumber, sco_data.ScannedBarcode, product);
             }
             else
             {
-                logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Not Found");
+                logWrite("Void sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Not Found");
                 return null;
             }
             return viewModels;
