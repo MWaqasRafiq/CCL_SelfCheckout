@@ -249,8 +249,11 @@ namespace IDOLSelfCheckout
             }
             else
             {
-                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
-                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
+                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+                ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
+                ucMainScreen.TransactionTotal.Content = (object)("TOTAL SAR " + sco_data.TransactionTotal);
+                ucMainScreen.TransactionVat.Content = (object)("VAT   SAR " + sco_data.TransactionVat);
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
             }
         }
         public bool tenderPayment(

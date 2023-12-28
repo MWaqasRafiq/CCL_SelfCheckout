@@ -119,7 +119,7 @@ namespace IDOLSelfCheckout
                 else if (Basepage.VoidRequested && !Basepage.VoidScaned)
                 {
                     Basepage.logWrite("VOID Scanned: " + _barcode);
-
+                    sco_data.ScannedBarcode = _barcode;
                     new Basepage().VoidItemOnPremises();
                     Basepage.VoidRequested = false;
                     Basepage.VoidScaned = true;
