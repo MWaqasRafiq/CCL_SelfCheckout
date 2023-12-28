@@ -32,12 +32,12 @@ namespace IDOLSelfCheckout.BankDevice
             {
                 amount = amount.Replace(".", "");
                 Basepage.logWrite(" >> PaymentDeviceCom...cmdType:" + cmdType);
-                Basepage.logWrite(" >> Basepage.LSRetail_PaymentDeviceComPort:" + Basepage.LSRetail_PaymentDeviceComPort);
+                Basepage.logWrite(" >> Basepage.PaymentDeviceComPort:" + Basepage.PaymentDeviceComPort);
                 // Closing serial port if it is open
                 if (_serialPort == null || _serialPort.IsOpen == false)
                 {
                     // Setting serial port settings
-                    _serialPort = new SerialPort(Basepage.LSRetail_PaymentDeviceComPort, 115200, Parity.None, 8, StopBits.One);
+                    _serialPort = new SerialPort(Basepage.PaymentDeviceComPort, 115200, Parity.None, 8, StopBits.One);
                     _serialPort.ReadTimeout = 40000;
                     _serialPort.WriteTimeout = 50000;
                     _serialPort.Open();

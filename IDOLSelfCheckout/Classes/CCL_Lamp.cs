@@ -44,7 +44,7 @@ namespace IDOLSelfCheckout.Classes
         [DllImport("CCLLampDll452.dll", EntryPoint = "CloseConnectCCLLamp")]
         public static extern void CloseConnectCCLLamp();
 
-        uint cbPort = 1;
+        uint cbPort = Basepage.LedComPort;
         uint lampType = Basepage.CCL_Lamp_Type;
 
         public CCL_Lamp()

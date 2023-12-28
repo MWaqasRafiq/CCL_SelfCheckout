@@ -26,20 +26,9 @@ namespace IDOLSelfCheckout
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private readonly DataModels.LsRetail.view_models viewModels;
         public static string LogFilePath;
-        public static string LSRetail_Header_Username;
-        public static string LSRetail_Header_Password;
-        public static string LSRetail_UserID;
-        public static string LSRetail_TerminalDetails;
-        public static string LSRetail_CreateNewTransactionNo;
-        public static string LSRetail_AddTransaction;
-        public static string LSRetail_TotalPressed;
-        public static string LSRetail_TenderKeyPressed;
-        public static string LSRetail_FinishPosTransaction;
-        public static string LSRetail_ItemDetails;
-        public static string LSRetail_ReceiptDetails;
-        public static string LSRetail_PrintReceipt;
-        public static string LSRetail_PaymentDeviceComPort;
-        public static string LSRetail_LedComPort;
+        public static string POS_Username;
+        public static string POS_Password;
+        public static string PaymentDeviceComPort;
         public static string OPOS_PrinterName;
         public static string PopId_Host;
         public static int PopId_Port;
@@ -51,6 +40,7 @@ namespace IDOLSelfCheckout
         public static bool VoidRequested;
         public static bool VoidScaned;
         public static string ServerName;
+        public static uint LedComPort;
         public static uint CCL_Lamp_Type;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -61,52 +51,42 @@ namespace IDOLSelfCheckout
                 ConfigurationManager.RefreshSection("appSettings");
                 if (ConfigurationManager.AppSettings["LogFile"] != null)
                     Basepage.LogFilePath = ConfigurationManager.AppSettings["LogFile"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_Header_Username"] != null)
-                    Basepage.LSRetail_Header_Username = ConfigurationManager.AppSettings["LSRetail_Header_Username"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_Header_Password"] != null)
-                    Basepage.LSRetail_Header_Password = ConfigurationManager.AppSettings["LSRetail_Header_Password"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_UserID"] != null)
-                    Basepage.LSRetail_UserID = ConfigurationManager.AppSettings["LSRetail_UserID"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_TerminalDetails"] != null)
-                    Basepage.LSRetail_TerminalDetails = ConfigurationManager.AppSettings["LSRetail_TerminalDetails"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_CreateNewTransactionNo"] != null)
-                    Basepage.LSRetail_CreateNewTransactionNo = ConfigurationManager.AppSettings["LSRetail_CreateNewTransactionNo"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_AddTransaction"] != null)
-                    Basepage.LSRetail_AddTransaction = ConfigurationManager.AppSettings["LSRetail_AddTransaction"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_TotalPressed"] != null)
-                    Basepage.LSRetail_TotalPressed = ConfigurationManager.AppSettings["LSRetail_TotalPressed"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_TenderKeyPressed"] != null)
-                    Basepage.LSRetail_TenderKeyPressed = ConfigurationManager.AppSettings["LSRetail_TenderKeyPressed"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_FinishPosTransaction"] != null)
-                    Basepage.LSRetail_FinishPosTransaction = ConfigurationManager.AppSettings["LSRetail_FinishPosTransaction"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_ItemDetails"] != null)
-                    Basepage.LSRetail_ItemDetails = ConfigurationManager.AppSettings["LSRetail_ItemDetails"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_ReceiptDetails"] != null)
-                    Basepage.LSRetail_ReceiptDetails = ConfigurationManager.AppSettings["LSRetail_ReceiptDetails"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_PrintReceipt"] != null)
-                    Basepage.LSRetail_PrintReceipt = ConfigurationManager.AppSettings["LSRetail_PrintReceipt"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_PaymentDeviceComPort"] != null)
-                    Basepage.LSRetail_PaymentDeviceComPort = ConfigurationManager.AppSettings["LSRetail_PaymentDeviceComPort"].ToString();
-                if (ConfigurationManager.AppSettings["LSRetail_LedComPort"] != null)
-                    Basepage.LSRetail_LedComPort = ConfigurationManager.AppSettings["LSRetail_LedComPort"].ToString();
+                
+                if (ConfigurationManager.AppSettings["POS_Username"] != null)
+                    Basepage.POS_Username = ConfigurationManager.AppSettings["POS_Username"].ToString();
+                
+                if (ConfigurationManager.AppSettings["POS_Password"] != null)
+                    Basepage.POS_Password = ConfigurationManager.AppSettings["POS_Password"].ToString();
+                
+                if (ConfigurationManager.AppSettings["PaymentDeviceComPort"] != null)
+                    Basepage.PaymentDeviceComPort = ConfigurationManager.AppSettings["PaymentDeviceComPort"].ToString();
+                
                 if (ConfigurationManager.AppSettings["OPOS_PrinterName"] != null)
                     Basepage.OPOS_PrinterName = ConfigurationManager.AppSettings["OPOS_PrinterName"].ToString();
 
                 //FacePay
                 if (ConfigurationManager.AppSettings["PopId_Host"] != null)
                     Basepage.PopId_Host = ConfigurationManager.AppSettings["PopId_Host"].ToString();
+
                 if (ConfigurationManager.AppSettings["PopId_Port"] != null)
                     Basepage.PopId_Port = Convert.ToInt32(ConfigurationManager.AppSettings["PopId_Port"]);
+
                 if (ConfigurationManager.AppSettings["PopId_SecondaryPort"] != null)
                     Basepage.PopId_SecondaryPort = Convert.ToInt32(ConfigurationManager.AppSettings["PopId_SecondaryPort"]);
 
                 //Service API
                 if (ConfigurationManager.AppSettings["Terminal_Id"] != null)
                     Basepage.HostTerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
+
                 if (ConfigurationManager.AppSettings["Store_No"] != null)
                     Basepage.StoreNumber = ConfigurationManager.AppSettings["Store_No"].ToString();
+
                 if (ConfigurationManager.AppSettings["ServerName"] != null)
                     Basepage.ServerName = ConfigurationManager.AppSettings["ServerName"].ToString();
+
+                if (ConfigurationManager.AppSettings["LedComPort"] != null)
+                    Basepage.LedComPort = Convert.ToUInt32(ConfigurationManager.AppSettings["LedComPort"]);
+
                 if (ConfigurationManager.AppSettings["cclLampType"] != null)
                     Basepage.CCL_Lamp_Type = Convert.ToUInt32(ConfigurationManager.AppSettings["cclLampType"]);
 
@@ -119,29 +99,29 @@ namespace IDOLSelfCheckout
             }
         }
 
-        public bool startNewTransaction()
-        {
-            bool flag = false;
-            try
-            {
-                LSscoApi lsscoApi = new LSscoApi();
-                flag = lsscoApi.getTerminalDetails();
-                if (flag)
-                {
-                    flag = lsscoApi.createNewTransactionNo(sco_data.StoreNumber, sco_data.TerminalNumber, sco_data.StaffId);
-                    if (flag)
-                        sco_data.TransactionProcess = "STARTED";
-                }
-                else
-                    this.errorMessage();
-            }
-            catch (Exception ex)
-            {
-                sco_data.ErrorMessage = ex.Message;
-                this.errorMessage();
-            }
-            return flag;
-        }
+        //public bool startNewTransaction()
+        //{
+        //    bool flag = false;
+        //    try
+        //    {
+        //        LSscoApi lsscoApi = new LSscoApi();
+        //        flag = lsscoApi.getTerminalDetails();
+        //        if (flag)
+        //        {
+        //            flag = lsscoApi.createNewTransactionNo(sco_data.StoreNumber, sco_data.TerminalNumber, sco_data.StaffId);
+        //            if (flag)
+        //                sco_data.TransactionProcess = "STARTED";
+        //        }
+        //        else
+        //            this.errorMessage();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        sco_data.ErrorMessage = ex.Message;
+        //        this.errorMessage();
+        //    }
+        //    return flag;
+        //}
 
         public bool addItem(string receiptNo, string barcodeNo, DataModels.prices product)
         {
