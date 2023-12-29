@@ -1,5 +1,4 @@
-﻿using DataModels.LsRetail;
-using DataModels.Shared;
+﻿using DataModels.Shared;
 using IDOLSelfCheckout.BankDevice;
 using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
@@ -24,7 +23,7 @@ namespace IDOLSelfCheckout
     public class Basepage
     {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        private readonly DataModels.LsRetail.view_models viewModels;
+        private readonly DataModels.Shared.view_models viewModels;
         public static string LogFilePath;
         public static string POS_Username;
         public static string POS_Password;
@@ -33,7 +32,7 @@ namespace IDOLSelfCheckout
         public static string PopId_Host;
         public static int PopId_Port;
         public static int PopId_SecondaryPort;
-        public static string HostTerminalId;
+        public static string TerminalId;
         public static string StoreNumber;
         public static bool LoyaltyRequested;
         public static bool LoyaltyScaned;
@@ -42,6 +41,7 @@ namespace IDOLSelfCheckout
         public static string ServerName;
         public static uint LedComPort;
         public static uint CCL_Lamp_Type;
+        public static string TransactionId;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         public void loadValues()
@@ -76,7 +76,7 @@ namespace IDOLSelfCheckout
 
                 //Service API
                 if (ConfigurationManager.AppSettings["Terminal_Id"] != null)
-                    Basepage.HostTerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
+                    Basepage.TerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
 
                 if (ConfigurationManager.AppSettings["Store_No"] != null)
                     Basepage.StoreNumber = ConfigurationManager.AppSettings["Store_No"].ToString();
@@ -99,29 +99,6 @@ namespace IDOLSelfCheckout
             }
         }
 
-        //public bool startNewTransaction()
-        //{
-        //    bool flag = false;
-        //    try
-        //    {
-        //        LSscoApi lsscoApi = new LSscoApi();
-        //        flag = lsscoApi.getTerminalDetails();
-        //        if (flag)
-        //        {
-        //            flag = lsscoApi.createNewTransactionNo(sco_data.StoreNumber, sco_data.TerminalNumber, sco_data.StaffId);
-        //            if (flag)
-        //                sco_data.TransactionProcess = "STARTED";
-        //        }
-        //        else
-        //            this.errorMessage();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        sco_data.ErrorMessage = ex.Message;
-        //        this.errorMessage();
-        //    }
-        //    return flag;
-        //}
 
         public bool addItem(string receiptNo, string barcodeNo, DataModels.prices product)
         {
@@ -136,9 +113,8 @@ namespace IDOLSelfCheckout
                     Toshiba_SIT.Core.ToshibaSA toshibaSA = new Toshiba_SIT.Core.ToshibaSA();
                     toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
                     break;
-                case "LS":
-                    GeneralSCO.Core.General_SCO lS_SCO = new GeneralSCO.Core.General_SCO();
-                    //var a = lS_SCO.productList();
+                case "GP":
+                    GeneralPosAddItem();
                     break;
                 case "D3":
                     break;
@@ -168,6 +144,28 @@ namespace IDOLSelfCheckout
                 Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
             }
         }
+
+
+        public void GeneralPosAddItem()
+        {
+            GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
+            var product = general_SCO.ProductDetails();
+
+            if (product != null && !string.IsNullOrEmpty(product.Description))
+            {
+                var result = general_SCO.AddToCart();
+
+                if (result != null && result.Products.Count() > 0)
+                {
+                    uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucStartScreen());
+                }
+            }
+            else
+            {
+                uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucHelpScreen());
+            }
+        }
+
         public void VoidItemOnPremises()
         {
             On_Premises.Core.OnPremises_SCO onPremises = new On_Premises.Core.OnPremises_SCO();

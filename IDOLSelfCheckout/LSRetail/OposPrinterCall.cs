@@ -34,11 +34,11 @@ namespace IDOLSelfCheckout.LSRetail
             {
                 Basepage.logWrite("Printer print..");
                 string items = "";
-                List<DataModels.LsRetail.items> itemList = sco_data.ItemList;
+                List<DataModels.Shared.items> itemList = sco_data.ItemList;
 
                 if(itemList.Count == 0 ) { return status; }
                 
-                foreach (DataModels.LsRetail.items item in itemList)
+                foreach (DataModels.Shared.items item in itemList)
                 {
                     string name = " " + item.Name + "                           ";
                     name = name.Substring(0, 27);
@@ -97,7 +97,7 @@ namespace IDOLSelfCheckout.LSRetail
             {
                 Basepage.logWrite("Printer print..");
                 string items = "";
-                List<DataModels.LsRetail.items> itemList = sco_data.ItemList;
+                List<DataModels.Shared.items> itemList = sco_data.ItemList;
 
                 if (itemList.Count == 0) { return status; }
 
@@ -109,7 +109,7 @@ namespace IDOLSelfCheckout.LSRetail
                     sco_data.ReceiptNumber = "98509798524383";
 
 
-                foreach (DataModels.LsRetail.items item in itemList)
+                foreach (DataModels.Shared.items item in itemList)
                 {
                     string name = item.Qty + "x " + item.Name + "                           ";
                     name = name.Substring(0, 27);

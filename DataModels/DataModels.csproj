@@ -39,11 +39,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeneralSCO\AddItemRequest.cs" />
+    <Compile Include="GeneralSCO\AddItemResponse.cs" />
+    <Compile Include="GeneralSCO\CartProducts.cs" />
+    <Compile Include="GeneralSCO\ProductDetails.cs" />
+    <Compile Include="GeneralSCO\ProductDetailsRequest.cs" />
     <Compile Include="GeneralSCO\SignTerminalRequest.cs" />
     <Compile Include="GeneralSCO\SignTerminalResponse.cs" />
-    <Compile Include="LsRetail\items.cs" />
-    <Compile Include="LsRetail\LsResponseGet.cs" />
-    <Compile Include="LsRetail\view_models.cs" />
+    <Compile Include="GeneralSCO\StartTransactionRequest.cs" />
+    <Compile Include="GeneralSCO\StartTransactionResponse.cs" />
+    <Compile Include="GeneralSCO\TransactionTotal.cs" />
+    <Compile Include="Shared\items.cs" />
+    <Compile Include="Shared\LsResponseGet.cs" />
+    <Compile Include="Shared\view_models.cs" />
     <Compile Include="prices.cs" />
     <Compile Include="PricesRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

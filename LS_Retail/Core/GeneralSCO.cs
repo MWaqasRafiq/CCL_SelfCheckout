@@ -1,8 +1,5 @@
-﻿using DataModels;
-using DataModels.GeneralSCO;
-using DataModels.LsRetail;
+﻿using DataModels.GeneralSCO;
 using DataModels.Shared;
-using DataModels.ToshibaSA;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -26,6 +23,9 @@ namespace GeneralSCO.Core
 
         public static string ServiceIp;
         public static string TerminalId;
+        public static string StoreNo;
+        public static string TransactionId;
+
 
         public General_SCO()
         {
@@ -43,15 +43,95 @@ namespace GeneralSCO.Core
             
             if (ConfigurationManager.AppSettings["Terminal_Id"] != null)
                 TerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
-            
+
+            if (ConfigurationManager.AppSettings["Store_No"] != null)
+                StoreNo = ConfigurationManager.AppSettings["Store_No"].ToString();
+
             if (ConfigurationManager.AppSettings["LogFile"] != null)
                 LogFilePath = ConfigurationManager.AppSettings["LogFile"].ToString();
         }
 
         public SignTerminalResponse SignTerminal(SignTerminalRequest terminalRequest)
         {
+            SignTerminalResponse response = new SignTerminalResponse();
+            try
+            {
+                response = PostRequest<SignTerminalRequest, SignTerminalResponse>(ServiceIp + "SignTerminal", terminalRequest);
+            }
+            catch(Exception ex)
+            {
+                logWrite(ex.Message); 
+            }
+            return response;
+        }
+
+
+        public StartTransactionResponse StartTransaction()
+        {
+            TransactionId = string.Empty;
+            StartTransactionResponse response = new StartTransactionResponse();
+            try
+            {
+                StartTransactionRequest request = new StartTransactionRequest()
+                {
+                    StoreNo = StoreNo,
+                    TerminalNo = TerminalId
+                };
+                response = PostRequest<StartTransactionRequest, StartTransactionResponse>(ServiceIp + "StartTransaction", request);
+                if(response != null && response.Code == 1)
+                {
+                    TransactionId = response.TransactionId;
+                }
+            }
+            catch (Exception ex)
+            {
+                logWrite(ex.Message);
+            }
+            return response;
+        }
+
+        public ProductDetails ProductDetails()
+        {
+            ProductDetails response = new ProductDetails();
+
+            try
+            {
+                ProductDetailsRequest request = new ProductDetailsRequest()
+                {
+                    BarCode = sco_data.ScannedBarcode,
+                    StoreNo = StoreNo,
+                    TerminalNo = TerminalId
+                };
+                response = PostRequest<ProductDetailsRequest, ProductDetails>(ServiceIp + "ProductDetails", request);
+            }
+            catch (Exception ex)
+            {
+                logWrite(ex.Message);
+            }
+            return response;
+        }
+
+        public CartProducts AddToCart()
+        {
+            CartProducts response = new CartProducts();
             
-             return PostRequest<SignTerminalRequest, SignTerminalResponse>(ServiceIp + "PosApi/SignTerminal", terminalRequest);
+            try
+            {
+                AddItemRequest request = new AddItemRequest()
+                {
+                    BarCode = sco_data.ScannedBarcode,
+                    Qty = 1,
+                    StoreNo = StoreNo,
+                    TerminalNo = TerminalId,
+                    TransactionId = TransactionId
+                };
+                response = PostRequest<AddItemRequest, CartProducts>(ServiceIp + "AddToCart", request);
+            }
+            catch (Exception ex)
+            {
+                logWrite(ex.Message);
+            }
+            return response;
         }
 
         private TOut PostRequest<TIn, TOut>(string uri, TIn content) where TOut : new()
@@ -77,7 +157,36 @@ namespace GeneralSCO.Core
             }
             return @out;
         }
-        
+
+
+        /// <summary>
+        /// Write Logs
+        /// </summary>
+        /// <param name="msg"></param>
+        public static void logWrite(string msg)
+        {
+            string format = "ddMMyyyy";
+            string path = LogFilePath + "POS" + DateTime.Now.ToString(format) + ".log";
+            string str = "1.3.0.2";
+            if (!File.Exists(path))
+            {
+                StreamWriter streamWriter = new StreamWriter(path);
+                streamWriter.WriteLine("[" + str.ToString() + "] " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss tt") + "==> " + msg);
+                streamWriter.Close();
+            }
+            else
+            {
+                using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                {
+                    using (StreamWriter streamWriter = new StreamWriter((Stream)fileStream))
+                    {
+                        streamWriter.WriteLine("[" + str.ToString() + "] " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss tt") + "==> " + msg);
+                        streamWriter.Close();
+                    }
+                }
+            }
+        }
+
 
         //public PricesRequest productList()
         //{
@@ -100,11 +209,11 @@ namespace GeneralSCO.Core
         //            requestStream.Write(bytes, 0, bytes.Length);
 
         //        var streamResponse = new StreamReader(httpWebRequest.GetResponse().GetResponseStream()).ReadToEnd();
-                
+
         //        Console.WriteLine("productList responseString: ", streamResponse);
-                
+
         //        var lsResponse = JsonConvert.DeserializeObject<LsResponseGet>(streamResponse);
-                
+
         //        masafiPricesRequest = lsResponse.data;
         //        return masafiPricesRequest;
         //    }
@@ -616,32 +725,5 @@ namespace GeneralSCO.Core
         //    return result;
         //}
 
-        /// <summary>
-        /// Write Logs
-        /// </summary>
-        /// <param name="msg"></param>
-        public static void logWrite(string msg)
-        {
-            string format = "ddMMyyyy";
-            string path = LogFilePath + "POS" + DateTime.Now.ToString(format) + ".log";
-            string str = "1.3.0.2";
-            if (!File.Exists(path))
-            {
-                StreamWriter streamWriter = new StreamWriter(path);
-                streamWriter.WriteLine("[" + str.ToString() + "] " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss tt") + "==> " + msg);
-                streamWriter.Close();
-            }
-            else
-            {
-                using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-                {
-                    using (StreamWriter streamWriter = new StreamWriter((Stream)fileStream))
-                    {
-                        streamWriter.WriteLine("[" + str.ToString() + "] " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss tt") + "==> " + msg);
-                        streamWriter.Close();
-                    }
-                }
-            }
-        }
     }
 }

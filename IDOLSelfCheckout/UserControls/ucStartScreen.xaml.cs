@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -32,8 +33,17 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btn_start_sco_Click(object sender, RoutedEventArgs e)
         {
-           uc_call.Uc_Add(MainWindow.Main_SCO, new ucMainScreen());
-
+            GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
+            var response = general_SCO.StartTransaction();
+            if (response != null && response.Code == 1)
+            {
+                Basepage.TransactionId = response.TransactionId;
+                uc_call.Uc_Add(MainWindow.Main_SCO, new ucMainScreen());
+            }
+            else
+            {
+                uc_call.Uc_Add(MainWindow.Main_SCO, new ucHelpScreen());
+            }
         }
     }
 }

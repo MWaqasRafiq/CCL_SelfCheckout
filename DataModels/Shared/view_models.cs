@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataModels.LsRetail
+namespace DataModels.Shared
 {
     public class view_models
     {

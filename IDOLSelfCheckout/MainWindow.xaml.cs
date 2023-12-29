@@ -22,8 +22,8 @@ using System.Runtime.InteropServices;
 //using Toshiba_SIT.Core;
 //using GeneralSCO.Core;
 using DataModels.Shared;
-using DataModels.LsRetail;
 using IDOLSelfCheckout.Classes;
+using DataModels.GeneralSCO;
 //using On_Premises.Core;
 
 
@@ -51,7 +51,7 @@ namespace IDOLSelfCheckout
         public MainWindow()
         {
             this.InitializeComponent();
-            sco_data.ItemList = new List<DataModels.LsRetail.items>();
+            sco_data.ItemList = new List<DataModels.Shared.items>();
             string[] filter = new string[4]
             {
                 "*.jpg",
@@ -68,6 +68,8 @@ namespace IDOLSelfCheckout
 
             lamp = new CCL_Lamp();
             lamp.GreenOpen();
+
+            
         }
 
         private void Window_Loaded(
@@ -77,9 +79,28 @@ namespace IDOLSelfCheckout
             new Basepage().loadValues();
             MainWindow.Img_Circle = this.imgCircle;
             MainWindow.Main_SCO = this.Main_sco;
-            uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucStartScreen());
+
+            SignTerminalRequest terminalRequest = new SignTerminalRequest()
+            {
+                Type = "on",
+                Password = "",
+                StoreNo = "",
+                TerminalNo = "",
+                UserId = ""
+            };
+            GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
+            var res = general_SCO.SignTerminal(terminalRequest);
+            if (res != null && res.Code == 1)
+            {
+                uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucStartScreen());
+            }
+            else
+            {
+                uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucClosedScreen());
+            }
 
             this.PreviewKeyDown += new KeyEventHandler(this.labelBarCode_PreviewKeyDown);
+
         }
 
         private void labelBarCode_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -146,9 +167,8 @@ namespace IDOLSelfCheckout
                                     Toshiba_SIT.Core.ToshibaSA toshibaSA = new Toshiba_SIT.Core.ToshibaSA();
                                     toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
                                     break;
-                                case "LS":
-                                    GeneralSCO.Core.General_SCO lS_SCO = new GeneralSCO.Core.General_SCO();
-                                    //var a = lS_SCO.productList();
+                                case "GP":
+                                    new Basepage().GeneralPosAddItem();
                                     break;
                                 case "D3":
                                     break;
@@ -162,7 +182,6 @@ namespace IDOLSelfCheckout
                 this._barcode = string.Empty;
             }
         }
-
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)

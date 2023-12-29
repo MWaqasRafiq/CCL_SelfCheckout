@@ -46,7 +46,7 @@ namespace IDOLSelfCheckout.UserControls
                 if (statu)
                 {
                     uc_call.Uc_Add(MainWindow.Main_SCO, new ucStartScreen());
-                    sco_data.ItemList = new List<DataModels.LsRetail.items>();
+                    sco_data.ItemList = new List<DataModels.Shared.items>();
                     sco_data.TransactionTotal = Convert.ToDecimal("0").ToString("0.00");
                     sco_data.TransactionVat = Convert.ToDecimal("0").ToString("0.00"); ;
                     ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);

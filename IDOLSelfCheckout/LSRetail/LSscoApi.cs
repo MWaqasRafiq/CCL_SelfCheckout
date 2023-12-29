@@ -1,5 +1,4 @@
 ﻿using DataModels;
-using DataModels.LsRetail;
 using DataModels.Shared;
 //using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.UserControls;

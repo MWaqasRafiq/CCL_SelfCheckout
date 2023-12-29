@@ -1,5 +1,4 @@
-﻿using DataModels.LsRetail;
-using DataModels.Shared;
+﻿using DataModels.Shared;
 using DataModels.ToshibaSA;
 using IDOLSelfCheckout.Classes;
 using System;
@@ -33,7 +32,7 @@ namespace IDOLSelfCheckout.UserControls
         public static Label TransactionVat;
         public static Label ItemInfo;
         public static TextBlock ReceiptText;
-        private readonly DataModels.LsRetail.view_models viewModels;
+        private readonly DataModels.Shared.view_models viewModels;
         private ToshibaSA toshibaSA;
         CCL_Lamp lamp;
         public ucMainScreen()
@@ -42,11 +41,11 @@ namespace IDOLSelfCheckout.UserControls
             lamp = new CCL_Lamp();
             lamp.BlueOpen();
             ItemListDataGrid = item_list;
-            this.viewModels = new DataModels.LsRetail.view_models
+            this.viewModels = new DataModels.Shared.view_models
             {
-                items = new List<DataModels.LsRetail.items>()
+                items = new List<DataModels.Shared.items>()
                 {
-                    new DataModels.LsRetail.items { Name = "", Price = "" }
+                    new DataModels.Shared.items { Name = "", Price = "" }
                 }
             };
             ItemListDataGrid.DataContext = this.viewModels;

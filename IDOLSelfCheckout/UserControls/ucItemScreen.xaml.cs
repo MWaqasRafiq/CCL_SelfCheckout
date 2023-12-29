@@ -44,15 +44,7 @@ namespace IDOLSelfCheckout.UserControls
             }
             else
             {
-                SignTerminalRequest terminalRequest = new SignTerminalRequest() {
-                    Type = "on",
-                    Password = "",
-                    StoreNo ="",
-                    TerminalNo = "",
-                    UserId = ""
-                };
-                GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
-                var res = general_SCO.SignTerminal(terminalRequest);
+
             }
         }
 
