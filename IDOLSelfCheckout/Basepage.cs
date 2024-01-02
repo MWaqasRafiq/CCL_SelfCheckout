@@ -42,6 +42,7 @@ namespace IDOLSelfCheckout
         public static uint LedComPort;
         public static uint CCL_Lamp_Type;
         public static string TransactionId;
+        public static string VideoControlSource;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         public void loadValues()
@@ -51,7 +52,10 @@ namespace IDOLSelfCheckout
                 ConfigurationManager.RefreshSection("appSettings");
                 if (ConfigurationManager.AppSettings["LogFile"] != null)
                     Basepage.LogFilePath = ConfigurationManager.AppSettings["LogFile"].ToString();
-                
+
+                if (ConfigurationManager.AppSettings["VideoControlSource"] != null)
+                    Basepage.VideoControlSource = ConfigurationManager.AppSettings["VideoControlSource"].ToString();
+
                 if (ConfigurationManager.AppSettings["POS_Username"] != null)
                     Basepage.POS_Username = ConfigurationManager.AppSettings["POS_Username"].ToString();
                 

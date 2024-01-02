@@ -29,7 +29,7 @@
                 </Grid.RowDefinitions>
                 <Border Grid.Column="0" Grid.Row="0">
                     <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Image Source="C:/IDOL/images/Choithramsheader.jpg" Stretch="Fill"/>
+                        <Image Source="C:/IDOL/images/DrSulaimanAlHabibPharmacies.jpg" Stretch="Fill"/>
                     </DockPanel>
                 </Border>
             </Grid>
@@ -43,8 +43,12 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Border Grid.Column="0" Grid.Row="0" >
-                    <Image x:Name="sceneriesBtn" Source="C:/IDOL/images/advertise/1.jpg" VerticalAlignment="Bottom"
-                 Stretch="Fill"/>
+                    <MediaElement Canvas.Left="0" Canvas.Top ="0"
+                        Name="VideoControl" LoadedBehavior="Play" Volume="0" Stretch="Fill" 
+                        UnloadedBehavior="Manual" MediaEnded="Video_MediaEnded" Source="">
+                    </MediaElement>
+                    <!--<Image x:Name="sceneriesBtn" Source="C:/IDOL/images/advertise/1.jpg" VerticalAlignment="Bottom"
+                 Stretch="Fill"/>-->
                 </Border>
             </Grid>
         </Border>
