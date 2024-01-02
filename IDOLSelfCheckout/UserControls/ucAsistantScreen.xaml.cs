@@ -1,4 +1,5 @@
-﻿using DataModels.Shared;
+﻿using DataModels.GeneralSCO;
+using DataModels.Shared;
 using IDOLSelfCheckout.BankDevice;
 using IDOLSelfCheckout.Classes;
 using System;
@@ -89,6 +90,16 @@ namespace IDOLSelfCheckout.UserControls
         private void btn_closed_screen_Click(object sender, RoutedEventArgs e)
         {
             sco_data.TransactionProcess = "CLOSED";
+            SignTerminalRequest terminalRequest = new SignTerminalRequest()
+            {
+                Type = "off",
+                Password = "",
+                StoreNo = Basepage.StoreNumber,
+                TerminalNo = Basepage.TerminalId,
+                UserId = ""
+            };
+            GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
+            var res = general_SCO.SignTerminal(terminalRequest);
             uc_call.Uc_Add(MainWindow.Main_SCO, new ucClosedScreen());
         }
 
@@ -108,6 +119,11 @@ namespace IDOLSelfCheckout.UserControls
         }
 
         private async void btn_led_Click(object sender, RoutedEventArgs e)
+        {
+            await Task.Factory.StartNew(() => Led_Test());
+        }
+
+        private async void Led_Test()
         {
             try
             {
@@ -131,8 +147,6 @@ namespace IDOLSelfCheckout.UserControls
                 MessageBox.Show(ex.Message);
             }
         }
-
-     
 
     }
 }

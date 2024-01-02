@@ -154,15 +154,35 @@ namespace IDOLSelfCheckout
             if (product != null && !string.IsNullOrEmpty(product.Description))
             {
                 var result = general_SCO.AddToCart();
-
-                if (result != null && result.Products.Count() > 0)
+                
+                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+                if (result != null && result.items != null)
                 {
-                    uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucStartScreen());
+                    sco_data.LastItemDescription = product.Description;
+                    ucMainScreen.ItemListDataGrid.DataContext = (object)result;
+                    updateTransactionDetails();
+                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
                 }
+                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
             }
             else
             {
-                uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucHelpScreen());
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
+            }
+        }
+
+        public void OrderTotal()
+        {
+            GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
+            var result = general_SCO.OrderTotal();
+
+            ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+            if (result != null && result.items != null)
+            {
+                ucMainScreen.ItemListDataGrid.DataContext = (object)result;
+                updateTransactionDetails();
+                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
             }
         }
 

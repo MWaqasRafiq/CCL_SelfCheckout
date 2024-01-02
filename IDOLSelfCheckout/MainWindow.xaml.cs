@@ -84,8 +84,8 @@ namespace IDOLSelfCheckout
             {
                 Type = "on",
                 Password = "",
-                StoreNo = "",
-                TerminalNo = "",
+                StoreNo = Basepage.StoreNumber,
+                TerminalNo = Basepage.TerminalId,
                 UserId = ""
             };
             GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();

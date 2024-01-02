@@ -32,7 +32,7 @@ namespace IDOLSelfCheckout.UserControls
         }
         private void btn_help_sco_Click(object sender, RoutedEventArgs e)
         {
-            btn_help_sco.Focusable = false;
+            btn_help_sco.Focusable = true;
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucAsistantScreen());
         }
      

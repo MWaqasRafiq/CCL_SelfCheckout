@@ -111,10 +111,10 @@ namespace GeneralSCO.Core
             return response;
         }
 
-        public CartProducts AddToCart()
+        public view_models AddToCart()
         {
-            CartProducts response = new CartProducts();
-            
+            view_models viewModels = new view_models();
+
             try
             {
                 AddItemRequest request = new AddItemRequest()
@@ -125,13 +125,68 @@ namespace GeneralSCO.Core
                     TerminalNo = TerminalId,
                     TransactionId = TransactionId
                 };
-                response = PostRequest<AddItemRequest, CartProducts>(ServiceIp + "AddToCart", request);
+                CartProducts response = PostRequest<AddItemRequest, CartProducts>(ServiceIp + "AddToCart", request);
+                if (response != null && response.Products.Count() > 0)
+                {
+                    List<items> itemList = new List<items>();//sco_data.ItemList;
+
+                    foreach (var a in response.Products)
+                    {
+                        itemList.Add(new items()
+                        {
+                            Name = a.Description,
+                            Price = a.Price.ToString(),
+                            Qty = a.Qty.ToString()
+                        });
+                    }
+                    viewModels.items = itemList;
+
+                    sco_data.TransactionTotal = response.Total.TotalAmount.ToString();
+                    sco_data.TransactionVat = response.Total.TotalVat.ToString();
+                }
             }
             catch (Exception ex)
             {
                 logWrite(ex.Message);
             }
-            return response;
+            return viewModels;
+        }
+
+
+        public view_models OrderTotal()
+        {
+            view_models viewModels = new view_models();
+            try
+            {
+                StartTransactionRequest request = new StartTransactionRequest() {
+                    StoreNo = StoreNo,
+                    TerminalNo = TerminalId
+                };
+                CartProducts response = PostRequest<StartTransactionRequest, CartProducts>(ServiceIp + "OrderTotal", request);
+                if (response != null && response.Products.Count() > 0)
+                {
+                    List<items> itemList = new List<items>();//sco_data.ItemList;
+
+                    foreach (var a in response.Products)
+                    {
+                        itemList.Add(new items()
+                        {
+                            Name = a.Description,
+                            Price = a.Price.ToString(),
+                            Qty = a.Qty.ToString()
+                        });
+                    }
+                    viewModels.items = itemList;
+
+                    sco_data.TransactionTotal = response.Total.TotalAmount.ToString();
+                    sco_data.TransactionVat = response.Total.TotalVat.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                logWrite(ex.Message);
+            }
+            return viewModels;
         }
 
         private TOut PostRequest<TIn, TOut>(string uri, TIn content) where TOut : new()
@@ -153,6 +208,10 @@ namespace GeneralSCO.Core
                 {
                     string result = response.Content.ReadAsStringAsync().Result;
                     @out =  JsonConvert.DeserializeObject<TOut>(result);
+                }
+                else
+                {
+                    logWrite("GeneralSCO > PostRequest encountered exception: " + response.ReasonPhrase);
                 }
             }
             return @out;

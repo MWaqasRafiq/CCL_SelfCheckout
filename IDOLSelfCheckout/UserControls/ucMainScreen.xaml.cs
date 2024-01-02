@@ -49,7 +49,7 @@ namespace IDOLSelfCheckout.UserControls
                 }
             };
             ItemListDataGrid.DataContext = this.viewModels;
-
+            
             //Server API
             //serverIntegration = new ServerIntegration();
             toshibaSA = new ToshibaSA();
@@ -103,6 +103,7 @@ namespace IDOLSelfCheckout.UserControls
             }
             
             ucMainScreen.TransactionDetails.Content = (object)("Store No: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber );
+            new Basepage().OrderTotal();
         }
 
         public void UpdateReceipt(InvoiceResponseVM responseVM)
