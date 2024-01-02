@@ -52,6 +52,7 @@ namespace IDOLSelfCheckout
         public static bool VoidRequested;
         public static bool VoidScaned;
         public static uint CCL_Lamp_Type;
+        public static string VideoControlSource;
         //private TsgcWebSocketClient socketClient;
 
         public void loadValues()
@@ -110,6 +111,9 @@ namespace IDOLSelfCheckout
                 if (ConfigurationManager.AppSettings["cclLampType"] != null)
                     Basepage.CCL_Lamp_Type = Convert.ToUInt32(ConfigurationManager.AppSettings["cclLampType"]);
                 
+                if (ConfigurationManager.AppSettings["VideoControlSource"] != null)
+                    Basepage.VideoControlSource = ConfigurationManager.AppSettings["VideoControlSource"].ToString();
+
                 Basepage.logWrite("--------------------- Application Started -----------------------");
             }
             catch (Exception ex)
@@ -238,23 +242,16 @@ namespace IDOLSelfCheckout
                 };
             }
 
+            ucMainScreen.ItemListDataGrid.DataContext = (object)null;
             if (viewModels != null && viewModels.items != null)
             {
-                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
                 ucMainScreen.ItemListDataGrid.DataContext = (object)viewModels;
-                ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-                ucMainScreen.TransactionTotal.Content = (object)("TOTAL SAR " + sco_data.TransactionTotal);
-                ucMainScreen.TransactionVat.Content = (object)("VAT   SAR " + sco_data.TransactionVat);
-                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+            
             }
-            else
-            {
-                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
-                ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-                ucMainScreen.TransactionTotal.Content = (object)("TOTAL SAR " + sco_data.TransactionTotal);
-                ucMainScreen.TransactionVat.Content = (object)("VAT   SAR " + sco_data.TransactionVat);
-                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
-            }
+            ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
+            ucMainScreen.TransactionTotal.Content = (object)("TOTAL SAR " + sco_data.TransactionTotal);
+            ucMainScreen.TransactionVat.Content = (object)("VAT SAR " + sco_data.TransactionVat);
+            uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
         }
         public bool tenderPayment(
           string receiptNo,

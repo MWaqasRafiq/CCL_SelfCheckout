@@ -90,6 +90,7 @@ namespace IDOLSelfCheckout
             //    MessageBox.Show("Opened");
             //    GreenOpenCCLLamp();
             //}
+            VideoControl.Source = new Uri(Basepage.VideoControlSource);
         }
 
         private void labelBarCode_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -206,7 +207,11 @@ namespace IDOLSelfCheckout
         }
 
         private void _timer_Elapsed(object sender, ElapsedEventArgs e) => ((DispatcherObject)this).Dispatcher.Invoke(new Action(this.UpdateImage));
-
+        private void Video_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            VideoControl.Position = TimeSpan.FromSeconds(0);
+            VideoControl.Play();
+        }
         public void UpdateImage()
         {
             if (this.Images1 == null)
@@ -215,7 +220,7 @@ namespace IDOLSelfCheckout
                 ++this.count1;
             if (this.count1 >= this.Images1.Count)
                 this.count1 = 0;
-            this.sceneriesBtn.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("C:\\IDOL\\images\\advertise\\" + this.Images1[this.count1].ToString());
+            //this.sceneriesBtn.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("C:\\IDOL\\images\\advertise\\" + this.Images1[this.count1].ToString());
         }
     }
 }
