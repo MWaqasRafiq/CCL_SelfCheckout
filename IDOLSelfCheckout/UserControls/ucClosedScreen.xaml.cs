@@ -1,4 +1,5 @@
-﻿using IDOLSelfCheckout.Classes;
+﻿using DataModels.Shared;
+using IDOLSelfCheckout.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +25,14 @@ namespace IDOLSelfCheckout.UserControls
         public ucClosedScreen()
         {
             InitializeComponent();
+            sco_data.TransactionTotal = Convert.ToDecimal("0").ToString("0.00");
+            sco_data.TransactionVat = Convert.ToDecimal("0").ToString("0.00");
+            sco_data.LastItemDescription = "";
         }
 
         private void btn_closed_sco_Click(object sender, RoutedEventArgs e)
         {
+
             uc_call.Uc_Add(MainWindow.Main_SCO, new ucMainScreen());
         }
     }

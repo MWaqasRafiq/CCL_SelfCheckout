@@ -316,9 +316,9 @@ namespace IDOLSelfCheckout
 
         public void updateTransactionDetails(DataModels.prices product = null)
         {
-            ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-            ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED " + sco_data.TransactionTotal);
-            ucMainScreen.TransactionVat.Content = (object)("VAT   AED " + sco_data.TransactionVat);
+            ucMainScreen.TransactionDetails.Content = (object)("StoreNo: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber + "  \r\nReceiptNumber: " + sco_data.ReceiptNumber);
+            ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED " + (sco_data.TransactionTotal == null ? "0.00": sco_data.TransactionTotal));
+            ucMainScreen.TransactionVat.Content = (object)("VAT AED " + (sco_data.TransactionVat == null ? "0.00" : sco_data.TransactionVat));
             ucMainScreen.ItemInfo.Content = (object)sco_data.LastItemDescription;
         }
 

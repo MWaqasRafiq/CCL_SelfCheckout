@@ -60,19 +60,9 @@
 
                 </Border>
 
+               
+
                 <Border Background="White" Grid.Column="1" Grid.Row="0">
-
-                    <Button Name="btn_assistant_reconsulation" Background="White" Click="btn_assistant_reconsulation_Click"  >
-                        <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">RECONSULATION</Label>
-                            <Image  Source="C:/IDOL/images/icons/reset.png"   />
-
-                        </DockPanel>
-                    </Button>
-
-                </Border>
-
-                <Border Background="White" Grid.Column="2" Grid.Row="0">
 
                     <Button Name="btn_new_transaction"  Background="White" Click="btn_new_transaction_Click"  >
                         <DockPanel LastChildFill="True">
@@ -83,32 +73,38 @@
                     </Button>
 
                 </Border>
+                <Border Background="White" Grid.Column="2" Grid.Row="0">
 
+                    <Button Name="btn_assistant_reconsulation" Background="White" Click="btn_assistant_reconsulation_Click"  >
+                        <DockPanel LastChildFill="True">
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">RECONSULATION</Label>
+                            <Image  Source="C:/IDOL/images/icons/retrieve.png"   />
+
+                        </DockPanel>
+                    </Button>
+
+                </Border>
+               
+
+              
                 <Border Background="White" Grid.Column="0" Grid.Row="1">
-
-                    <Button Name="btn_donation_item4"  Background="White"  >
+                    <Button Name="btn_led"  Background="White" Click="btn_led_Click"  >
                         <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">SETTINGS</Label>
-                            <Image  Source="C:/IDOL/images/icons/nosale.png"   />
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">LED TEST</Label>
+                            <Image  Source="C:/IDOL/images/icons/enter.png"   />
 
                         </DockPanel>
                     </Button>
+                    <!--<Button Name="btn_donation_item4"  Background="White"  >
+                         <DockPanel LastChildFill="True">
+                             <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">SETTINGS</Label>
+                             <Image  Source="C:/IDOL/images/icons/nosale.png"   />
+
+                         </DockPanel>
+                     </Button>-->
 
                 </Border>
-
                 <Border Background="White" Grid.Column="1" Grid.Row="1">
-
-                    <Button Name="btn_closed_screen"  Background="White" Click="btn_closed_screen_Click"  >
-                        <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">CLOSED</Label>
-                            <Image  Source="C:/IDOL/images/icons/reset.png"   />
-
-                        </DockPanel>
-                    </Button>
-
-                </Border>
-
-                <Border Background="White" Grid.Column="2" Grid.Row="1">
 
                     <Button Name="btn_reprint"  Background="White" Click="btn_reprint_Click"  >
                         <DockPanel LastChildFill="True">
@@ -119,40 +115,44 @@
                     </Button>
 
                 </Border>
+                <Border Background="White" Grid.Column="2" Grid.Row="1">
 
+                    <Button Name="btn_closed_screen"  Background="White" Click="btn_closed_screen_Click"  >
+                        <DockPanel LastChildFill="True">
+                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">CLOSED</Label>
+                            <Image  Source="C:/IDOL/images/icons/cross.png"   />
+
+                        </DockPanel>
+                    </Button>
+
+                </Border>
                 <Border Background="White" Grid.Column="0" Grid.Row="2">
 
-                    <Button Name="btn_donation_item7"  Background="White"  >
+                    <!--<Button Name="btn_donation_item7"  Background="White"  >
                         <DockPanel LastChildFill="True">
                             <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">RESET</Label>
                             <Image  Source="C:/IDOL/images/icons/reset.png"   />
 
                         </DockPanel>
-                    </Button>
+                    </Button>-->
 
                 </Border>
 
                 <Border Background="White" Grid.Column="1" Grid.Row="2">
 
-                    <Button Name="btn_led"  Background="White" Click="btn_led_Click"  >
-                        <DockPanel LastChildFill="True">
-                            <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">LED TEST</Label>
-                            <Image  Source="C:/IDOL/images/icons/enter.png"   />
-
-                        </DockPanel>
-                    </Button>
+                    
 
                 </Border>
 
                 <Border Background="White" Grid.Column="2" Grid.Row="2">
 
-                    <Button Name="btn_donation_item9"  Background="White"  >
+                    <!--<Button Name="btn_donation_item9"  Background="White"  >
                         <DockPanel LastChildFill="True">
                             <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom">SETTING</Label>
                             <Image  Source="C:/IDOL/images/icons/reset.png"   />
 
                         </DockPanel>
-                    </Button>
+                    </Button>-->
 
                 </Border>
 
