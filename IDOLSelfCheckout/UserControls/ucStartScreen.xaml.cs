@@ -35,9 +35,9 @@ namespace IDOLSelfCheckout.UserControls
         {
             GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
             var response = general_SCO.StartTransaction();
-            if (response != null && response.Code == 1)
+            if (response.Item1 == 1)
             {
-                Basepage.TransactionId = response.TransactionId;
+                Basepage.TransactionId = response.Item2;
                 uc_call.Uc_Add(MainWindow.Main_SCO, new ucMainScreen());
             }
             else

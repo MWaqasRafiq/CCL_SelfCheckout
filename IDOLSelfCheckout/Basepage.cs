@@ -1,4 +1,5 @@
-﻿using DataModels.Shared;
+﻿using DataModels.GeneralSCO;
+using DataModels.Shared;
 using IDOLSelfCheckout.BankDevice;
 using IDOLSelfCheckout.Classes;
 using IDOLSelfCheckout.LSRetail;
@@ -153,24 +154,36 @@ namespace IDOLSelfCheckout
         public void GeneralPosAddItem()
         {
             GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
-            var product = general_SCO.ProductDetails();
+            ProductDetails product = new ProductDetails();
+            var tuple = general_SCO.ProductDetails();
+            if(tuple.Item1 == 200)
+            {
+                product = tuple.Item2;
+            }
 
             if (product != null && !string.IsNullOrEmpty(product.Description))
             {
                 var result = general_SCO.AddToCart();
-                
-                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
-                if (result != null && result.items != null)
+                if(result.Item1 == 200)
                 {
-                    sco_data.LastItemDescription = product.Description;
-                    ucMainScreen.ItemListDataGrid.DataContext = (object)result;
-                    updateTransactionDetails();
-                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+                    ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+                    if (result != null && result.Item2.items != null)
+                    {
+                        sco_data.LastItemDescription = product.Description;
+                        ucMainScreen.ItemListDataGrid.DataContext = (object)result.Item2;
+                        updateTransactionDetails();
+                        uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+                    }
                 }
-                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
+                else
+                {
+                    Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
+                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
+                }
             }
             else
             {
+                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
                 uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
             }
         }
@@ -178,15 +191,22 @@ namespace IDOLSelfCheckout
         public void OrderTotal()
         {
             GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
-            var result = general_SCO.OrderTotal();
 
-            ucMainScreen.ItemListDataGrid.DataContext = (object)null;
-            if (result != null && result.items != null)
+            var result = general_SCO.OrderTotal();
+            if (result.Item1 == 200)
             {
-                ucMainScreen.ItemListDataGrid.DataContext = (object)result;
-                updateTransactionDetails();
+                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+                if (result != null && result.Item2.items != null)
+                {
+                    ucMainScreen.ItemListDataGrid.DataContext = (object)result.Item2;
+                    updateTransactionDetails();
+                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+                }
+            }
+            else
+            {
                 Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
-                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
             }
         }
 

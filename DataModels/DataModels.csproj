@@ -42,6 +42,7 @@
     <Compile Include="GeneralSCO\AddItemRequest.cs" />
     <Compile Include="GeneralSCO\AddItemResponse.cs" />
     <Compile Include="GeneralSCO\CartProducts.cs" />
+    <Compile Include="GeneralSCO\Error.cs" />
     <Compile Include="GeneralSCO\ProductDetails.cs" />
     <Compile Include="GeneralSCO\ProductDetailsRequest.cs" />
     <Compile Include="GeneralSCO\SignTerminalRequest.cs" />

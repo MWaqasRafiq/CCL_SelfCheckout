@@ -90,7 +90,7 @@ namespace IDOLSelfCheckout
             };
             GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
             var res = general_SCO.SignTerminal(terminalRequest);
-            if (res != null && res.Code == 1)
+            if (res.Item1 == 1)
             {
                 uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucStartScreen());
             }

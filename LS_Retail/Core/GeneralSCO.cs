@@ -51,25 +51,33 @@ namespace GeneralSCO.Core
                 LogFilePath = ConfigurationManager.AppSettings["LogFile"].ToString();
         }
 
-        public SignTerminalResponse SignTerminal(SignTerminalRequest terminalRequest)
+        public Tuple<int, string> SignTerminal(SignTerminalRequest terminalRequest)
         {
-            SignTerminalResponse response = new SignTerminalResponse();
             try
             {
-                response = PostRequest<SignTerminalRequest, SignTerminalResponse>(ServiceIp + "SignTerminal", terminalRequest);
+                var result = PostRequest<SignTerminalRequest, SignTerminalResponse>(ServiceIp + "SignTerminal", terminalRequest);
+                if (result != null && result.Item2 == 200)
+                {
+                   var response = result.Item1 as SignTerminalResponse;
+                    return new Tuple<int, string>(response.Code.Value,response.StatusMessage);
+                }
+                else
+                {
+                    var response = result.Item1 as Error;
+                    return new Tuple<int, string>(response.Code.Value, response.Message);
+                }
             }
             catch(Exception ex)
             {
                 logWrite(ex.Message); 
+                return new Tuple<int, string>(500, ex.Message);
             }
-            return response;
         }
 
 
-        public StartTransactionResponse StartTransaction()
+        public Tuple<int,string> StartTransaction()
         {
             TransactionId = string.Empty;
-            StartTransactionResponse response = new StartTransactionResponse();
             try
             {
                 StartTransactionRequest request = new StartTransactionRequest()
@@ -77,23 +85,28 @@ namespace GeneralSCO.Core
                     StoreNo = StoreNo,
                     TerminalNo = TerminalId
                 };
-                response = PostRequest<StartTransactionRequest, StartTransactionResponse>(ServiceIp + "StartTransaction", request);
-                if(response != null && response.Code == 1)
+                var result = PostRequest<StartTransactionRequest, StartTransactionResponse>(ServiceIp + "StartTransaction", request);
+                if (result != null && result.Item2 == 200)
                 {
+                    var response = result.Item1 as StartTransactionResponse;
                     TransactionId = response.TransactionId;
+                    return new Tuple<int, string>( response.Code.Value, response.TransactionId);
+                }
+                else
+                {
+                    var response = result.Item1 as Error;
+                    return new Tuple<int, string>(response.Code.Value, response.Message);
                 }
             }
             catch (Exception ex)
             {
                 logWrite(ex.Message);
+                return new Tuple<int, string>(500, ex.Message); ;
             }
-            return response;
         }
 
-        public ProductDetails ProductDetails()
+        public Tuple<int, ProductDetails>  ProductDetails()
         {
-            ProductDetails response = new ProductDetails();
-
             try
             {
                 ProductDetailsRequest request = new ProductDetailsRequest()
@@ -102,19 +115,29 @@ namespace GeneralSCO.Core
                     StoreNo = StoreNo,
                     TerminalNo = TerminalId
                 };
-                response = PostRequest<ProductDetailsRequest, ProductDetails>(ServiceIp + "ProductDetails", request);
+                var result = PostRequest<ProductDetailsRequest, ProductDetails>(ServiceIp + "ProductDetails", request);
+                if (result != null && result.Item2 == 200)
+                {
+                    var response = result.Item1 as ProductDetails;
+                    return new Tuple<int, ProductDetails>(result.Item2, response);
+                }
+                else
+                {
+                    var response = result.Item1 as Error;
+                    return new Tuple<int, ProductDetails>(response.Code.Value, new ProductDetails());
+                }
             }
             catch (Exception ex)
             {
                 logWrite(ex.Message);
+                return new Tuple<int, ProductDetails>(500, new ProductDetails());
             }
-            return response;
         }
 
-        public view_models AddToCart()
+        public Tuple<int, view_models> AddToCart()
         {
             view_models viewModels = new view_models();
-
+            CartProducts cartProducts = new CartProducts();
             try
             {
                 AddItemRequest request = new AddItemRequest()
@@ -125,12 +148,22 @@ namespace GeneralSCO.Core
                     TerminalNo = TerminalId,
                     TransactionId = TransactionId
                 };
-                CartProducts response = PostRequest<AddItemRequest, CartProducts>(ServiceIp + "AddToCart", request);
-                if (response != null && response.Products.Count() > 0)
+                var result = PostRequest<AddItemRequest, CartProducts>(ServiceIp + "AddToCart", request);
+                if (result != null && result.Item2 == 200)
+                {
+                    cartProducts = result.Item1 as CartProducts;
+                }
+                else
+                {
+                    var response = result.Item1 as Error;
+                    return new Tuple<int, view_models>(response.Code.Value, new view_models());
+                }
+
+                if (cartProducts != null && cartProducts.Products.Count() > 0)
                 {
                     List<items> itemList = new List<items>();//sco_data.ItemList;
 
-                    foreach (var a in response.Products)
+                    foreach (var a in cartProducts.Products)
                     {
                         itemList.Add(new items()
                         {
@@ -141,33 +174,42 @@ namespace GeneralSCO.Core
                     }
                     viewModels.items = itemList;
 
-                    sco_data.TransactionTotal = response.Total.TotalAmount.ToString();
-                    sco_data.TransactionVat = response.Total.TotalVat.ToString();
+                    sco_data.TransactionTotal = cartProducts.Total.TotalAmount.ToString();
+                    sco_data.TransactionVat = cartProducts.Total.TotalVat.ToString();
                 }
             }
             catch (Exception ex)
             {
                 logWrite(ex.Message);
             }
-            return viewModels;
+            return new Tuple<int, view_models>(200, viewModels);
         }
 
-
-        public view_models OrderTotal()
+        public Tuple<int, view_models> OrderTotal()
         {
             view_models viewModels = new view_models();
+            CartProducts cartProducts = new CartProducts();
             try
             {
                 StartTransactionRequest request = new StartTransactionRequest() {
                     StoreNo = StoreNo,
                     TerminalNo = TerminalId
                 };
-                CartProducts response = PostRequest<StartTransactionRequest, CartProducts>(ServiceIp + "OrderTotal", request);
-                if (response != null && response.Products.Count() > 0)
+                var result = PostRequest<StartTransactionRequest, CartProducts>(ServiceIp + "OrderTotal", request);
+                if (result != null && result.Item2 == 200)
+                {
+                    cartProducts = result.Item1 as CartProducts;
+                }
+                else
+                {
+                    var response = result.Item1 as Error;
+                    return new Tuple<int, view_models>(response.Code.Value, new view_models());
+                }
+                if (cartProducts != null && cartProducts.Products.Count() > 0)
                 {
                     List<items> itemList = new List<items>();//sco_data.ItemList;
 
-                    foreach (var a in response.Products)
+                    foreach (var a in cartProducts.Products)
                     {
                         itemList.Add(new items()
                         {
@@ -178,18 +220,18 @@ namespace GeneralSCO.Core
                     }
                     viewModels.items = itemList;
 
-                    sco_data.TransactionTotal = response.Total.TotalAmount.ToString();
-                    sco_data.TransactionVat = response.Total.TotalVat.ToString();
+                    sco_data.TransactionTotal = cartProducts.Total.TotalAmount.ToString();
+                    sco_data.TransactionVat = cartProducts.Total.TotalVat.ToString();
                 }
             }
             catch (Exception ex)
             {
                 logWrite(ex.Message);
             }
-            return viewModels;
+            return new Tuple<int, view_models>(200, viewModels);
         }
 
-        private TOut PostRequest<TIn, TOut>(string uri, TIn content) where TOut : new()
+        private Tuple<dynamic,int> PostRequest<TIn, TOut>(string uri, TIn content) where TOut : new()
         {
             TOut @out = new TOut();
             using (var client = new HttpClient())
@@ -208,13 +250,16 @@ namespace GeneralSCO.Core
                 {
                     string result = response.Content.ReadAsStringAsync().Result;
                     @out =  JsonConvert.DeserializeObject<TOut>(result);
+                    return new Tuple<dynamic, int>(@out, 200);
                 }
                 else
                 {
                     logWrite("GeneralSCO > PostRequest encountered exception: " + response.ReasonPhrase);
+                    string result = response.Content.ReadAsStringAsync().Result;
+                    Error error = JsonConvert.DeserializeObject<Error>(result);
+                    return new Tuple<dynamic, int>(error, ((int)response.StatusCode));
                 }
             }
-            return @out;
         }
 
 
