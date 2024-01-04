@@ -151,6 +151,18 @@ namespace IDOLSelfCheckout
         }
 
 
+        public string GeneralPosPrintReceipt()
+        {
+            PrintReceiptResponse receiptResponse = new PrintReceiptResponse();
+            var tuple = new GeneralSCO.Core.General_SCO().PrintReceipt();
+            if (tuple.Item1 == 200)
+            {
+                receiptResponse = tuple.Item2 as PrintReceiptResponse;
+            }
+
+            return receiptResponse.Receipt;
+        }
+
         public void GeneralPosAddItem()
         {
             GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();

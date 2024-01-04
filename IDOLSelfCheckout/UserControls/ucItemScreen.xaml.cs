@@ -37,6 +37,10 @@ namespace IDOLSelfCheckout.UserControls
 #nullable enable
         private void btn_pay_Click(object sender, RoutedEventArgs e)
         {
+            if (Basepage.ServerName == "GP")
+            {
+                new Basepage().OrderTotal();
+            }
             if (!string.IsNullOrEmpty(sco_data.TransactionTotal) && IsAllDigits(sco_data.TransactionTotal)
                 && Convert.ToDecimal(sco_data.TransactionTotal) > 0)
             {

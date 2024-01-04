@@ -17,6 +17,7 @@ using System.Reflection;
 using System.Drawing.Imaging;
 using System.IO;
 using DataModels.Shared;
+using System.Text.RegularExpressions;
 
 namespace IDOLSelfCheckout.LSRetail
 {
@@ -192,6 +193,148 @@ namespace IDOLSelfCheckout.LSRetail
                 //Basepage.logWrite("printed2");
 
                 Printer.CutPaper(99);
+
+                Basepage.logWrite("printed");
+
+                Printer.Close();
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                Basepage.logWrite("Printer Error:" + ex.Message);
+                sco_data.ErrorMessage = ex.Message;
+                status = false;
+            }
+            return status;
+        }
+
+        public Boolean OposGeneralprint(string receipt)
+        {
+            Boolean status = false;
+            try
+            {
+
+                Basepage.logWrite("Printer print..");
+                if (string.IsNullOrEmpty(receipt)) { return status; }
+
+                Basepage.logWrite("Printer receipt:\n" + receipt);
+
+                string logoIndex = string.Empty;
+                List<string> receiptChunks = new List<string>();
+                List<string> Codes = new List<string>();
+                List<string> CodesType = new List<string>();
+                string receiptBck = receipt;
+                
+                if (receipt.Contains("$$PRINTLOGO"))
+                {
+                    
+                    logoIndex = receipt.Split("$$PRINTLOGO")[1].Substring(0,2);
+
+                    receiptChunks.Add(receipt.Split("$$PRINTLOGO")[0]);
+                    receipt = receipt.Split("$$PRINTLOGO"+ logoIndex)[1];
+                }
+
+                if (receipt.Contains("$$PRINTBCD"))
+                {
+                    string bcd = receipt.Split("$$PRINTBCD")[1].Split(")(")[1].Split(")")[0];
+                    string bcdT = receipt.Split("$$PRINTBCD")[1].Split(")(")[0].Replace("(", "");
+                    CodesType.Add(bcdT);
+                    Codes.Add(bcd);
+
+                    receiptChunks.Add(receipt.Split("$$PRINTBCD("+bcdT+")("+bcd+")")[0]);
+                    receipt = receipt.Split("$$PRINTBCD(" + bcdT + ")(" + bcd + ")")[1];
+                    bcdT = new string(bcdT.Where(c => char.IsDigit(c)).ToArray());
+                }
+
+                if (receipt.Contains("$$PRINTQR"))
+                {
+                    string qr = receipt.Split("$$PRINTQR(")[1].Split(")")[0];
+                    CodesType.Add("QR");
+                    Codes.Add(qr);
+
+                    receiptChunks.Add(receipt.Split("$$PRINTQR(" + qr + ")")[0]);
+                    receipt = receipt.Split("$$PRINTQR(" + qr + ")")[1];
+                }
+                if (receipt.Contains("$$CUTPAPER"))
+                {
+
+                }
+                    ////byte[] BinaryData = System.Text.Encoding.UTF8.GetBytes(string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "1234567890" : sco_data.ReceiptNumber);
+                    //var codes = QRCodeWriter.CreateQrCode(BinaryData, 500, QRCodeWriter.QrErrorCorrectionLevel.Medium).SaveAsPng("MyQR.png");
+                    //var res = CreateQRCode(string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "1234567890" : sco_data.ReceiptNumber);
+                OPOSPOSPrinter Printer = new OPOSPOSPrinterClass();
+
+                Printer.Open(_oposDeviceName); // Check your printer class after executing this line and make sure there is no fault on the instantiated class (printer)
+                Basepage.logWrite("device Opened");
+                Printer.ClaimDevice(2000); //Is it enought to pool your device
+                Printer.CharacterSet = 1256;
+                Printer.DeviceEnabled = true;
+                //Printer.SetBitmap(1, 2, "C:\\IDOL\\images\\bits\\logo122.bpm", 100, -2);
+                //Printer.PrintBitmap(2, "C:\\IDOL\\images\\bits\\logo122.bpm", 100, -2);
+
+                Printer.PrintNormal(2, receiptChunks[0]);
+                //print logo here
+                if (receiptBck.Contains("$$PRINTBCD"))
+                {
+                    Printer.PrintNormal(2, receiptChunks[1]);
+                    Printer.PrintBarCode(2, Codes[0], Convert.ToInt32(CodesType[0]), 100, 200, -2, -13);
+
+
+                    Printer.PrintNormal(2, receiptChunks[2]);
+                    if (receipt.Contains("$$PRINTQR"))
+                    {
+                        //print QR here
+                    }
+                    Printer.CutPaper(99);
+
+                }
+                else
+                {
+                    Printer.PrintNormal(2, receiptChunks[1]);
+                    if (receipt.Contains("$$PRINTQR"))
+                    {
+                        //print QR here
+                    }
+                    Printer.CutPaper(99);
+                }
+
+                Basepage.logWrite("Printed main part");
+
+                //Printer.PrintNormal(2, "\n -------------------------------------------- \n");
+
+                //Printer.PrintBitmap(2, "C:\\IDOL\\images\\bits\\logo20.bpm", 100, -2);
+                //string ArabicChars = "اللغة العربية";
+                //var arabic = Encoding.GetEncoding(1256);
+                //Printer.PrintNormal(2, arabic.GetString(arabic.GetBytes(ArabicChars)));
+                //Printer.PrintNormal(2, "\n --------------------------------------------");
+                //Printer.PrintBarCode(2,"Test",);
+                //Printer.PrintNormal(2, "\n     **THANK YOU, HAPPY TO SEE YOU AGAIN** \n\n\n\n\n\n");
+                //////////////////Printer.PrintNormal(2, "\x1B|cA\x1B|2COPOS POSPrinter\x1B|1C\nvia Microsoft.NET\n\n");//Make sure about this line seems to be tricky
+
+                //Printer.SetLogo(1, (char)0x1B + (char)0x7C + (char)0x74 + (char)0x4C + "");
+                //// Printer.SetLogo(1, "\x1b\xa\xd");    
+                //Printer.PrintNormal(2, (char)0x1B + (char)0x7C + (char)0x74 + (char)0x4C + "");
+
+                //Printer.SetLogo(1, "\x1b|tL");
+                //Printer.PrintNormal(2, "logo print." + "\n");
+
+                //Printer.SetLogo(0, (char)0x1B + (char)0x7C + (char)0x74 + (char)0x4C + "");
+                //Printer.SetLogo(1, "\x1b|tL");
+                //Printer.PrintNormal(2, "logo print." + "\n");
+                //Printer.PrintNormal(2, " \x1b\x0C");
+                //Printer.PrintNormal(2, "arabic print." + "\n");
+                //Printer.DirectIO(111, 1, "-2");
+                //string arabic = "مانشلضرون";
+                ////string CodeArabic1256 = ASCIIEncoding.Default.GetString(Encoding.GetEncoding(1256).GetBytes(arabic));
+                ////byte[] winByte = Encoding.GetEncoding(1256).GetBytes(receipt);
+                ////string result = Encoding.GetEncoding(1256).GetString(winByte);
+                //Printer.PrintNormal(2, arabic);
+                //Printer.CharacterSet = 864;
+                //Printer.PrintNormal(2, arabic);
+                //Printer.PrintNormal(2, Cutter);
+                //Basepage.logWrite("printed2");
+
+                //Printer.CutPaper(99);
 
                 Basepage.logWrite("printed");
 

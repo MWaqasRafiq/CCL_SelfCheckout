@@ -41,21 +41,15 @@
                 </Grid.RowDefinitions>
 
                 <Border Background="White" Grid.Column="0" Grid.Row="0">
-
                     <Button x:Name="btn_creditcard" Click="btn_creditcard_Click"  >
                         <Image  Source="C:/IDOL/images/icons/creditcardbtn1.png" Stretch="Fill"  />
-                  
-                    
                     </Button>
-                    
                 </Border>
 
                 <Border Background="White" Grid.Column="1" Grid.Row="0">
-
                     <Button Name="btnCreditcard2" Click="btnCreditcard2_Click"  >
                         <Image  Source="C:/IDOL/images/icons/giftcard.png" Stretch="Fill"  />
                     </Button>
-
                 </Border>
 
                 <Border Background="White" Grid.Column="0" Grid.Row="1">
@@ -65,11 +59,9 @@
                 </Border>
 
                 <Border Background="White" Grid.Column="1" Grid.Row="1">
-
                     <Button Name="btnFacePay" Click="btnFacePay_Click"  >
                         <Image  Source="C:/IDOL/images/icons/facescan.png" MaxHeight="120" Stretch="Fill"  />
                     </Button>
-                    <!--<Image Name="imgCircle" Visibility="Collapsed" Width="100" Height="100" gif:AnimationBehavior.SourceUri="C:/IDOL/images/circle.gif"/>-->
                 </Border>
 
                 <Border Background="White" Grid.Column="0" Grid.Row="2">

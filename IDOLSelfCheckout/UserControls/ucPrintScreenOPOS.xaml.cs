@@ -40,11 +40,20 @@ namespace IDOLSelfCheckout.UserControls
             Thread.Sleep(500);
             Dispatcher.Invoke(() =>
             {
-                sco_data.TransactionProcess = "FINISHED";
                 OposPrinterCall pp = new OposPrinterCall();
-                Boolean statu = pp.OPOSprint();
-                if (statu)
+                bool status = false;
+                if (Basepage.ServerName == "GP")
                 {
+                    string receipt = new Basepage().GeneralPosPrintReceipt();
+                    status = pp.OposGeneralprint(receipt);
+                }
+                else
+                {
+                    status = pp.OPOSprint();
+                }
+                if (status)
+                {
+                    sco_data.TransactionProcess = "FINISHED";
                     uc_call.Uc_Add(MainWindow.Main_SCO, new ucStartScreen());
                     sco_data.ItemList = new List<DataModels.Shared.items>();
                     sco_data.TransactionTotal = Convert.ToDecimal("0").ToString("0.00");
