@@ -93,14 +93,22 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btnCreditcardOpos_Click(object sender, RoutedEventArgs e)
         {
-            Basepage bp = new Basepage();
-            Boolean status = bp.tenderPaymentOffline(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
-            if (status)
+            try
             {
-                uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreenOPOS());
+                Basepage bp = new Basepage();
+                Boolean status = bp.tenderPaymentOffline(sco_data.ReceiptNumber, sco_data.TransactionTotal, "1234", "1222");
+                if (status)
+                {
+                    uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreenOPOS());
+                }
+                else
+                {
+                    uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
+                }
             }
-            else
+            catch(Exception ex)
             {
+                Basepage.logWrite("btnCreditcardOpos_Click encountered an exception: "+ex.Message);
                 uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
             }
         }

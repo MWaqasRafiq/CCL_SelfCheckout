@@ -155,9 +155,14 @@ namespace IDOLSelfCheckout
         {
             PrintReceiptResponse receiptResponse = new PrintReceiptResponse();
             var tuple = new GeneralSCO.Core.General_SCO().PrintReceipt();
-            if (tuple.Item1 == 200)
+            if (tuple.Item1 == 200 && tuple.Item2 != null)
             {
                 receiptResponse = tuple.Item2 as PrintReceiptResponse;
+            }
+            else
+            {
+                var err = tuple.Item2 as Error ?? new Error();
+                throw new Exception(err.Message);
             }
 
             return receiptResponse.Receipt;

@@ -277,8 +277,8 @@ namespace IDOLSelfCheckout.LSRetail
                 if (receiptBck.Contains("$$PRINTBCD"))
                 {
                     Printer.PrintNormal(2, receiptChunks[1]);
-                    Printer.PrintBarCode(2, Codes[0], Convert.ToInt32(CodesType[0]), 100, 200, -2, -13);
 
+                    Printer.PrintBarCode(2, Codes[0], Convert.ToInt32(CodesType[0]), 100, 200, -2, -13);
 
                     Printer.PrintNormal(2, receiptChunks[2]);
                     if (receipt.Contains("$$PRINTQR"))
@@ -286,7 +286,6 @@ namespace IDOLSelfCheckout.LSRetail
                         //print QR here
                     }
                     Printer.CutPaper(99);
-
                 }
                 else
                 {
@@ -297,10 +296,6 @@ namespace IDOLSelfCheckout.LSRetail
                     }
                     Printer.CutPaper(99);
                 }
-
-                Basepage.logWrite("Printed main part");
-
-                //Printer.PrintNormal(2, "\n -------------------------------------------- \n");
 
                 //Printer.PrintBitmap(2, "C:\\IDOL\\images\\bits\\logo20.bpm", 100, -2);
                 //string ArabicChars = "اللغة العربية";
