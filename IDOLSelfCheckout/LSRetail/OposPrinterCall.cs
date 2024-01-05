@@ -275,13 +275,14 @@ namespace IDOLSelfCheckout.LSRetail
                 Printer.PrintNormal(2, receiptChunks[0]);
                 //print logo here
                 Printer.SetBitmap(1, 2, "C:\\IDOL\\images\\bits\\logo122.bpm", 200, -2);
-                Printer.PrintBitmap(2, "C:/IDOL/images/bits/logo122.bpm", 200, -2);
+                //Printer.PrintBitmap();
+                Printer.PrintBitmap(2, "C:/IDOL/images/bits/logo122.bpm", 200, 0);
                 if (receiptBck.Contains("$$PRINTBCD"))
                 {
-                    Printer.PrintBarCode(2, "1234567890321", 128, 100, 200, -2, -13);
-                    //Printer.PrintBarCode(2, Codes[0], Convert.ToInt32(CodesType[0]), 100, 200, -2, -13);
-
                     Printer.PrintNormal(2, "\r\n"+receiptChunks[1]);
+
+                    //Printer.PrintBarCode(2, "1234567890321", 108, 100, 200, -2, -13);
+                    Printer.PrintBarCode(2, Codes[0], Convert.ToInt32(CodesType[0]), 50, 200, -2, -13);
 
                     Printer.PrintNormal(2, receiptChunks[2]);
                     if (receipt.Contains("$$PRINTQR"))
