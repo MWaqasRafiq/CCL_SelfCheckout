@@ -89,17 +89,21 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btn_closed_screen_Click(object sender, RoutedEventArgs e)
         {
-            sco_data.TransactionProcess = "CLOSED";
-            SignTerminalRequest terminalRequest = new SignTerminalRequest()
+            if (Basepage.ServerName == "GP")
             {
-                Type = "off",
-                Password = "",
-                StoreNo = Basepage.StoreNumber,
-                TerminalNo = Basepage.TerminalId,
-                UserId = ""
-            };
-            GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
-            var res = general_SCO.SignTerminal(terminalRequest);
+                SignTerminalRequest terminalRequest = new SignTerminalRequest()
+                {
+                    Type = "off",
+                    Password = "",
+                    StoreNo = Basepage.StoreNumber,
+                    TerminalNo = Basepage.TerminalId,
+                    UserId = ""
+                };
+                GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
+                var res = general_SCO.SignTerminal(terminalRequest);
+            }
+            
+            sco_data.TransactionProcess = "CLOSED";
             uc_call.Uc_Add(MainWindow.Main_SCO, new ucClosedScreen());
         }
 

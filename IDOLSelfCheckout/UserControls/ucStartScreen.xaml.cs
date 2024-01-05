@@ -33,17 +33,25 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btn_start_sco_Click(object sender, RoutedEventArgs e)
         {
-            GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
-            var response = general_SCO.StartTransaction();
-            if (response.Item1 == 1)
+            if(Basepage.ServerName == "GP")
             {
-                Basepage.TransactionId = response.Item2;
-                uc_call.Uc_Add(MainWindow.Main_SCO, new ucMainScreen());
+                GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
+                var response = general_SCO.StartTransaction();
+                if (response.Item1 == 1)
+                {
+                    Basepage.TransactionId = response.Item2;
+                    uc_call.Uc_Add(MainWindow.Main_SCO, new ucMainScreen());
+                }
+                else
+                {
+                    uc_call.Uc_Add(MainWindow.Main_SCO, new ucHelpScreen());
+                }
             }
             else
             {
-                uc_call.Uc_Add(MainWindow.Main_SCO, new ucHelpScreen());
+                uc_call.Uc_Add(MainWindow.Main_SCO, new ucMainScreen());
             }
+           
         }
     }
 }

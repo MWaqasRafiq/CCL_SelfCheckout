@@ -80,23 +80,30 @@ namespace IDOLSelfCheckout
             MainWindow.Img_Circle = this.imgCircle;
             MainWindow.Main_SCO = this.Main_sco;
 
-            SignTerminalRequest terminalRequest = new SignTerminalRequest()
+            if(Basepage.ServerName == "GP")
             {
-                Type = "on",
-                Password = "",
-                StoreNo = Basepage.StoreNumber,
-                TerminalNo = Basepage.TerminalId,
-                UserId = ""
-            };
-            GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
-            var res = general_SCO.SignTerminal(terminalRequest);
-            if (res.Item1 == 1)
-            {
-                uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucStartScreen());
+                SignTerminalRequest terminalRequest = new SignTerminalRequest()
+                {
+                    Type = "on",
+                    Password = "",
+                    StoreNo = Basepage.StoreNumber,
+                    TerminalNo = Basepage.TerminalId,
+                    UserId = ""
+                };
+                GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
+                var res = general_SCO.SignTerminal(terminalRequest);
+                if (res.Item1 == 1)
+                {
+                    uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucStartScreen());
+                }
+                else
+                {
+                    uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucClosedScreen());
+                }
             }
             else
             {
-                uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucClosedScreen());
+                uc_call.Uc_Add(MainWindow.Main_SCO, (UserControl)new ucStartScreen());
             }
 
             this.PreviewKeyDown += new KeyEventHandler(this.labelBarCode_PreviewKeyDown);

@@ -151,10 +151,10 @@ namespace IDOLSelfCheckout
         }
 
 
-        public string GeneralPosPrintReceipt()
+        public string GeneralPosPrintReceipt(bool goGreen = false, string mobileNumber = "")
         {
             PrintReceiptResponse receiptResponse = new PrintReceiptResponse();
-            var tuple = new GeneralSCO.Core.General_SCO().PrintReceipt();
+            var tuple = new GeneralSCO.Core.General_SCO().PrintReceipt(goGreen, mobileNumber);
             if (tuple.Item1 == 200 && tuple.Item2 != null)
             {
                 receiptResponse = tuple.Item2 as PrintReceiptResponse;

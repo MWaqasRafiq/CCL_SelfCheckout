@@ -32,8 +32,8 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btn_closed_sco_Click(object sender, RoutedEventArgs e)
         {
-
-            uc_call.Uc_Add(MainWindow.Main_SCO, new ucMainScreen());
+            uc_call.Uc_Add(MainWindow.Main_SCO, new ucStartScreen());
+            //uc_call.Uc_Add(MainWindow.Main_SCO, new ucMainScreen());
         }
     }
 }

@@ -208,15 +208,16 @@ namespace IDOLSelfCheckout.LSRetail
             return status;
         }
 
-        public Boolean OposGeneralprint(string receipt)
+        public bool OposGeneralprint(string receipt)
         {
-            Boolean status = false;
+            bool status = false;
             try
             {
-
                 Basepage.logWrite("Printer print..");
-                if (string.IsNullOrEmpty(receipt)) { return status; }
-
+                if (string.IsNullOrEmpty(receipt)) 
+                { 
+                    return status; 
+                }
                 Basepage.logWrite("Printer receipt:\n" + receipt);
 
                 string logoIndex = string.Empty;
@@ -259,9 +260,9 @@ namespace IDOLSelfCheckout.LSRetail
                 {
 
                 }
-                    ////byte[] BinaryData = System.Text.Encoding.UTF8.GetBytes(string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "1234567890" : sco_data.ReceiptNumber);
-                    //var codes = QRCodeWriter.CreateQrCode(BinaryData, 500, QRCodeWriter.QrErrorCorrectionLevel.Medium).SaveAsPng("MyQR.png");
-                    //var res = CreateQRCode(string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "1234567890" : sco_data.ReceiptNumber);
+                ////byte[] BinaryData = System.Text.Encoding.UTF8.GetBytes(string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "1234567890" : sco_data.ReceiptNumber);
+                //var codes = QRCodeWriter.CreateQrCode(BinaryData, 500, QRCodeWriter.QrErrorCorrectionLevel.Medium).SaveAsPng("MyQR.png");
+                //var res = CreateQRCode(string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "1234567890" : sco_data.ReceiptNumber);
                 OPOSPOSPrinter Printer = new OPOSPOSPrinterClass();
 
                 Printer.Open(_oposDeviceName); // Check your printer class after executing this line and make sure there is no fault on the instantiated class (printer)
@@ -269,16 +270,18 @@ namespace IDOLSelfCheckout.LSRetail
                 Printer.ClaimDevice(2000); //Is it enought to pool your device
                 Printer.CharacterSet = 1256;
                 Printer.DeviceEnabled = true;
-                //Printer.SetBitmap(1, 2, "C:\\IDOL\\images\\bits\\logo122.bpm", 100, -2);
                 //Printer.PrintBitmap(2, "C:\\IDOL\\images\\bits\\logo122.bpm", 100, -2);
 
                 Printer.PrintNormal(2, receiptChunks[0]);
                 //print logo here
+                Printer.SetBitmap(1, 2, "C:\\IDOL\\images\\bits\\logo122.bpm", 200, -2);
+                Printer.PrintBitmap(2, "C:/IDOL/images/bits/logo122.bpm", 200, -2);
                 if (receiptBck.Contains("$$PRINTBCD"))
                 {
-                    Printer.PrintNormal(2, receiptChunks[1]);
+                    Printer.PrintBarCode(2, "1234567890321", 128, 100, 200, -2, -13);
+                    //Printer.PrintBarCode(2, Codes[0], Convert.ToInt32(CodesType[0]), 100, 200, -2, -13);
 
-                    Printer.PrintBarCode(2, Codes[0], Convert.ToInt32(CodesType[0]), 100, 200, -2, -13);
+                    Printer.PrintNormal(2, "\r\n"+receiptChunks[1]);
 
                     Printer.PrintNormal(2, receiptChunks[2]);
                     if (receipt.Contains("$$PRINTQR"))
