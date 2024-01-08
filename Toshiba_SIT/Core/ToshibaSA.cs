@@ -25,12 +25,12 @@ namespace Toshiba_SIT.Core
         /// </summary>
         public ToshibaSA()
         {
-            if (ConfigurationManager.AppSettings["Service_Ip"] != null)
-                HostServiceIp = ConfigurationManager.AppSettings["Service_Ip"].ToString();
-            if (ConfigurationManager.AppSettings["Service_EndPoint"] != null)
-                HostServiceEndpoint = ConfigurationManager.AppSettings["Service_EndPoint"].ToString();
-            if (ConfigurationManager.AppSettings["Terminal_Id"] != null)
-                HostTerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
+            if (ConfigurationManager.AppSettings["ServiceIp"] != null)
+                HostServiceIp = ConfigurationManager.AppSettings["ServiceIp"].ToString();
+            if (ConfigurationManager.AppSettings["ServiceEndPoint"] != null)
+                HostServiceEndpoint = ConfigurationManager.AppSettings["ServiceEndPoint"].ToString();
+            if (ConfigurationManager.AppSettings["TerminalNo"] != null)
+                HostTerminalId = ConfigurationManager.AppSettings["TerminalNo"].ToString();
             if (ConfigurationManager.AppSettings["LogFile"] != null)
                 LogFilePath = ConfigurationManager.AppSettings["LogFile"].ToString();
         }

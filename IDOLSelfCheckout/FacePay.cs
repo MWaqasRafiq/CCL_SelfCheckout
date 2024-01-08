@@ -42,7 +42,7 @@ namespace IDOLSelfCheckout
             try
             {
                 Basepage.logWrite("FacePay - Initialization!");
-                Uri serverUri = new Uri("ws://"+ Basepage.PopId_Host + ":"+ Basepage.PopId_Port.ToString() + ""); // Replace with your WebSocket server URL
+                Uri serverUri = new Uri("ws://"+ Basepage.PopIdHost + ":"+ Basepage.PopIdPort.ToString() + ""); // Replace with your WebSocket server URL
                 socketClient.ConnectAsync(serverUri, CancellationToken.None);
                 Thread.Sleep(1000);
                 Basepage.logWrite("FacePay - Initialized!");

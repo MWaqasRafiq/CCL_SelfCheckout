@@ -17,8 +17,8 @@ namespace GeneralSCO.Core
 {
     public class General_SCO
     {
-        public static string POS_Username;
-        public static string POS_Password;
+        public static string UserName;
+        public static string PassWord;
         public static string LogFilePath;
 
         public static string ServiceIp;
@@ -29,28 +29,35 @@ namespace GeneralSCO.Core
 
         public General_SCO()
         {
-            if (ConfigurationManager.AppSettings["POS_Username"] != null)
-                POS_Username = ConfigurationManager.AppSettings["POS_Username"].ToString();
+            ConfigurationManager.RefreshSection("appSettings");
 
-            if (ConfigurationManager.AppSettings["POS_Password"] != null)
-                POS_Password = ConfigurationManager.AppSettings["POS_Password"].ToString();
+            if (ConfigurationManager.AppSettings["UserName"] != null)
+                UserName = ConfigurationManager.AppSettings["UserName"].ToString();
+
+            if (ConfigurationManager.AppSettings["PassWord"] != null)
+                PassWord = ConfigurationManager.AppSettings["PassWord"].ToString();
 
             if (ConfigurationManager.AppSettings["LogFile"] != null)
                 LogFilePath = ConfigurationManager.AppSettings["LogFile"].ToString();
 
-            if (ConfigurationManager.AppSettings["Service_Ip"] != null)
-                ServiceIp = ConfigurationManager.AppSettings["Service_Ip"].ToString();
+            if (ConfigurationManager.AppSettings["ServiceIp"] != null)
+                ServiceIp = ConfigurationManager.AppSettings["ServiceIp"].ToString();
             
-            if (ConfigurationManager.AppSettings["Terminal_Id"] != null)
-                TerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
+            if (ConfigurationManager.AppSettings["TerminalNo"] != null)
+                TerminalId = ConfigurationManager.AppSettings["TerminalNo"].ToString();
 
-            if (ConfigurationManager.AppSettings["Store_No"] != null)
-                StoreNo = ConfigurationManager.AppSettings["Store_No"].ToString();
+            if (ConfigurationManager.AppSettings["StoreNo"] != null)
+                StoreNo = ConfigurationManager.AppSettings["StoreNo"].ToString();
 
             if (ConfigurationManager.AppSettings["LogFile"] != null)
                 LogFilePath = ConfigurationManager.AppSettings["LogFile"].ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="terminalRequest"></param>
+        /// <returns></returns>
         public Tuple<int, string> SignTerminal(SignTerminalRequest terminalRequest)
         {
             try
@@ -74,7 +81,10 @@ namespace GeneralSCO.Core
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Tuple<int,string> StartTransaction()
         {
             TransactionId = string.Empty;
@@ -105,6 +115,10 @@ namespace GeneralSCO.Core
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Tuple<int, ProductDetails>  ProductDetails()
         {
             try
@@ -134,6 +148,10 @@ namespace GeneralSCO.Core
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Tuple<int, view_models> AddToCart()
         {
             view_models viewModels = new view_models();
@@ -185,6 +203,10 @@ namespace GeneralSCO.Core
             return new Tuple<int, view_models>(200, viewModels);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Tuple<int, view_models> OrderTotal()
         {
             view_models viewModels = new view_models();
@@ -231,7 +253,12 @@ namespace GeneralSCO.Core
             return new Tuple<int, view_models>(200, viewModels);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="goGreen"></param>
+        /// <param name="mobileNumber"></param>
+        /// <returns></returns>
         public Tuple<int, dynamic> PrintReceipt(bool goGreen = false, string mobileNumber = "")
         {
             try
@@ -265,7 +292,14 @@ namespace GeneralSCO.Core
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TIn"></typeparam>
+        /// <typeparam name="TOut"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
         private Tuple<dynamic,int> PostRequest<TIn, TOut>(string uri, TIn content) where TOut : new()
         {
             TOut @out = new TOut();

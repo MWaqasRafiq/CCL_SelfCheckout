@@ -23,7 +23,7 @@ namespace IDOLSelfCheckout.LSRetail
 {
     public class OposPrinterCall
     {
-        private string _oposDeviceName = Basepage.OPOS_PrinterName;
+        private string _oposDeviceName = Basepage.OposPrinterName;
         //private OPOSPOSPrinter Printer = null;
         public OposPrinterCall()
         {
@@ -404,7 +404,7 @@ namespace IDOLSelfCheckout.LSRetail
 
         //        Basepage.logWrite("Printer receipt:\n" + receipt);
         //        OposPOSPrinter_CCO.OPOSPOSPrinter Printer = new OposPOSPrinter_CCO.OPOSPOSPrinter(); //Make sure you don`t need to initialize anything and check overloaded constructors
-        //        int res = Printer.Open(Basepage.OPOS_PrinterName); // Check your printer class after executing this line and make sure there is no fault on the instantiated class (printer)
+        //        int res = Printer.Open(Basepage.OposPrinterName); // Check your printer class after executing this line and make sure there is no fault on the instantiated class (printer)
         //        //Basepage.logWrite("device Opened");
         //        //Printer.ClaimDevice(2000); //Is it enought to pool your device
         //        //Printer.CharacterSet = 1256;

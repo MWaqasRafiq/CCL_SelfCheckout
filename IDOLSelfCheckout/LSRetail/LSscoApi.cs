@@ -84,7 +84,7 @@ namespace IDOLSelfCheckout.LSRetail
         //    List<string> list = new List<string>();
 
         //    list.Add("SelfCheckout_Staff_ID");
-        //    list.Add("Store_No");
+        //    list.Add("StoreNo");
         //    list.Add("POS_Terminal");
 
         //    List<string> a = xPathReader(res, list);

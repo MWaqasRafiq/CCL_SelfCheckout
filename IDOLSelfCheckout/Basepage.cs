@@ -26,13 +26,13 @@ namespace IDOLSelfCheckout
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private readonly DataModels.Shared.view_models viewModels;
         public static string LogFilePath;
-        public static string POS_Username;
-        public static string POS_Password;
+        public static string UserName;
+        public static string PassWord;
         public static string PaymentDeviceComPort;
-        public static string OPOS_PrinterName;
-        public static string PopId_Host;
-        public static int PopId_Port;
-        public static int PopId_SecondaryPort;
+        public static string OposPrinterName;
+        public static string PopIdHost;
+        public static int PopIdPort;
+        public static int PopIdSecondaryPort;
         public static string TerminalId;
         public static string StoreNumber;
         public static bool LoyaltyRequested;
@@ -51,40 +51,41 @@ namespace IDOLSelfCheckout
             try
             {
                 ConfigurationManager.RefreshSection("appSettings");
+
                 if (ConfigurationManager.AppSettings["LogFile"] != null)
                     Basepage.LogFilePath = ConfigurationManager.AppSettings["LogFile"].ToString();
 
                 if (ConfigurationManager.AppSettings["VideoControlSource"] != null)
                     Basepage.VideoControlSource = ConfigurationManager.AppSettings["VideoControlSource"].ToString();
 
-                if (ConfigurationManager.AppSettings["POS_Username"] != null)
-                    Basepage.POS_Username = ConfigurationManager.AppSettings["POS_Username"].ToString();
+                if (ConfigurationManager.AppSettings["UserName"] != null)
+                    Basepage.UserName = ConfigurationManager.AppSettings["UserName"].ToString();
                 
-                if (ConfigurationManager.AppSettings["POS_Password"] != null)
-                    Basepage.POS_Password = ConfigurationManager.AppSettings["POS_Password"].ToString();
+                if (ConfigurationManager.AppSettings["PassWord"] != null)
+                    Basepage.PassWord = ConfigurationManager.AppSettings["PassWord"].ToString();
                 
                 if (ConfigurationManager.AppSettings["PaymentDeviceComPort"] != null)
                     Basepage.PaymentDeviceComPort = ConfigurationManager.AppSettings["PaymentDeviceComPort"].ToString();
                 
-                if (ConfigurationManager.AppSettings["OPOS_PrinterName"] != null)
-                    Basepage.OPOS_PrinterName = ConfigurationManager.AppSettings["OPOS_PrinterName"].ToString();
+                if (ConfigurationManager.AppSettings["OposPrinterName"] != null)
+                    Basepage.OposPrinterName = ConfigurationManager.AppSettings["OposPrinterName"].ToString();
 
                 //FacePay
-                if (ConfigurationManager.AppSettings["PopId_Host"] != null)
-                    Basepage.PopId_Host = ConfigurationManager.AppSettings["PopId_Host"].ToString();
+                if (ConfigurationManager.AppSettings["PopIdHost"] != null)
+                    Basepage.PopIdHost = ConfigurationManager.AppSettings["PopIdHost"].ToString();
 
-                if (ConfigurationManager.AppSettings["PopId_Port"] != null)
-                    Basepage.PopId_Port = Convert.ToInt32(ConfigurationManager.AppSettings["PopId_Port"]);
+                if (ConfigurationManager.AppSettings["PopIdPort"] != null)
+                    Basepage.PopIdPort = Convert.ToInt32(ConfigurationManager.AppSettings["PopIdPort"]);
 
-                if (ConfigurationManager.AppSettings["PopId_SecondaryPort"] != null)
-                    Basepage.PopId_SecondaryPort = Convert.ToInt32(ConfigurationManager.AppSettings["PopId_SecondaryPort"]);
+                if (ConfigurationManager.AppSettings["PopIdSecondaryPort"] != null)
+                    Basepage.PopIdSecondaryPort = Convert.ToInt32(ConfigurationManager.AppSettings["PopIdSecondaryPort"]);
 
                 //Service API
-                if (ConfigurationManager.AppSettings["Terminal_Id"] != null)
-                    Basepage.TerminalId = ConfigurationManager.AppSettings["Terminal_Id"].ToString();
+                if (ConfigurationManager.AppSettings["TerminalNo"] != null)
+                    Basepage.TerminalId = ConfigurationManager.AppSettings["TerminalNo"].ToString();
 
-                if (ConfigurationManager.AppSettings["Store_No"] != null)
-                    Basepage.StoreNumber = ConfigurationManager.AppSettings["Store_No"].ToString();
+                if (ConfigurationManager.AppSettings["StoreNo"] != null)
+                    Basepage.StoreNumber = ConfigurationManager.AppSettings["StoreNo"].ToString();
 
                 if (ConfigurationManager.AppSettings["ServerName"] != null)
                     Basepage.ServerName = ConfigurationManager.AppSettings["ServerName"].ToString();
