@@ -28,7 +28,7 @@ namespace IDOLSelfCheckout
         public static string LogFilePath;
         public static string UserName;
         public static string PassWord;
-        public static string PaymentDeviceComPort;
+        public static string PaymentDevicePort;
         public static string OposPrinterName;
         public static string PopIdHost;
         public static int PopIdPort;
@@ -64,8 +64,8 @@ namespace IDOLSelfCheckout
                 if (ConfigurationManager.AppSettings["PassWord"] != null)
                     Basepage.PassWord = ConfigurationManager.AppSettings["PassWord"].ToString();
                 
-                if (ConfigurationManager.AppSettings["PaymentDeviceComPort"] != null)
-                    Basepage.PaymentDeviceComPort = ConfigurationManager.AppSettings["PaymentDeviceComPort"].ToString();
+                if (ConfigurationManager.AppSettings["PaymentDevicePort"] != null)
+                    Basepage.PaymentDevicePort = ConfigurationManager.AppSettings["PaymentDevicePort"].ToString();
                 
                 if (ConfigurationManager.AppSettings["OposPrinterName"] != null)
                     Basepage.OposPrinterName = ConfigurationManager.AppSettings["OposPrinterName"].ToString();

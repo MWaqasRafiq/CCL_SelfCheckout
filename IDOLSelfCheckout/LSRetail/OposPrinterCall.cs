@@ -258,13 +258,14 @@ namespace IDOLSelfCheckout.LSRetail
                 }
                 if (receipt.Contains("$$CUTPAPER"))
                 {
-
+                    string cutPaper = Convert.ToString((char)27) + Convert.ToString((char)105);
+                    receiptChunks.Add(receipt.Replace("$$CUTPAPER", cutPaper));
                 }
                 ////byte[] BinaryData = System.Text.Encoding.UTF8.GetBytes(string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "1234567890" : sco_data.ReceiptNumber);
                 //var codes = QRCodeWriter.CreateQrCode(BinaryData, 500, QRCodeWriter.QrErrorCorrectionLevel.Medium).SaveAsPng("MyQR.png");
                 //var res = CreateQRCode(string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "1234567890" : sco_data.ReceiptNumber);
                 OPOSPOSPrinter Printer = new OPOSPOSPrinterClass();
-
+                
                 Printer.Open(_oposDeviceName); // Check your printer class after executing this line and make sure there is no fault on the instantiated class (printer)
                 Basepage.logWrite("device Opened");
                 Printer.ClaimDevice(2000); //Is it enought to pool your device
@@ -289,7 +290,8 @@ namespace IDOLSelfCheckout.LSRetail
                     {
                         //print QR here
                     }
-                    Printer.CutPaper(99);
+                    Printer.PrintNormal(2, receiptChunks[3]);
+                    //Printer.CutPaper(99);
                 }
                 else
                 {
@@ -298,7 +300,8 @@ namespace IDOLSelfCheckout.LSRetail
                     {
                         //print QR here
                     }
-                    Printer.CutPaper(99);
+                    Printer.PrintNormal(2, receiptChunks[2]);
+                    //Printer.CutPaper(99);
                 }
 
                 //Printer.PrintBitmap(2, "C:\\IDOL\\images\\bits\\logo20.bpm", 100, -2);

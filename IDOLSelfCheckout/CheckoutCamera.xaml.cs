@@ -2,8 +2,8 @@
 using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
 using IDOLSelfCheckout;
-using OpenCvSharp;
-using OpenCvSharp.WpfExtensions;
+//using OpenCvSharp;
+//using OpenCvSharp.WpfExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,16 +29,16 @@ namespace OposPrinter
     /// </summary>
     public partial class CheckoutCamera : System.Windows.Window
     {
-        private readonly VideoCapture capture;
-        private readonly CascadeClassifier cascadeClassifier;
+        //private readonly VideoCapture capture;
+        //private readonly CascadeClassifier cascadeClassifier;
 
         private readonly BackgroundWorker bkgWorker;
         public CheckoutCamera()
         {
             InitializeComponent();
 
-            capture = new VideoCapture();
-            cascadeClassifier = new CascadeClassifier("haarcascade_frontalface_default.xml");
+            //capture = new VideoCapture();
+            //cascadeClassifier = new CascadeClassifier("haarcascade_frontalface_default.xml");
 
             bkgWorker = new BackgroundWorker { WorkerSupportsCancellation = true };
             bkgWorker.DoWork += Worker_DoWork;
@@ -54,12 +54,12 @@ namespace OposPrinter
         }
         private void CheckoutCamera_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            capture.Open(0, VideoCaptureAPIs.ANY);
-            if (!capture.IsOpened())
-            {
-                Close();
-                return;
-            }
+            //capture.Open(0, VideoCaptureAPIs.ANY);
+            //if (!capture.IsOpened())
+            //{
+            //    Close();
+            //    return;
+            //}
 
             bkgWorker.RunWorkerAsync();
         }
@@ -68,8 +68,8 @@ namespace OposPrinter
         {
             bkgWorker.CancelAsync();
 
-            capture.Dispose();
-            cascadeClassifier.Dispose();
+            //capture.Dispose();
+            //cascadeClassifier.Dispose();
         }
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
@@ -77,21 +77,21 @@ namespace OposPrinter
             var worker = (BackgroundWorker)sender;
             while (!worker.CancellationPending)
             {
-                using (var frameMat = capture.RetrieveMat())
-                {
-                    var rects = cascadeClassifier.DetectMultiScale(frameMat, 1.1, 5, HaarDetectionTypes.ScaleImage, new OpenCvSharp.Size(30, 30));
+                //using (var frameMat = capture.RetrieveMat())
+                //{
+                //    var rects = cascadeClassifier.DetectMultiScale(frameMat, 1.1, 5, HaarDetectionTypes.ScaleImage, new OpenCvSharp.Size(30, 30));
 
-                    foreach (var rect in rects)
-                    {
-                        Cv2.Rectangle(frameMat, rect, Scalar.Red);
-                    }
+                //    foreach (var rect in rects)
+                //    {
+                //        Cv2.Rectangle(frameMat, rect, Scalar.Red);
+                //    }
 
-                    // Must create and use WriteableBitmap in the same thread(UI Thread).
-                    Dispatcher.Invoke(() =>
-                    {
-                        FrameImage.Source = frameMat.ToWriteableBitmap();
-                    });
-                }
+                //    // Must create and use WriteableBitmap in the same thread(UI Thread).
+                //    Dispatcher.Invoke(() =>
+                //    {
+                //        FrameImage.Source = frameMat.ToWriteableBitmap();
+                //    });
+                //}
 
                 Thread.Sleep(30);
             }
