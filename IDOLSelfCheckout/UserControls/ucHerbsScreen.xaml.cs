@@ -66,7 +66,7 @@ namespace IDOLSelfCheckout.UserControls
             this.product = this.list.prices.Where(x => x.barcode == barcode).FirstOrDefault() ?? new prices();
             if (this.product != null && basepage.addItem(sco_data.ReceiptNumber, barcode, this.product))
             {
-                basepage.updateTransactionDetails(this.product);
+                basepage.updateTransactionDetails();
                 uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
             }
             else

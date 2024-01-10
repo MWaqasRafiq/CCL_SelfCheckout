@@ -73,7 +73,7 @@ namespace IDOLSelfCheckout.UserControls
             Basepage basepage = new Basepage();
             if (basepage.addItem(sco_data.ReceiptNumber, barcode, product))
             {
-                basepage.updateTransactionDetails(product);
+                basepage.updateTransactionDetails();
                 uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
             }
             else

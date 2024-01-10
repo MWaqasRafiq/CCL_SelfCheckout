@@ -18,6 +18,6 @@ namespace DataModels.GeneralSCO
         public decimal FinalPrice { get; set; }
         public bool Weighted { get; set; }
         public bool AgeRestriction { get; set; }
-        public string BCD { get; set; }
+        public string BarCode { get; set; }
     }
 }

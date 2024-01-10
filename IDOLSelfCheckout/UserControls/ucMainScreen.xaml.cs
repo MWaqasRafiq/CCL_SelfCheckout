@@ -35,6 +35,7 @@ namespace IDOLSelfCheckout.UserControls
         private readonly DataModels.Shared.view_models viewModels;
         private ToshibaSA toshibaSA;
         CCL_Lamp lamp;
+
         public ucMainScreen()
         {
             InitializeComponent();
@@ -91,7 +92,7 @@ namespace IDOLSelfCheckout.UserControls
                 uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
             }
             sco_data.StoreNumber = Basepage.StoreNumber;
-            if (Basepage.ServerName == "SA" || Basepage.ServerName == "LS")//(Basepage.IsLocalConsumption)
+            if (Basepage.ServerName == "SA")//(Basepage.IsLocalConsumption)
             {
                 item_list_parent.Visibility = Visibility.Hidden;
                 Receipt_Text_parent.Visibility = Visibility.Visible;
@@ -100,6 +101,16 @@ namespace IDOLSelfCheckout.UserControls
             {
                 item_list_parent.Visibility = Visibility.Visible;
                 Receipt_Text_parent.Visibility = Visibility.Hidden;
+                if (!string.IsNullOrEmpty(Basepage.AdditionalLanguage) && Basepage.AdditionalLanguage.ToLower() == "ar")
+                {
+                    item_list.Columns[1].Visibility = Visibility.Visible;
+                    item_list.Columns[1].Header = "اسم";
+
+                }
+                else
+                {
+                    item_list.Columns[1].Visibility = Visibility.Hidden;
+                }
             }
             
             ucMainScreen.TransactionDetails.Content = (object)("Store No: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber );
@@ -131,8 +142,8 @@ namespace IDOLSelfCheckout.UserControls
                     sco_data.TransactionVat = "0.00";
 
                 ucMainScreen.TransactionDetails.Content = (object)("Store No: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-                ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED: " + ((!string.IsNullOrEmpty(sco_data.TransactionTotal) && sco_data.TransactionTotal != "null") ?  sco_data.TransactionTotal : "0.00"));
-                ucMainScreen.TransactionVat.Content =   (object)("VAT   AED: " + sco_data.TransactionVat);
+                ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + Basepage.TransactionCurrency + ": " + ((!string.IsNullOrEmpty(sco_data.TransactionTotal) && sco_data.TransactionTotal != "null") ?  sco_data.TransactionTotal : "0.00"));
+                ucMainScreen.TransactionVat.Content =   (object)("VAT  " + Basepage.TransactionCurrency + ": " + sco_data.TransactionVat);
             }
             else
             {
@@ -142,8 +153,8 @@ namespace IDOLSelfCheckout.UserControls
                 {
                     if (ReceiptText != null) 
                         { ReceiptText.Text = ""; }
-                    ucMainScreen.TransactionTotal.Content = (object)("TOTAL AED: " + sco_data.TransactionTotal);
-                    ucMainScreen.TransactionVat.Content = (object)("VAT   AED: " + sco_data.TransactionVat);
+                    ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + Basepage.TransactionCurrency + ": " + sco_data.TransactionTotal);
+                    ucMainScreen.TransactionVat.Content = (object)("VAT  " + Basepage.TransactionCurrency + ": " + sco_data.TransactionVat);
                 }
             }
         }
@@ -167,6 +178,5 @@ namespace IDOLSelfCheckout.UserControls
                 UpdateReceipt(response);
             }
         }
-
     }
 }

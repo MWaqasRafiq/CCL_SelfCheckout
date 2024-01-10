@@ -78,22 +78,56 @@
                                     <DataGrid x:Name="item_list" AutoGenerateColumns="False" CanUserResizeColumns="False"
                             GridLinesVisibility="None" ItemsSource="{Binding items}" IsReadOnly="True" CanUserReorderColumns="False" CanUserSortColumns = "False">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Name" DisplayIndex="0" Width="250" Binding="{Binding Name}">
+                                            <DataGridTextColumn Header="Name" DisplayIndex="0" Width="1*" Binding="{Binding Name}">
                                                 <DataGridColumn.HeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                                         <Setter Property="Control.FontSize" Value="20"/>
                                                         <Setter Property="Control.HorizontalContentAlignment" Value="Left"/>
+                                                        <Setter Property="Control.FontWeight" Value="Bold"/>
                                                     </Style>
                                                 </DataGridColumn.HeaderStyle>
                                                 <DataGridBoundColumn.ElementStyle>
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="TextBlock.FontSize" Value="20"/>
                                                         <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left"/>
-                                                        <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+                                                        <!--<Setter Property="TextBlock.FontWeight" Value="Bold"/>-->
                                                     </Style>
                                                 </DataGridBoundColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Qty" DisplayIndex="1" Width="100" Binding="{Binding Qty}">
+                                            <DataGridTextColumn Header="Name" DisplayIndex="1" Width="1*" Binding="{Binding Name2}">
+                                                <DataGridColumn.HeaderStyle>
+                                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                        <Setter Property="Control.FontSize" Value="20"/>
+                                                        <Setter Property="Control.HorizontalContentAlignment" Value="Left"/>
+                                                        <Setter Property="Control.FontWeight" Value="Bold"/>
+                                                    </Style>
+                                                </DataGridColumn.HeaderStyle>
+                                                <DataGridBoundColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextBlock.FontSize" Value="20"/>
+                                                        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left"/>
+                                                        <!--<Setter Property="TextBlock.FontWeight" Value="Bold"/>-->
+                                                    </Style>
+                                                </DataGridBoundColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="Qty" DisplayIndex="2" Width="80" Binding="{Binding Qty}">
+                                                <DataGridColumn.HeaderStyle>
+                                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                        <Setter Property="Control.FontSize" Value="20"/>
+                                                        <Setter Property="Control.HorizontalContentAlignment" Value="Right"/>
+                                                        <Setter Property="Control.FontWeight" Value="Bold"/>
+                                                    </Style>
+                                                </DataGridColumn.HeaderStyle>
+                                            
+                                                <DataGridBoundColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextBlock.FontSize" Value="20"/>
+                                                        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Right"/>
+                                                        <!--<Setter Property="TextBlock.FontWeight" Value="Bold"/>-->
+                                                    </Style>
+                                                </DataGridBoundColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="Price" DisplayIndex="3" Width="100" Binding="{Binding Price}">
                                                 <DataGridColumn.HeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                                         <Setter Property="Control.FontSize" Value="20"/>
@@ -105,16 +139,17 @@
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="TextBlock.FontSize" Value="20"/>
                                                         <Setter Property="FrameworkElement.HorizontalAlignment" Value="Right"/>
-                                                        <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+                                                        <!--<Setter Property="TextBlock.FontWeight" Value="Bold"/>-->
                                                     </Style>
                                                 </DataGridBoundColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Price" DisplayIndex="2" Width="100" Binding="{Binding Price}">
+                                            <DataGridTextColumn Header="BarCode" DisplayIndex="4" Visibility="Hidden" Width="100" Binding="{Binding BarCode}">
                                                 <DataGridColumn.HeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                                         <Setter Property="Control.FontSize" Value="20"/>
                                                         <Setter Property="Control.HorizontalContentAlignment" Value="Right"/>
                                                         <Setter Property="Control.FontWeight" Value="Bold"/>
+                                                        <Setter Property="Control.Visibility" Value="Hidden"/>
                                                     </Style>
                                                 </DataGridColumn.HeaderStyle>
                                                 <DataGridBoundColumn.ElementStyle>

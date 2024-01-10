@@ -40,9 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GeneralSCO\AddItemRequest.cs" />
-    <Compile Include="GeneralSCO\AddItemResponse.cs" />
+    <Compile Include="GeneralSCO\AddPaymentRequest.cs" />
+    <Compile Include="GeneralSCO\AddPaymentResponse.cs" />
     <Compile Include="GeneralSCO\CartProducts.cs" />
     <Compile Include="GeneralSCO\Error.cs" />
+    <Compile Include="GeneralSCO\OrderTotalRequest.cs" />
     <Compile Include="GeneralSCO\PrintReceiptRequest.cs" />
     <Compile Include="GeneralSCO\PrintReceiptResponse.cs" />
     <Compile Include="GeneralSCO\ProductDetails.cs" />
@@ -52,6 +54,7 @@
     <Compile Include="GeneralSCO\StartTransactionRequest.cs" />
     <Compile Include="GeneralSCO\StartTransactionResponse.cs" />
     <Compile Include="GeneralSCO\TransactionTotal.cs" />
+    <Compile Include="GeneralSCO\VoidItemRequest.cs" />
     <Compile Include="Shared\items.cs" />
     <Compile Include="Shared\LsResponseGet.cs" />
     <Compile Include="Shared\view_models.cs" />

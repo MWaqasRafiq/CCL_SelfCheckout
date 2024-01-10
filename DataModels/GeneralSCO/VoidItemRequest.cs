@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataModels.GeneralSCO
 {
-    public class AddItemRequest
+    public class VoidItemRequest
     {
         public string TransactionId { get; set; }
         public string BarCode { get; set; }
-        /// <summary>
-        /// weight could be here for weighted items in grams
-        /// </summary>
-        public int Qty { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿//using IDOLSelfCheckout.Classes;
-using IDOLSelfCheckout.LSRetail;
+﻿using IDOLSelfCheckout.LSRetail;
 using IDOLSelfCheckout.UserControls;
 using Newtonsoft.Json;
 using System;
@@ -19,15 +18,10 @@ using System.Windows.Threading;
 using static IDOLSelfCheckout.FacePay;
 using System.Threading;
 using System.Runtime.InteropServices;
-//using Toshiba_SIT.Core;
-//using GeneralSCO.Core;
 using DataModels.Shared;
 using IDOLSelfCheckout.Classes;
 using DataModels.GeneralSCO;
-//using On_Premises.Core;
 
-
-#nullable enable
 namespace IDOLSelfCheckout
 {
     public partial class MainWindow : Window, IComponentConnector
@@ -39,9 +33,7 @@ namespace IDOLSelfCheckout
         private System.Timers.Timer _timer;
         private List<string> Images1 = new List<string>();
         private int count1;
-        internal
-#nullable disable
-        Image _sceneriesBtn;
+        internal Image _sceneriesBtn;
         internal Grid _Main_sco;
         internal TextBox _textBox1;
         internal TextBlock _textBlock1;
@@ -72,9 +64,7 @@ namespace IDOLSelfCheckout
             
         }
 
-        private void Window_Loaded(
-#nullable enable
-        object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             new Basepage().loadValues();
             MainWindow.Img_Circle = this.imgCircle;
@@ -119,11 +109,12 @@ namespace IDOLSelfCheckout
             if (char.IsNumber(c))
                 _barcode += c;
 
-            Basepage.logWrite("_barcode=" + _barcode);
-            Basepage.logWrite("e.Key=" + Convert.ToString(e.Key));
+            //Basepage.logWrite("_barcode=" + _barcode);
+            //Basepage.logWrite("e.Key=" + Convert.ToString(e.Key));
 
             if (e.Key == Key.Return)
             {
+                sco_data.ScannedBarcode = _barcode;
                 if (Basepage.LoyaltyRequested && !Basepage.LoyaltyScaned)
                 {
                     Basepage.logWrite("Loyalty Scanned: " + _barcode);
@@ -132,63 +123,21 @@ namespace IDOLSelfCheckout
                     Basepage.LoyaltyScaned = true;
 
                     uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucPaymentScreen());
-                    return;
                 }
                 else if (Basepage.VoidRequested && !Basepage.VoidScaned)
                 {
                     Basepage.logWrite("VOID Scanned: " + _barcode);
-                    sco_data.ScannedBarcode = _barcode;
-                    switch (Basepage.ServerName)
-                    {
-                        case "D3":
-                            break;
-                        default:
-                            new Basepage().VoidItemOnPremises();
-                            break;
-                    }
-                    Basepage.VoidRequested = false;
-                    Basepage.VoidScaned = true;
-
-                    return;
+                    new Basepage().VoidItemMain();
                 }
                 else
                 {
-                    Basepage.logWrite("Scanned barcode=" + _barcode);
-
-                    if (sco_data.TransactionProcess == "STARTED")
-                    {
-                        Basepage.logWrite("Scanned Barcode=" + _barcode);
-
-                        if (_barcode == "1111111111116")
-                        {
-                            uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucAsistantScreen());
-                        }
-                        else
-                        {
-                            sco_data.ScannedBarcode = _barcode;
-                            Basepage.logWrite("sco_data.ScannedBarcode=" + sco_data.ScannedBarcode);
-                            // here we will choose the server that we want to integrate
-                            switch (Basepage.ServerName)
-                            {
-                                case "SA":
-                                    Toshiba_SIT.Core.ToshibaSA toshibaSA = new Toshiba_SIT.Core.ToshibaSA();
-                                    toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
-                                    break;
-                                case "GP":
-                                    new Basepage().GeneralPosAddItem();
-                                    break;
-                                case "D3":
-                                    break;
-                                default:
-                                    new Basepage().AddItemOnPremises();
-                                    break;
-                            }
-                        }
-                    }
+                    Basepage.logWrite("Item Scanned: " + _barcode);
+                    new Basepage().AddItemMain();
                 }
                 this._barcode = string.Empty;
             }
         }
+
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
@@ -228,6 +177,5 @@ namespace IDOLSelfCheckout
                 this.count1 = 0;
             //this.sceneriesBtn.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("C:\\IDOL\\images\\advertise\\" + this.Images1[this.count1].ToString());
         }
-
     }
 }

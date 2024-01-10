@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataModels.GeneralSCO
 {
-    public class AddItemResponse
+    public class OrderTotalRequest
     {
         public string TransactionId { get; set; }
-        public int? Code { get; set; }
-        public string StatusMessage { get; set; }
-        public string Status { get; set; }
     }
 }

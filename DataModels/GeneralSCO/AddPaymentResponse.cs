@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataModels.GeneralSCO
 {
-    public class SignTerminalResponse
+    public class AddPaymentResponse
     {
-        public int Code { get; set; }
+        public int? Code { get; set; }
         public string Message { get; set; }
     }
 }

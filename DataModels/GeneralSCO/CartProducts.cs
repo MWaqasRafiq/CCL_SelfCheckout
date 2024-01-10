@@ -10,5 +10,10 @@ namespace DataModels.GeneralSCO
     {
         public List<ProductDetails> Products { get; set; }
         public TransactionTotal Total { get; set; }
+        public CartProducts()
+        {
+            Products = new List<ProductDetails>();
+            Total = new TransactionTotal();
+        }
     }
 }
