@@ -16,8 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using Toshiba_SIT;
-using Toshiba_SIT.Core;
+//using Toshiba_SIT;
+//using Toshiba_SIT.Core;
 
 namespace IDOLSelfCheckout.UserControls
 {
@@ -33,7 +33,7 @@ namespace IDOLSelfCheckout.UserControls
         public static Label ItemInfo;
         public static TextBlock ReceiptText;
         private readonly DataModels.Shared.view_models viewModels;
-        private ToshibaSA toshibaSA;
+        //private ToshibaSA toshibaSA;
         CCL_Lamp lamp;
 
 
@@ -53,15 +53,14 @@ namespace IDOLSelfCheckout.UserControls
             ItemListDataGrid.DataContext = this.viewModels;
             
             //Server API
-            //serverIntegration = new ServerIntegration();
-            toshibaSA = new ToshibaSA();
-            if(Basepage.ServerName == "SA")
-            {
-                DispatcherTimer timer = new DispatcherTimer();
-                timer.Interval = TimeSpan.FromMilliseconds(500);
-                timer.Tick += ServiceCallWorker;
-                timer.Start();
-            }
+            //toshibaSA = new ToshibaSA();
+            //if(Basepage.ServerName == "SA")
+            //{
+            //    DispatcherTimer timer = new DispatcherTimer();
+            //    timer.Interval = TimeSpan.FromMilliseconds(500);
+            //    timer.Tick += ServiceCallWorker;
+            //    timer.Start();
+            //}
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -143,8 +142,8 @@ namespace IDOLSelfCheckout.UserControls
                     sco_data.TransactionVat = "0.00";
 
                 ucMainScreen.TransactionDetails.Content = (object)("Store No: " + sco_data.StoreNumber + "  Terminal: " + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-                ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + Basepage.TransactionCurrency + ": " + ((!string.IsNullOrEmpty(sco_data.TransactionTotal) && sco_data.TransactionTotal != "null") ?  sco_data.TransactionTotal : "0.00"));
-                ucMainScreen.TransactionVat.Content =   (object)("VAT  " + Basepage.TransactionCurrency + ": " + sco_data.TransactionVat);
+                ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + sco_data.TransactionCurrency + ": " + ((!string.IsNullOrEmpty(sco_data.TransactionTotal) && sco_data.TransactionTotal != "null") ?  sco_data.TransactionTotal : "0.00"));
+                ucMainScreen.TransactionVat.Content =   (object)("VAT  " + sco_data.TransactionCurrency + ": " + sco_data.TransactionVat);
             }
             else
             {
@@ -154,8 +153,8 @@ namespace IDOLSelfCheckout.UserControls
                 {
                     if (ReceiptText != null) 
                         { ReceiptText.Text = ""; }
-                    ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + Basepage.TransactionCurrency + ": " + sco_data.TransactionTotal);
-                    ucMainScreen.TransactionVat.Content = (object)("VAT  " + Basepage.TransactionCurrency + ": " + sco_data.TransactionVat);
+                    ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + sco_data.TransactionCurrency + ": " + sco_data.TransactionTotal);
+                    ucMainScreen.TransactionVat.Content = (object)("VAT  " + sco_data.TransactionCurrency + ": " + sco_data.TransactionVat);
                 }
             }
         }
@@ -175,8 +174,8 @@ namespace IDOLSelfCheckout.UserControls
         {
             if (Receipt_Text != null)
             {
-                var response = toshibaSA.GetReceipt();
-                UpdateReceipt(response);
+                //var response = toshibaSA.GetReceipt();
+                //UpdateReceipt(response);
             }
         }
     }

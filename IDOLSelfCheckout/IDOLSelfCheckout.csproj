@@ -57,8 +57,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DataModels\DataModels.csproj" />
     <ProjectReference Include="..\LS_Retail\GeneralSCO.csproj" />
-    <ProjectReference Include="..\On_Premises\On_Premises.csproj" />
-    <ProjectReference Include="..\Toshiba_SIT\Toshiba_SIT.csproj" />
   </ItemGroup>
 
   <ItemGroup>

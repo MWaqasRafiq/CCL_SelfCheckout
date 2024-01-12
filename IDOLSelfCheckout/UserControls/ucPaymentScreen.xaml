@@ -47,13 +47,13 @@
                 </Border>
 
                 <Border Background="White" Grid.Column="1" Grid.Row="0">
-                    <Button Name="btnCreditcard2" Click="btnCreditcard2_Click"  >
+                    <Button Name="btnCreditcard2" Click="btnGiftCard_Click"  >
                         <Image  Source="C:/IDOL/images/icons/giftcard.png" Stretch="Fill"  />
                     </Button>
                 </Border>
 
                 <Border Background="White" Grid.Column="0" Grid.Row="1">
-                    <Button Name="btnCreditcardOpos" Click="btnCreditcardOpos_Click"  >
+                    <Button Name="btnCreditcardOpos" Click="btnCash_Click"  >
                         <Image  Source="C:/IDOL/images/icons/cash.png" MaxHeight="120" Stretch="Fill"  />
                     </Button>
                 </Border>

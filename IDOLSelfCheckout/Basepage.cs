@@ -40,7 +40,6 @@ namespace IDOLSelfCheckout
         public static string TransactionId;
         public static string VideoControlSource;
         public static string AdditionalLanguage;
-        public static string TransactionCurrency;
 
         public void loadValues()
         {
@@ -96,7 +95,7 @@ namespace IDOLSelfCheckout
                     Basepage.AdditionalLanguage = ConfigurationManager.AppSettings["AdditionalLanguage"].ToString();
 
                 if (ConfigurationManager.AppSettings["Currency"] != null)
-                    Basepage.TransactionCurrency = ConfigurationManager.AppSettings["Currency"].ToString();
+                    sco_data.TransactionCurrency = ConfigurationManager.AppSettings["Currency"].ToString();
 
                 sco_data.TerminalNumber = TerminalId;
                 Basepage.logWrite("--------------------- Application Started -----------------------");
@@ -117,8 +116,8 @@ namespace IDOLSelfCheckout
             switch (ServerName)
             {
                 case "SA":
-                    Toshiba_SIT.Core.ToshibaSA toshibaSA = new Toshiba_SIT.Core.ToshibaSA();
-                    toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
+                    //Toshiba_SIT.Core.ToshibaSA toshibaSA = new Toshiba_SIT.Core.ToshibaSA();
+                    //toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
                     break;
                 case "GP":
                     GeneralPosAddItem();
@@ -134,22 +133,22 @@ namespace IDOLSelfCheckout
 
         public void AddItemOnPremises()
         {
-            On_Premises.Core.OnPremises_SCO onPremises = new On_Premises.Core.OnPremises_SCO();
-            Basepage basepage = new Basepage();
-            var result = onPremises.AddItemOnPremises();
+            //On_Premises.Core.OnPremises_SCO onPremises = new On_Premises.Core.OnPremises_SCO();
+            //Basepage basepage = new Basepage();
+            //var result = onPremises.AddItemOnPremises();
 
-            if (result != null && result.items != null)
-            {
-                ucMainScreen.ItemListDataGrid.DataContext = (object)null;
-                ucMainScreen.ItemListDataGrid.DataContext = (object)result;
-                basepage.updateTransactionDetails();
-                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
-            }
-            else
-            {
-                uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
-                Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
-            }
+            //if (result != null && result.items != null)
+            //{
+            //    ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+            //    ucMainScreen.ItemListDataGrid.DataContext = (object)result;
+            //    basepage.updateTransactionDetails();
+            //    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+            //}
+            //else
+            //{
+            //    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
+            //    Basepage.logWrite("sco_data.ScannedBarcode.Product=" + sco_data.ScannedBarcode + " Went to Help");
+            //}
         }
 
         public string GeneralPosPrintReceipt(bool goGreen = false, string mobileNumber = "")
@@ -183,8 +182,8 @@ namespace IDOLSelfCheckout
                     switch (Basepage.ServerName)
                     {
                         case "SA":
-                            Toshiba_SIT.Core.ToshibaSA toshibaSA = new Toshiba_SIT.Core.ToshibaSA();
-                            toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
+                            //Toshiba_SIT.Core.ToshibaSA toshibaSA = new Toshiba_SIT.Core.ToshibaSA();
+                            //toshibaSA.AddItemToReceipt(sco_data.ScannedBarcode);
                             break;
                         case "GP":
                             GeneralPosAddItem();
@@ -297,17 +296,17 @@ namespace IDOLSelfCheckout
 
         public void VoidItemOnPremises()
         {
-            On_Premises.Core.OnPremises_SCO onPremises = new On_Premises.Core.OnPremises_SCO();
-            Basepage basepage = new Basepage();
-            var result = onPremises.VoidItemOnPremises();
+            //On_Premises.Core.OnPremises_SCO onPremises = new On_Premises.Core.OnPremises_SCO();
+            //Basepage basepage = new Basepage();
+            //var result = onPremises.VoidItemOnPremises();
 
-            ucMainScreen.ItemListDataGrid.DataContext = (object)null;
-            if (result != null && result.items != null)
-            {
-                ucMainScreen.ItemListDataGrid.DataContext = (object)result;
-            }
-            basepage.updateTransactionDetails();
-            uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+            //ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+            //if (result != null && result.items != null)
+            //{
+            //    ucMainScreen.ItemListDataGrid.DataContext = (object)result;
+            //}
+            //basepage.updateTransactionDetails();
+            //uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
         }
 
         public bool pressedTotal(string receiptNo)
@@ -347,12 +346,46 @@ namespace IDOLSelfCheckout
                     {
                         //flag = lsscoApi.FinishPosTransaction(receiptNo);
                         if (flag)
+                        {
                             sco_data.TransactionProcess = "FINISHED";
+                            if (Basepage.ServerName == "GP")
+                            {
+                                AddPaymentRequest request = new AddPaymentRequest()
+                                {
+                                    Amount = Convert.ToDecimal(tenderedAmount),
+                                    PaymentType = "card",
+                                    TransactionId = TransactionId,
+                                    Currency = sco_data.TransactionCurrency,
+                                    BankTransactionId = string.Empty,
+                                    CardMaskNo = sco_data.MaskCardNumber
+                                };
+                                var tuple = new GeneralSCO.Core.General_SCO().AddPayment(request);
+                                if (tuple.Item1 == 200 && tuple.Item2 != null)
+                                {
+                                    if (tuple.Item2 as AddPaymentResponse != null)
+                                    {
+                                        sco_data.MaskCardNumber = string.Empty;
+                                        flag = true;
+                                    }
+                                    else
+                                    {
+                                        flag = false;
+                                        sco_data.ErrorMessage = "Cash Payment: No data has found.";
+                                        this.errorMessage();
+                                    }
+                                }
+                                else
+                                {
+                                    var err = tuple.Item2 as Error ?? new Error() {Message = "Error Cash Payment: No data has found." };
+                                    sco_data.ErrorMessage = err.Message;
+                                }
+                            }
+                        }
                         sco_data.TransactionTotal = Convert.ToDecimal("0").ToString("0.00");
                         sco_data.TransactionVat = Convert.ToDecimal("0").ToString("0.00"); ;
                         ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-                        ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + Basepage.TransactionCurrency + " " + sco_data.TransactionTotal);
-                        ucMainScreen.TransactionVat.Content = (object)("VAT  " + Basepage.TransactionCurrency + " " + sco_data.TransactionVat);
+                        ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + sco_data.TransactionCurrency + " " + sco_data.TransactionTotal);
+                        ucMainScreen.TransactionVat.Content = (object)("VAT  " + sco_data.TransactionCurrency + " " + sco_data.TransactionVat);
 
                     }
                 }
@@ -378,12 +411,45 @@ namespace IDOLSelfCheckout
                 {
                     //flag = lsscoApi.FinishPosTransaction(receiptNo);
                     if (flag)
+                    {
                         sco_data.TransactionProcess = "FINISHED";
+                        if (Basepage.ServerName == "GP")
+                        {
+                            AddPaymentRequest request = new AddPaymentRequest() 
+                            { 
+                                Amount = Convert.ToDecimal(tenderedAmount),
+                                PaymentType = "cash",
+                                TransactionId = TransactionId,
+                                Currency = sco_data.TransactionCurrency,
+                                BankTransactionId = string.Empty,
+                                CardMaskNo = string.Empty
+                            };
+                            var tuple = new GeneralSCO.Core.General_SCO().AddPayment(request);
+                            if (tuple.Item1 == 200 && tuple.Item2 != null)
+                            {
+                                if (tuple.Item2 as AddPaymentResponse != null)
+                                {
+                                    flag = true;
+                                }
+                                else
+                                {
+                                    flag = false;
+                                    sco_data.ErrorMessage = "Cash Payment: No data has found.";
+                                    this.errorMessage();
+                                }
+                            }
+                            else
+                            {
+                                var err = tuple.Item2 as Error;
+                                sco_data.ErrorMessage = err.Message;
+                            }
+                        }
+                    }
                     sco_data.TransactionTotal = Convert.ToDecimal("0").ToString("0.00");
                     sco_data.TransactionVat = Convert.ToDecimal("0").ToString("0.00"); ;
                     ucMainScreen.TransactionDetails.Content = (object)("StoreNo:" + sco_data.StoreNumber + "  Terminal:" + sco_data.TerminalNumber + "  \r\nReceiptNumber:" + sco_data.ReceiptNumber);
-                    ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + Basepage.TransactionCurrency + " " + sco_data.TransactionTotal);
-                    ucMainScreen.TransactionVat.Content = (object)("VAT  " + Basepage.TransactionCurrency + " " + sco_data.TransactionVat);
+                    ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + sco_data.TransactionCurrency + " " + sco_data.TransactionTotal);
+                    ucMainScreen.TransactionVat.Content = (object)("VAT  " + sco_data.TransactionCurrency + " " + sco_data.TransactionVat);
                 }
                 else
                     this.errorMessage();
@@ -439,8 +505,8 @@ namespace IDOLSelfCheckout
         public void updateTransactionDetails()
         {
             ucMainScreen.TransactionDetails.Content = (object)("StoreNo: " + sco_data.StoreNumber + "       Terminal: " + sco_data.TerminalNumber + "  \r\nReceiptNumber: " + sco_data.ReceiptNumber);
-            ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + Basepage.TransactionCurrency + " " + (sco_data.TransactionTotal == null ? "0.00": sco_data.TransactionTotal));
-            ucMainScreen.TransactionVat.Content = (object)("VAT  " + Basepage.TransactionCurrency + " " + (sco_data.TransactionVat == null ? "0.00" : sco_data.TransactionVat));
+            ucMainScreen.TransactionTotal.Content = (object)("TOTAL " + sco_data.TransactionCurrency + " " + (sco_data.TransactionTotal == null ? "0.00": sco_data.TransactionTotal));
+            ucMainScreen.TransactionVat.Content = (object)("VAT  " + sco_data.TransactionCurrency + " " + (sco_data.TransactionVat == null ? "0.00" : sco_data.TransactionVat));
             ucMainScreen.ItemInfo.Content = (object)sco_data.LastItemDescription;
         }
 

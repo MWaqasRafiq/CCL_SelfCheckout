@@ -312,7 +312,7 @@ namespace GeneralSCO.Core
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Tuple<int, AddPaymentResponse> AddPayment(AddPaymentRequest request)
+        public Tuple<int, dynamic> AddPayment(AddPaymentRequest request)
         {
             AddPaymentResponse paymentResponse = new AddPaymentResponse();
             try
@@ -325,14 +325,14 @@ namespace GeneralSCO.Core
                 else
                 {
                     var response = result.Item1 as Error;
-                    return new Tuple<int, AddPaymentResponse>(response.Code.Value, new AddPaymentResponse());
+                    return new Tuple<int, dynamic>(response.Code.Value, response);
                 }
             }
             catch (Exception ex)
             {
                 logWrite(ex.Message);
             }
-            return new Tuple<int, AddPaymentResponse>(200, paymentResponse);
+            return new Tuple<int, dynamic>(200, paymentResponse);
         }
 
         /// <summary>

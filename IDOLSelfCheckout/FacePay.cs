@@ -14,7 +14,7 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Windows;
 using static System.Net.Mime.MediaTypeNames;
-using Toshiba_SIT.Core;
+//using Toshiba_SIT.Core;
 using DataModels.Shared;
 
 namespace IDOLSelfCheckout
@@ -283,9 +283,9 @@ namespace IDOLSelfCheckout
                 switch (Basepage.ServerName)
                 {
                     case "SA":
-                        ToshibaSA toshibaSA = new ToshibaSA();
-                        toshibaSA.CashPayment(responseJson.totalAmount.ToString());
-                        sco_data.TransactionProcess = "FINISHED";
+                        //ToshibaSA toshibaSA = new ToshibaSA();
+                        //toshibaSA.CashPayment(responseJson.totalAmount.ToString());
+                        //sco_data.TransactionProcess = "FINISHED";
                         break;
                     case "LS":
 

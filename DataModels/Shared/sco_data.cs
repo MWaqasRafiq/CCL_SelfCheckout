@@ -26,6 +26,7 @@ namespace DataModels.Shared
         public static string ExpiryDate;
         public static string AuthCode;
         public static string TransactionVat;
+        public static string TransactionCurrency;
         public static string LastItemDescription;
         public static string ErrorMessage = "";
         public static List<items> ItemList;
