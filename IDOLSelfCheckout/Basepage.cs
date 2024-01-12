@@ -14,7 +14,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 
-#nullable enable
 namespace IDOLSelfCheckout
 {
     public class Basepage
