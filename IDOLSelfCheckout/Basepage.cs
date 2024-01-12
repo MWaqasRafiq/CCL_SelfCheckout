@@ -401,7 +401,32 @@ namespace IDOLSelfCheckout
             bool flag = false;
             try
             {
-                new OposPrinterCall().OPOSprint();
+                if (Basepage.ServerName == "GP")
+                {
+                    PrintReceiptResponse receiptResponse = new PrintReceiptResponse();
+                    var tuple = new GeneralSCO.Core.General_SCO().PrintLastReceipt();
+                    if (tuple.Item1 == 200 && tuple.Item2 != null)
+                    {
+                        receiptResponse = tuple.Item2 as PrintReceiptResponse;
+                        if(receiptResponse != null)
+                        {
+                            flag = new OposPrinterCall().OposGeneralprint(receiptResponse.Receipt);
+                        }
+                        else
+                        {
+                            sco_data.ErrorMessage = "Receipt not found";
+                            this.errorMessage();
+                        }
+                    }
+                    else
+                    {
+                        var err = tuple.Item2 as Error;
+                        sco_data.ErrorMessage = err.Message;
+                    }
+
+                }
+                else 
+                    flag = new OposPrinterCall().OPOSprint();
             }
             catch (Exception ex)
             {

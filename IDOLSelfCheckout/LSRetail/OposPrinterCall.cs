@@ -266,6 +266,7 @@ namespace IDOLSelfCheckout.LSRetail
                 //var res = CreateQRCode(string.IsNullOrEmpty(sco_data.ReceiptNumber) ? "1234567890" : sco_data.ReceiptNumber);
                 OPOSPOSPrinter Printer = new OPOSPOSPrinterClass();
                 
+
                 Printer.Open(_oposDeviceName); // Check your printer class after executing this line and make sure there is no fault on the instantiated class (printer)
                 Basepage.logWrite("device Opened");
                 Printer.ClaimDevice(2000); //Is it enought to pool your device
@@ -304,39 +305,6 @@ namespace IDOLSelfCheckout.LSRetail
                     //Printer.CutPaper(99);
                 }
 
-                //Printer.PrintBitmap(2, "C:\\IDOL\\images\\bits\\logo20.bpm", 100, -2);
-                //string ArabicChars = "اللغة العربية";
-                //var arabic = Encoding.GetEncoding(1256);
-                //Printer.PrintNormal(2, arabic.GetString(arabic.GetBytes(ArabicChars)));
-                //Printer.PrintNormal(2, "\n --------------------------------------------");
-                //Printer.PrintBarCode(2,"Test",);
-                //Printer.PrintNormal(2, "\n     **THANK YOU, HAPPY TO SEE YOU AGAIN** \n\n\n\n\n\n");
-                //////////////////Printer.PrintNormal(2, "\x1B|cA\x1B|2COPOS POSPrinter\x1B|1C\nvia Microsoft.NET\n\n");//Make sure about this line seems to be tricky
-
-                //Printer.SetLogo(1, (char)0x1B + (char)0x7C + (char)0x74 + (char)0x4C + "");
-                //// Printer.SetLogo(1, "\x1b\xa\xd");    
-                //Printer.PrintNormal(2, (char)0x1B + (char)0x7C + (char)0x74 + (char)0x4C + "");
-
-                //Printer.SetLogo(1, "\x1b|tL");
-                //Printer.PrintNormal(2, "logo print." + "\n");
-
-                //Printer.SetLogo(0, (char)0x1B + (char)0x7C + (char)0x74 + (char)0x4C + "");
-                //Printer.SetLogo(1, "\x1b|tL");
-                //Printer.PrintNormal(2, "logo print." + "\n");
-                //Printer.PrintNormal(2, " \x1b\x0C");
-                //Printer.PrintNormal(2, "arabic print." + "\n");
-                //Printer.DirectIO(111, 1, "-2");
-                //string arabic = "مانشلضرون";
-                ////string CodeArabic1256 = ASCIIEncoding.Default.GetString(Encoding.GetEncoding(1256).GetBytes(arabic));
-                ////byte[] winByte = Encoding.GetEncoding(1256).GetBytes(receipt);
-                ////string result = Encoding.GetEncoding(1256).GetString(winByte);
-                //Printer.PrintNormal(2, arabic);
-                //Printer.CharacterSet = 864;
-                //Printer.PrintNormal(2, arabic);
-                //Printer.PrintNormal(2, Cutter);
-                //Basepage.logWrite("printed2");
-
-                //Printer.CutPaper(99);
 
                 Basepage.logWrite("printed");
 

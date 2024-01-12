@@ -109,8 +109,9 @@ namespace IDOLSelfCheckout.UserControls
 
         private void btn_reprint_Click(object sender, RoutedEventArgs e)
         {
+         
             Basepage bp = new Basepage();
-            Boolean status = bp.reprintLastTrnsaction();
+            bool status = bp.reprintLastTrnsaction();
             if (status)
             {
                 uc_call.Uc_Add(MainWindow.Item_SCO, new ucPrintScreen());

@@ -362,7 +362,41 @@ namespace GeneralSCO.Core
                 else
                 {
                     var response = result.Item1 as Error;
-                    return new Tuple<int, dynamic>(response.Code.Value, response.Message);
+                    return new Tuple<int, dynamic>(response.Code.Value, response);
+                }
+            }
+            catch (Exception ex)
+            {
+                logWrite(ex.Message);
+                return new Tuple<int, dynamic>(500, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Tuple<int, dynamic> PrintLastReceipt()
+        {
+            try
+            {
+                PrintLastReceiptRequest request = new PrintLastReceiptRequest()
+                {
+                    StoreNo = StoreNo,
+                    TerminalNo = TerminalId
+                };
+
+                var result = PostRequest<PrintLastReceiptRequest, PrintReceiptResponse>(ServiceIp + "PrintLastReceipt", request);
+
+                if (result != null && result.Item2 == 200)
+                {
+                    var receiptResponse = result.Item1 as PrintReceiptResponse;
+                    return new Tuple<int, dynamic>(result.Item2, receiptResponse);
+                }
+                else
+                {
+                    var response = result.Item1 as Error;
+                    return new Tuple<int, dynamic>(response.Code.Value, response);
                 }
             }
             catch (Exception ex)

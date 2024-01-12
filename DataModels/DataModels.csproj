@@ -45,6 +45,7 @@
     <Compile Include="GeneralSCO\CartProducts.cs" />
     <Compile Include="GeneralSCO\Error.cs" />
     <Compile Include="GeneralSCO\OrderTotalRequest.cs" />
+    <Compile Include="GeneralSCO\PrintLastReceiptRequest.cs" />
     <Compile Include="GeneralSCO\PrintReceiptRequest.cs" />
     <Compile Include="GeneralSCO\PrintReceiptResponse.cs" />
     <Compile Include="GeneralSCO\ProductDetails.cs" />
