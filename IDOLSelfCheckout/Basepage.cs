@@ -309,28 +309,6 @@ namespace IDOLSelfCheckout
             //uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
         }
 
-        public bool pressedTotal(string receiptNo)
-        {
-            bool flag = false;
-            try
-            {
-                LSscoApi lsscoApi = new LSscoApi();
-                if (flag)
-                {
-                    if (!flag)
-                        ;
-                }
-                else
-                    this.errorMessage();
-            }
-            catch (Exception ex)
-            {
-                sco_data.ErrorMessage = ex.Message;
-                this.errorMessage();
-            }
-            return flag;
-        }
-
         public bool tenderPayment(string receiptNo, string tenderedAmount, string creditCardNo, string creditCardExpriyDate)
         {
             bool flag = false;

@@ -272,7 +272,6 @@ namespace IDOLSelfCheckout.BankDevice
             Basepage.logWrite("serial port stopped.");
         }
 
-
         private byte[] reqData(string amount, string CmdTyp, string InvoiceNumber)
         {
 
@@ -338,8 +337,6 @@ namespace IDOLSelfCheckout.BankDevice
             return data;
         }
 
-
-
         public List<string> xPathReader(string xml, List<string> xpathList)
         {
             try
@@ -364,11 +361,6 @@ namespace IDOLSelfCheckout.BankDevice
                 return null;
             }
         }
-
-
-
-
-
 
         //void _serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         //{
@@ -457,7 +449,5 @@ namespace IDOLSelfCheckout.BankDevice
         //    }
 
         //}
-
-
     }
 }

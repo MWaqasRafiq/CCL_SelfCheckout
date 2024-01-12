@@ -48,6 +48,7 @@ namespace IDOLSelfCheckout.UserControls
             Basepage.LoyaltyScaned = false;
             uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucLoyalty());
         }
+
         private void btn_creditcard_Click(object sender, RoutedEventArgs e)
         {
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucCreditCardScreen());
@@ -55,6 +56,7 @@ namespace IDOLSelfCheckout.UserControls
             Thread thread = new Thread(StartThreadOfCreditCardPayment);
             thread.Start();
         }
+
         private void StartThreadOfCreditCardPayment()
         {
             this.Dispatcher.BeginInvoke(DispatcherPriority.Normal,

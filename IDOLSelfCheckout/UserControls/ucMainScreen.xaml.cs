@@ -36,7 +36,6 @@ namespace IDOLSelfCheckout.UserControls
         //private ToshibaSA toshibaSA;
         CCL_Lamp lamp;
 
-
         public ucMainScreen()
         {
             InitializeComponent();
