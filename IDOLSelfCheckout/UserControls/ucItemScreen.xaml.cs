@@ -31,6 +31,7 @@ namespace IDOLSelfCheckout.UserControls
             lamp = new CCL_Lamp();
             //Basepage.ledItemScreen();
             lamp.BlueOpen();
+            ucMainScreen.ItemListDataGrid.Columns[5].Visibility = Visibility.Hidden;
         }
 
         bool IsAllDigits(string s) => s.Replace(",", "").Replace(".", "").All(char.IsDigit);

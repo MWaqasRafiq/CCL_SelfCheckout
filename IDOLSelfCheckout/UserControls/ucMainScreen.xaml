@@ -76,7 +76,7 @@
 
                                 <Grid>
                                     <DataGrid x:Name="item_list" AutoGenerateColumns="False" CanUserResizeColumns="False"
-                            GridLinesVisibility="None" ItemsSource="{Binding items}" IsReadOnly="True" CanUserReorderColumns="False" CanUserSortColumns = "False">
+                                        GridLinesVisibility="None" ItemsSource="{Binding items}" IsReadOnly="True" CanUserReorderColumns="False" CanUserSortColumns = "False">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="Name" DisplayIndex="0" Width="1*" Binding="{Binding Name}">
                                                 <DataGridColumn.HeaderStyle>
@@ -110,7 +110,7 @@
                                                     </Style>
                                                 </DataGridBoundColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Qty" DisplayIndex="2" Width="80" Binding="{Binding Qty}">
+                                            <DataGridTextColumn Header="Quantity" DisplayIndex="2" Width="100" Binding="{Binding Qty}">
                                                 <DataGridColumn.HeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                                         <Setter Property="Control.FontSize" Value="20"/>
@@ -160,6 +160,27 @@
                                                     </Style>
                                                 </DataGridBoundColumn.ElementStyle>
                                             </DataGridTextColumn>
+                                            <DataGridTemplateColumn x:Name="ActionButton" Header="Action" DisplayIndex="5" Width="90" Visibility="Hidden">
+                                                <DataGridColumn.HeaderStyle>
+                                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                        <Setter Property="Control.FontSize" Value="20"/>
+                                                        <Setter Property="Control.HorizontalContentAlignment" Value="Center"/>
+                                                        <Setter Property="Control.FontWeight" Value="Bold"/>
+                                                    </Style>
+                                                </DataGridColumn.HeaderStyle>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <DockPanel>
+                                                            <Button x:Name="Edit_Button" Background="White" Click="Edit_Button_Click" CommandParameter="{Binding Path=BarCode}" FontSize="12" Margin="3" Width="28" MinHeight="28" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.EditCommand}">
+                                                                <Image Margin="2" Source="C:\IDOL\images\icons\edit_icon.png"/>
+                                                            </Button>
+                                                            <Button x:Name="Delete_Button" Background="White" Click="Delete_Button_Click"  CommandParameter="{Binding Path=BarCode}" FontSize="12" Margin="3" Width="28" MinHeight="28" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.DeleteCommand}">
+                                                                <Image Margin="2" Source="C:\IDOL\images\icons\trash_icon.png"/>
+                                                            </Button>
+                                                        </DockPanel>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </Grid>

@@ -164,6 +164,16 @@ namespace IDOLSelfCheckout.UserControls
             uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
         }
 
+        private void Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            string barCode = ((Button)sender).CommandParameter.ToString();
+        }
+
+        private void Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            string barCode = ((Button)sender).CommandParameter.ToString();
+        }
+
         /// <summary>
         /// Service for receipt to display
         /// </summary>

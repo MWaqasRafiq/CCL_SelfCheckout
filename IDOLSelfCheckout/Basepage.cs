@@ -12,6 +12,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace IDOLSelfCheckout
@@ -173,7 +174,8 @@ namespace IDOLSelfCheckout
             {
                 if (sco_data.ScannedBarcode == "1111111111116")
                 {
-                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucAsistantScreen());
+                    ucMainScreen.ItemListDataGrid.Columns[5].Visibility = Visibility.Visible;
+                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucHelpScreen());
                 }
                 else
                 {
@@ -215,6 +217,8 @@ namespace IDOLSelfCheckout
                     ucMainScreen.ItemListDataGrid.DataContext = (object)null;
                     if (result != null && result.Item2.items != null)
                     {
+                        sco_data.ItemList = result.Item2.items.ToList();
+
                         sco_data.LastItemDescription = product.Description;
                         ucMainScreen.ItemListDataGrid.DataContext = (object)result.Item2;
                         updateTransactionDetails();
@@ -258,6 +262,8 @@ namespace IDOLSelfCheckout
                 ucMainScreen.ItemListDataGrid.DataContext = (object)null;
                 if (result != null && result.Item2.items != null)
                 {
+                    sco_data.ItemList = result.Item2.items.ToList();
+
                     sco_data.LastItemDescription = string.Empty;
                     ucMainScreen.ItemListDataGrid.DataContext = (object)result.Item2;
                     updateTransactionDetails();
@@ -281,6 +287,8 @@ namespace IDOLSelfCheckout
                 ucMainScreen.ItemListDataGrid.DataContext = (object)null;
                 if (result != null && result.Item2.items != null)
                 {
+                    sco_data.ItemList = result.Item2.items.ToList();
+
                     ucMainScreen.ItemListDataGrid.DataContext = (object)result.Item2;
                     updateTransactionDetails();
                     uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());

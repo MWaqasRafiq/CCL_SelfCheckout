@@ -34,13 +34,14 @@ namespace IDOLSelfCheckout.UserControls
         public ucAsistantScreen()
         {
             InitializeComponent();
+            
             //MessageText = messageTxt;
             messageTxt.Text = sco_data.ErrorMessage;
             lamp = new CCL_Lamp();
             lamp.RedOpen();
             setLabel();
+            ucMainScreen.ItemListDataGrid.Columns[5].Visibility = Visibility.Visible;
         }
-
         private void btn_new_transaction_Click(object sender, RoutedEventArgs e)
         {
             sco_data.ItemList = new List<DataModels.Shared.items>();
@@ -54,6 +55,7 @@ namespace IDOLSelfCheckout.UserControls
             {
                 items = (IEnumerable<DataModels.Shared.items>)itemList
             };
+            ucMainScreen.ItemListDataGrid.Columns[5].Visibility = Visibility.Hidden;
             ucMainScreen.ItemListDataGrid.DataContext = (object)viewModels;
             uc_call.Uc_Add(MainWindow.Main_SCO, new ucStartScreen());
         }
@@ -75,6 +77,7 @@ namespace IDOLSelfCheckout.UserControls
                 uc_call.Uc_Add(MainWindow.Item_SCO, new ucItemScreen());
             }
             Basepage.VoidRequested = false;
+            ucMainScreen.ItemListDataGrid.Columns[5].Visibility = Visibility.Hidden;
         }
 
         private void btn_assistant_reconsulation_Click(object sender, RoutedEventArgs e)
@@ -105,6 +108,7 @@ namespace IDOLSelfCheckout.UserControls
             
             sco_data.TransactionProcess = "CLOSED";
             uc_call.Uc_Add(MainWindow.Main_SCO, new ucClosedScreen());
+            ucMainScreen.ItemListDataGrid.Columns[5].Visibility = Visibility.Hidden;
         }
 
         private void btn_reprint_Click(object sender, RoutedEventArgs e)
@@ -121,6 +125,7 @@ namespace IDOLSelfCheckout.UserControls
                 uc_call.Uc_Add(MainWindow.Item_SCO, new ucHelpScreen());
 
             }
+            ucMainScreen.ItemListDataGrid.Columns[5].Visibility = Visibility.Hidden;
         }
 
         private async void btn_led_Click(object sender, RoutedEventArgs e)

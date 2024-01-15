@@ -446,7 +446,7 @@ namespace GeneralSCO.Core
         }
 
         /// <summary>
-        /// Write Logs
+        /// Write Logs to file
         /// </summary>
         /// <param name="msg"></param>
         public static void logWrite(string msg)
