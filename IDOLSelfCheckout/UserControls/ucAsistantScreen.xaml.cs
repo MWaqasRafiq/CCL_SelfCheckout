@@ -28,20 +28,17 @@ namespace IDOLSelfCheckout.UserControls
     /// </summary>
     public partial class ucAsistantScreen : UserControl
     {
-        private System.Timers.Timer _timer;
         public static TextBox MessageText;
         CCL_Lamp lamp;
         public ucAsistantScreen()
         {
             InitializeComponent();
-            
-            //MessageText = messageTxt;
-            messageTxt.Text = sco_data.ErrorMessage;
             lamp = new CCL_Lamp();
             lamp.RedOpen();
             setLabel();
             ucMainScreen.ItemListDataGrid.Columns[5].Visibility = Visibility.Visible;
         }
+
         private void btn_new_transaction_Click(object sender, RoutedEventArgs e)
         {
             sco_data.ItemList = new List<DataModels.Shared.items>();
@@ -85,9 +82,11 @@ namespace IDOLSelfCheckout.UserControls
             Oma880 oma = new Oma880();
             oma.PaymentDeviceCom("112","");
         }
+
         public void setLabel()
         {
-            MessageText = messageTxt;
+            if(MessageText != null)
+                MessageText.Text = sco_data.ErrorMessage;
         }
 
         private void btn_closed_screen_Click(object sender, RoutedEventArgs e)
@@ -157,6 +156,5 @@ namespace IDOLSelfCheckout.UserControls
                 MessageBox.Show(ex.Message);
             }
         }
-
     }
 }

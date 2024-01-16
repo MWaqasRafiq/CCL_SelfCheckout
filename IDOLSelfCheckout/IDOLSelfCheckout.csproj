@@ -37,11 +37,6 @@
 	
 
   <ItemGroup>
-    <None Remove="leaflet1.jpg" />
-  </ItemGroup>
-	
-
-  <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="idollogo.ico" />
   </ItemGroup>
@@ -68,12 +63,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="leaflet1.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
@@ -90,9 +79,6 @@
     </None>
     <None Update="CCLLampDll452.lib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="haarcascade_frontalface_default.xml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="images\leaflet1.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
