@@ -208,7 +208,7 @@ namespace GeneralSCO.Core
         /// 
         /// </summary>
         /// <returns></returns>
-        public Tuple<int, view_models> VoidFromCart()
+        public Tuple<int, view_models> VoidFromCart(string barCode = "")
         {
             view_models viewModels = new view_models();
             CartProducts cartProducts = new CartProducts();
@@ -216,10 +216,10 @@ namespace GeneralSCO.Core
             {
                 VoidItemRequest request = new VoidItemRequest()
                 {
-                    BarCode = sco_data.ScannedBarcode,
+                    BarCode = !string.IsNullOrEmpty(barCode) ? barCode : sco_data.ScannedBarcode,
                     TransactionId = TransactionId
                 };
-                var result = PostRequest<VoidItemRequest, CartProducts>(ServiceIp + "AddToCart", request);
+                var result = PostRequest<VoidItemRequest, CartProducts>(ServiceIp + "VoidFromCart", request);
                 if (result != null && result.Item2 == 200)
                 {
                     cartProducts = result.Item1 as CartProducts;
@@ -247,8 +247,11 @@ namespace GeneralSCO.Core
                     }
                     viewModels.items = itemList;
 
-                    sco_data.TransactionTotal = cartProducts.Total.TotalAmount.ToString();
-                    sco_data.TransactionVat = cartProducts.Total.TotalVat.ToString();
+                }
+                if(cartProducts.Total != null)
+                {
+                    sco_data.TransactionTotal = cartProducts.Total.TotalAmount.ToString("0.00");
+                    sco_data.TransactionVat = cartProducts.Total.TotalVat.ToString("0.00");
                 }
             }
             catch (Exception ex)

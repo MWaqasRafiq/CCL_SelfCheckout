@@ -33,7 +33,8 @@ namespace IDOLSelfCheckout.UserControls
         public ucAsistantScreen()
         {
             InitializeComponent();
-            lamp = new CCL_Lamp();
+            lamp = new CCL_Lamp(); 
+            messageTxt.Text = sco_data.ErrorMessage;
             lamp.RedOpen();
             setLabel();
             ucMainScreen.ItemListDataGrid.Columns[5].Visibility = Visibility.Visible;
@@ -85,8 +86,7 @@ namespace IDOLSelfCheckout.UserControls
 
         public void setLabel()
         {
-            if(MessageText != null)
-                MessageText.Text = sco_data.ErrorMessage;
+            MessageText = messageTxt;
         }
 
         private void btn_closed_screen_Click(object sender, RoutedEventArgs e)

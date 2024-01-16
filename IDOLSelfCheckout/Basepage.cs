@@ -238,12 +238,12 @@ namespace IDOLSelfCheckout
             }
         }
 
-        public void VoidItemMain()
+        public void VoidItemMain(string barCode = "")
         {
             switch (Basepage.ServerName)
             {
                 case "GP":
-                    new Basepage().GeneralPosVoidCart();
+                    new Basepage().GeneralPosVoidCart(barCode);
                     break;
                 default:
                     new Basepage().VoidItemOnPremises();
@@ -253,21 +253,22 @@ namespace IDOLSelfCheckout
             Basepage.VoidScaned = true;
         }
 
-        public void GeneralPosVoidCart()
+        public void GeneralPosVoidCart(string barCode = "")
         {
             GeneralSCO.Core.General_SCO general_SCO = new GeneralSCO.Core.General_SCO();
-            var result = general_SCO.VoidFromCart();
+            var result = general_SCO.VoidFromCart(barCode);
             if (result.Item1 == 200)
             {
                 ucMainScreen.ItemListDataGrid.DataContext = (object)null;
+                updateTransactionDetails();
                 if (result != null && result.Item2.items != null)
                 {
                     sco_data.ItemList = result.Item2.items.ToList();
 
                     sco_data.LastItemDescription = string.Empty;
                     ucMainScreen.ItemListDataGrid.DataContext = (object)result.Item2;
-                    updateTransactionDetails();
-                    uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
+                    if(string.IsNullOrEmpty(barCode))
+                        uc_call.Uc_Add(MainWindow.Item_SCO, (UserControl)new ucItemScreen());
                 }
             }
             else

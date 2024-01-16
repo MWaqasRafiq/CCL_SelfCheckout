@@ -1,4 +1,5 @@
-﻿using DataModels.Shared;
+﻿using DataModels.GeneralSCO;
+using DataModels.Shared;
 using DataModels.ToshibaSA;
 using IDOLSelfCheckout.Classes;
 using System;
@@ -172,6 +173,10 @@ namespace IDOLSelfCheckout.UserControls
         private void Delete_Button_Click(object sender, RoutedEventArgs e)
         {
             string barCode = ((Button)sender).CommandParameter.ToString();
+            if (!string.IsNullOrEmpty(barCode))
+            {
+                new Basepage().VoidItemMain(barCode);
+            }
         }
 
         /// <summary>
