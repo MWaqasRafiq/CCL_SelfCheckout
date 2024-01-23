@@ -197,7 +197,7 @@
                             </Border>
                         </Grid>
                     </Border>
-                    <Border Background="Aqua" Grid.Column="1" Grid.Row="0">
+                    <Border Background="White" Grid.Column="1" Grid.Row="0">
                         <Grid x:Name="Item_sco"/>
                     </Border>
                 </Grid>
