@@ -1,0 +1,13 @@
+D:\IDOL\Self Checkout CCL\On_Premises\bin\Release\OP.dll.config
+D:\IDOL\Self Checkout CCL\On_Premises\bin\Release\OP.dll
+D:\IDOL\Self Checkout CCL\On_Premises\bin\Release\OP.pdb
+D:\IDOL\Self Checkout CCL\On_Premises\bin\Release\DM.dll
+D:\IDOL\Self Checkout CCL\On_Premises\bin\Release\Newtonsoft.Json.dll
+D:\IDOL\Self Checkout CCL\On_Premises\bin\Release\DM.pdb
+D:\IDOL\Self Checkout CCL\On_Premises\bin\Release\DM.dll.config
+D:\IDOL\Self Checkout CCL\On_Premises\bin\Release\Newtonsoft.Json.xml
+D:\IDOL\Self Checkout CCL\On_Premises\obj\Release\On_Premises.csproj.AssemblyReference.cache
+D:\IDOL\Self Checkout CCL\On_Premises\obj\Release\On_Premises.csproj.CoreCompileInputs.cache
+D:\IDOL\Self Checkout CCL\On_Premises\obj\Release\On_Premises.csproj.CopyComplete
+D:\IDOL\Self Checkout CCL\On_Premises\obj\Release\OP.dll
+D:\IDOL\Self Checkout CCL\On_Premises\obj\Release\OP.pdb

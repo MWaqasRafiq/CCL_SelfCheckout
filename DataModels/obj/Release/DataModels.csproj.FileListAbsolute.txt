@@ -1,0 +1,7 @@
+D:\IDOL\Self Checkout CCL\DataModels\bin\Release\DM.dll.config
+D:\IDOL\Self Checkout CCL\DataModels\bin\Release\DM.dll
+D:\IDOL\Self Checkout CCL\DataModels\bin\Release\DM.pdb
+D:\IDOL\Self Checkout CCL\DataModels\obj\Release\DataModels.csproj.AssemblyReference.cache
+D:\IDOL\Self Checkout CCL\DataModels\obj\Release\DataModels.csproj.CoreCompileInputs.cache
+D:\IDOL\Self Checkout CCL\DataModels\obj\Release\DM.dll
+D:\IDOL\Self Checkout CCL\DataModels\obj\Release\DM.pdb

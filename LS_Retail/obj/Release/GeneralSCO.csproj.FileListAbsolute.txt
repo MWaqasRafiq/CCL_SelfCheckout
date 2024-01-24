@@ -1,0 +1,13 @@
+D:\IDOL\Self Checkout CCL\LS_Retail\bin\Release\GeneralSCO.dll.config
+D:\IDOL\Self Checkout CCL\LS_Retail\bin\Release\GeneralSCO.dll
+D:\IDOL\Self Checkout CCL\LS_Retail\bin\Release\GeneralSCO.pdb
+D:\IDOL\Self Checkout CCL\LS_Retail\bin\Release\DM.dll
+D:\IDOL\Self Checkout CCL\LS_Retail\bin\Release\Newtonsoft.Json.dll
+D:\IDOL\Self Checkout CCL\LS_Retail\bin\Release\DM.pdb
+D:\IDOL\Self Checkout CCL\LS_Retail\bin\Release\DM.dll.config
+D:\IDOL\Self Checkout CCL\LS_Retail\bin\Release\Newtonsoft.Json.xml
+D:\IDOL\Self Checkout CCL\LS_Retail\obj\Release\GeneralSCO.csproj.AssemblyReference.cache
+D:\IDOL\Self Checkout CCL\LS_Retail\obj\Release\GeneralSCO.csproj.CoreCompileInputs.cache
+D:\IDOL\Self Checkout CCL\LS_Retail\obj\Release\GeneralSCO.csproj.CopyComplete
+D:\IDOL\Self Checkout CCL\LS_Retail\obj\Release\GeneralSCO.dll
+D:\IDOL\Self Checkout CCL\LS_Retail\obj\Release\GeneralSCO.pdb
